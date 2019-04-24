@@ -5,7 +5,7 @@
 			<h4 class="m-menu__section-text">{{ __('aside_menu.description') }}</h4>
 			<i class="m-menu__section-icon flaticon-more-v2"></i>
 		</li>
-		<li class="m-menu__item  {{ request()->routeIs('dashboard') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="index.php" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">{{ __('aside_menu.dashboard') }}</span></a></li>
+		<li class="m-menu__item  {{ request()->routeIs('dashboard') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('dashboard') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">{{ __('aside_menu.dashboard') }}</span></a></li>
 
 		<li class="m-menu__item  {{ request()->routeIs('companies') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="objects.php" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('aside_menu.companies') }}</span></a></li>
 
