@@ -11,6 +11,15 @@
 |
 */
 
+Route::get('locale/{locale}', function ($locale) {
+    \Session::put('locale', $locale);
+    return redirect()->back();
+})->name('locale');
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
