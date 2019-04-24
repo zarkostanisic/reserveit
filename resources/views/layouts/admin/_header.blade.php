@@ -59,6 +59,8 @@
 							{{-- @include ('layouts.admin._notifications') --}}
 							
 							{{-- @include ('layouts.admin._quick_actions') --}}
+
+							@include ('layouts.admin._locale')
 							
 							@include ('layouts.admin._profile')
 
