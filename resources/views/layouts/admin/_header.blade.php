@@ -8,7 +8,7 @@
 				<div class="m-stack m-stack--ver m-stack--general">
 					<div class="m-stack__item m-stack__item--middle m-brand__logo">
 						<a href="{{ route('dashboard') }}" class="m-brand__logo-wrapper">
-							<img alt="" src="assets/demo/demo12/media/img/logo/logo.png" />
+							<img alt="" src="/assets/demo/demo12/media/img/logo/logo.png" />
 						</a>
 					</div>
 					<div class="m-stack__item m-stack__item--middle m-brand__tools">

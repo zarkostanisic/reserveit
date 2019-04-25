@@ -22,22 +22,19 @@
 		<!--end::Web font -->
 
 		<!--begin::Global Theme Styles -->
-		<link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
 
-		<!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-		<link href="assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />
-
-		<!--RTL version:<link href="assets/demo/demo12/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+		<link href="/assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Page Vendors Styles -->
-		<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-
-		<!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+		<link href="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Page Vendors Styles -->
-		<link rel="shortcut icon" href="assets/demo/demo12/media/img/logo/favicon.ico" />
+		<link rel="shortcut icon" href="/assets/demo/demo12/media/img/logo/favicon.ico" />
+
+		@yield ('styles')
 	</head>
 
 	<!-- end::Head -->
@@ -86,20 +83,18 @@
 		{{-- @include ('layouts.admin._quick_nav') --}}
 
 		<!--begin::Global Theme Bundle -->
-		<script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-		<script src="assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>
+		<script src="/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+		<script src="/assets/demo/demo12/base/scripts.bundle.js" type="text/javascript"></script>
 
 		<!--end::Global Theme Bundle -->
 
-		<!--begin::Page Vendors -->
-		<script src="assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
-
-		<!--end::Page Vendors -->
-
 		<!--begin::Page Scripts -->
-		<script src="assets/app/js/dashboard.js" type="text/javascript"></script>
+
+		@yield('scripts')
 
 		<!--end::Page Scripts -->
+
+
 	</body>
 
 	<!-- end::Body -->
