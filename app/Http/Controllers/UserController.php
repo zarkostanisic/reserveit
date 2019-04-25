@@ -13,9 +13,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(1);
+        $users = User::paginate($request->query('perpage'));
 
         return UserResource::collection($users);
     }

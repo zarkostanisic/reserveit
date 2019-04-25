@@ -9,7 +9,7 @@
 
 		<li class="m-menu__item  {{ request()->routeIs('companies') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="objects.php" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('aside_menu.companies') }}</span></a></li>
 
-		<li class="m-menu__item  {{ request()->routeIs('users') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="users.php" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-avatar"></i><span class="m-menu__link-text">{{ __('aside_menu.users') }}</span></a></li>
+		<li class="m-menu__item  {{ request()->routeIs('users.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('users.index')}}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-avatar"></i><span class="m-menu__link-text">{{ __('aside_menu.users') }}</span></a></li>
 
 		<li class="m-menu__item  {{ request()->routeIs('events') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="#" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-signs"></i><span class="m-menu__link-text">{{ __('aside_menu.events') }}</span></a></li>
 
