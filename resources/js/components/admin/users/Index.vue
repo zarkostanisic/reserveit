@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="row">
-			<div class="col-sm-12 col-md-6">
+			<div class="col-sm-12 col-md-4">
 				<label>Show 
 					<select class="form-control-sm" v-model="perpage" @change="getUsers">
 						<option value="10">10</option>
@@ -11,9 +11,26 @@
 					</select> entries
 				</label>
 			</div>
-			<div class="col-sm-12 col-md-6">
-					<!-- <label>Search:</label>
-					<input type="search" class="form-control"> -->
+			<div class="col-sm-12 col-md-4">
+				<label>Role
+					<select class="form-control-sm" v-model="role_id" @change="getUsers">
+						<option value="-1">All</option>
+						<option v-for="role in roles" :value="role.id">
+							{{ role.name }}
+						</option>
+					</select>
+				</label>
+			</div>
+			<div class="col-sm-12 col-md-4">
+				<label>Company
+					<select class="form-control-sm" v-model="company_id" @change="getUsers">
+						<option value="-1">All</option>
+						<option v-for="company in companies" :value="company.id">
+							{{ company.name }}
+						</option>
+					</select>
+
+				</label>
 			</div>
 		</div>
 		<table class="table table-responsive m-table table-bordered">
@@ -50,11 +67,13 @@
 
 <script>
 	export default {
-
+		props: ['roles', 'companies'],
 		data() {
 			return {
 				users: {},
-				perpage: 25
+				perpage: 25,
+				role_id: -1,
+				company_id: -1
 			}
 		},
 
@@ -64,7 +83,12 @@
 
 		methods: {
 			getUsers(page = 1) {
-				axios.get('/api/users?page=' + page + '&perpage=' + this.perpage)
+				var ajax_url = '/api/users?page=' + page 
+				ajax_url += '&perpage=' + this.perpage;
+				ajax_url += '&role_id=' + this.role_id;
+				ajax_url += '&company_id=' + this.company_id;
+
+				axios.get(ajax_url)
 				.then(response => {
 					this.users = response.data;
 				});

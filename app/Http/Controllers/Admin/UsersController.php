@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Role;
+use App\Company;
 
 class UsersController extends Controller
 {
@@ -14,7 +16,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('admin.posts.index');
+        $roles = Role::all();
+        $companies = Company::all();
+
+        return view('admin.posts.index', compact('roles', 'companies'));
     }
 
     /**

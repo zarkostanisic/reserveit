@@ -1813,11 +1813,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['roles', 'companies'],
   data: function data() {
     return {
       users: {},
-      perpage: 25
+      perpage: 25,
+      role_id: -1,
+      company_id: -1
     };
   },
   mounted: function mounted() {
@@ -1828,7 +1848,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get('/api/users?page=' + page + '&perpage=' + this.perpage).then(function (response) {
+      var ajax_url = '/api/users?page=' + page;
+      ajax_url += '&perpage=' + this.perpage;
+      ajax_url += '&role_id=' + this.role_id;
+      ajax_url += '&company_id=' + this.company_id;
+      axios.get(ajax_url).then(function (response) {
         _this.users = response.data;
       });
     }
@@ -38504,7 +38528,7 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
           _c("label", [
             _vm._v("Show \n\t\t\t\t"),
             _c(
@@ -38552,7 +38576,105 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-12 col-md-6" })
+        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+          _c("label", [
+            _vm._v("Role\n\t\t\t\t"),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.role_id,
+                    expression: "role_id"
+                  }
+                ],
+                staticClass: "form-control-sm",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.role_id = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getUsers
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "-1" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _vm._l(_vm.roles, function(role) {
+                  return _c("option", { domProps: { value: role.id } }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t" + _vm._s(role.name) + "\n\t\t\t\t\t"
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+          _c("label", [
+            _vm._v("Company\n\t\t\t\t"),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.company_id,
+                    expression: "company_id"
+                  }
+                ],
+                staticClass: "form-control-sm",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.company_id = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getUsers
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "-1" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _vm._l(_vm.companies, function(company) {
+                  return _c("option", { domProps: { value: company.id } }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t" + _vm._s(company.name) + "\n\t\t\t\t\t"
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c(
