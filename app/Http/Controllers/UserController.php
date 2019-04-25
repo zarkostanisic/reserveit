@@ -15,9 +15,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $perpage = $request->query('perpage') ? $request->query('perpage') : 1;
-        $role_id = $request->query('role_id') ? $request->query('role_id') : -1;
-        $company_id = $request->query('company_id') ? $request->query('company_id') : -1;
+        $perpage = $request->query('perpage') ?? 1;
+        $role_id = $request->query('role_id') ?? -1;
+        $company_id = $request->query('company_id') ?? -1;
 
         $users = User::filter($role_id, $company_id)->paginate($perpage);
 
