@@ -26,6 +26,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "lang-js": "^2.2.1",
+        "lang.js": "^1.1.14",
         "laravel-vue-pagination": "^2.3.0"
     }
 }

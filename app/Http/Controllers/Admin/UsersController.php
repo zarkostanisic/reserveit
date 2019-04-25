@@ -19,7 +19,7 @@ class UsersController extends Controller
         $roles = Role::all();
         $companies = Company::all();
 
-        return view('admin.posts.index', compact('roles', 'companies'));
+        return view('admin.users.index', compact('roles', 'companies'));
     }
 
     /**

@@ -1,14 +1,14 @@
 <template>
-	<div>
+	<div> 
 		<div class="row">
 			<div class="col-sm-12 col-md-4">
-				<label>Show 
+				<label>{{ trans.get('universal.show') }} 
 					<select class="form-control-sm" v-model="perpage" @change="getUsers">
 						<option value="10">10</option>
 						<option value="25">25</option>
 						<option value="50">50</option>
 						<option value="100">100</option>
-					</select> entries
+					</select>
 				</label>
 			</div>
 			<div class="col-sm-12 col-md-4">
@@ -22,7 +22,7 @@
 				</label>
 			</div>
 			<div class="col-sm-12 col-md-4">
-				<label>Company
+				<label> {{ trans.get('companies.singular') }}
 					<select class="form-control-sm" v-model="company_id" @change="getUsers">
 						<option value="-1">All</option>
 						<option v-for="company in companies" :value="company.id">

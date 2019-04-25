@@ -6,7 +6,7 @@
 <div class="m-subheader ">
     <div class="d-flex align-items-center">
 		<div class="mr-auto">
-			<h3 class="m-subheader__title m-subheader__title--separator">Korisnici</h3>
+			<h3 class="m-subheader__title m-subheader__title--separator">{{ __('users.plural') }}</h3>
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
 					<a href="{{ route('dashboard') }}" class="m-nav__link m-nav__link--icon">
@@ -16,7 +16,7 @@
 				<li class="m-nav__separator">-</li>
 				<li class="m-nav__item">
 					<a href="{{ route('users.index') }}" class="m-nav__link">
-						<span class="m-nav__link-text">Korisnici</span>
+						<span class="m-nav__link-text">{{ __('users.plural') }}</span>
 					</a>
 				</li>
 
@@ -34,7 +34,7 @@
 				<div class="m-portlet__head-caption">
 					<div class="m-portlet__head-title">
 						<h3 class="m-portlet__head-text">
-							Lista korisnika
+							{{ trans('users.list') }}
 						</h3>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 							<a href="new_user.php" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air">
 								<span>
 									<i class="la la-plus"></i>
-									<span>Korisnik</span>
+									<span>{{ __('users.singular') }}</span>
 								</span>
 							</a>
 						</li>

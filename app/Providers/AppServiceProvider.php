@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use ExportLocalization;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         // List of all langages on site
         View::share('languages', ['en', 'sr']);
+
+        View::share('messages', ExportLocalization::export()->toFlat());
     }
 }
