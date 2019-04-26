@@ -1841,6 +1841,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['roles', 'companies'],
   data: function data() {
@@ -1870,6 +1892,19 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
         _this.users = response.data;
       });
+    },
+    deleteUser: function deleteUser(id, key) {
+      var _this2 = this;
+
+      if (confirm(this.trans.get('universal.confirm'))) {
+        this.loading = true;
+        var ajax_url = '/api/users/' + id;
+        axios["delete"](ajax_url).then(function (response) {
+          _this2.loading = false;
+
+          _this2.users.data.splice(key, 1, response.data.data);
+        });
+      }
     }
   }
 });
@@ -39923,7 +39958,11 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-12 col-md-4" }, [
           _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("universal.show")) + " \n\t\t\t\t"),
+            _vm._v(
+              "\n\t\t\t\t" +
+                _vm._s(_vm.trans.get("universal.show")) +
+                " \n\n\t\t\t\t"
+            ),
             _c(
               "select",
               {
@@ -39971,7 +40010,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-12 col-md-4" }, [
           _c("label", [
-            _vm._v("Role\n\t\t\t\t"),
+            _vm._v(_vm._s(_vm.trans.get("universal.role")) + "\n\t\t\t\t"),
             _c(
               "select",
               {
@@ -40005,12 +40044,20 @@ var render = function() {
                 }
               },
               [
-                _c("option", { attrs: { value: "-1" } }, [_vm._v("All")]),
+                _c("option", { attrs: { value: "-1" } }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.choose")) +
+                      "\n\t\t\t\t\t"
+                  )
+                ]),
                 _vm._v(" "),
                 _vm._l(_vm.roles, function(role) {
                   return _c("option", { domProps: { value: role.id } }, [
                     _vm._v(
-                      "\n\t\t\t\t\t\t" + _vm._s(role.name) + "\n\t\t\t\t\t"
+                      "\n\t\t\t\t\t\t" +
+                        _vm._s(_vm.trans.get("universal." + role.name)) +
+                        "\n\t\t\t\t\t"
                     )
                   ])
                 })
@@ -40058,7 +40105,13 @@ var render = function() {
                 }
               },
               [
-                _c("option", { attrs: { value: "-1" } }, [_vm._v("All")]),
+                _c("option", { attrs: { value: "-1" } }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.choose")) +
+                      "\n\t\t\t\t\t"
+                  )
+                ]),
                 _vm._v(" "),
                 _vm._l(_vm.companies, function(company) {
                   return _c("option", { domProps: { value: company.id } }, [
@@ -40078,20 +40131,38 @@ var render = function() {
         "table",
         { staticClass: "table table-responsive m-table table-bordered" },
         [
-          _vm._m(0),
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.id")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.photo")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.full_name")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("companies.singular")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.username")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.status")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.role")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.actions")))])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
             [
-              _vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e(),
+              _vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(),
               _vm._v(" "),
-              _vm._l(_vm.users.data, function(user) {
+              _vm._l(_vm.users.data, function(user, key) {
                 return _c("tr", [
                   _c("th", { attrs: { scope: "row" } }, [
                     _vm._v(_vm._s(user.id))
                   ]),
                   _vm._v(" "),
-                  _vm._m(2, true),
+                  _vm._m(1, true),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(user.name))]),
                   _vm._v(" "),
@@ -40099,9 +40170,74 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(user.email))]),
                   _vm._v(" "),
-                  _vm._m(3, true),
+                  _c("td", [
+                    user.deleted
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "m-badge m-badge--danger m-badge--wide"
+                          },
+                          [
+                            _vm._v(
+                              "\t\n\t\t\t\t\t\t" +
+                                _vm._s(_vm.trans.get("universal.deleted")) +
+                                "\n\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      : _c("div", [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "m-badge m-badge--success m-badge--wide"
+                            },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t" +
+                                  _vm._s(_vm.trans.get("universal.active")) +
+                                  "\n\t\t\t\t\t\t"
+                              )
+                            ]
+                          )
+                        ])
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.role))])
+                  _c("td", [
+                    _vm._v(_vm._s(_vm.trans.get("universal." + user.role)))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    user.id > 1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn",
+                            class: {
+                              "btn-danger": !user.deleted,
+                              "btn-success": user.deleted
+                            },
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteUser(user.id, key)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t" +
+                                _vm._s(
+                                  user.deleted
+                                    ? _vm.trans.get("universal.restore")
+                                    : _vm.trans.get("universal.delete")
+                                ) +
+                                "\n\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ])
                 ])
               })
             ],
@@ -40132,28 +40268,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Id")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Photo")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Full Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Company Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Type")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("td", { attrs: { colspan: "7" } }, [
       _c("div", {
         staticClass: "m-loader",
@@ -40167,16 +40281,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", [
       _c("img", { attrs: { src: "photo/male.png", width: "80", height: "80" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("span", { staticClass: "m-badge m-badge--brand m-badge--wide" }, [
-        _vm._v("Pending")
-      ])
     ])
   }
 ]

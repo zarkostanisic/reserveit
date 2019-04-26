@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -13,15 +14,25 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perpage = $request->query('perpage') ?? 1;
-        $role_id = $request->query('role_id') ?? -1;
-        $company_id = $request->query('company_id') ?? -1;
+        $perpage = request()->query('perpage') ?? 1;
+        $role_id = request()->query('role_id') ?? -1;
+        $company_id = request()->query('company_id') ?? -1;
 
-        $users = User::filter($role_id, $company_id)->paginate($perpage);
+        $users = User::withTrashed()->filter($role_id, $company_id)->paginate($perpage);
 
         return UserResource::collection($users);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -38,10 +49,21 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
     {
         //
     }
@@ -50,10 +72,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -61,11 +83,20 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if($user->trashed()){
+            $user->restore();
+        }
+        else{
+            $user->delete();
+        }
+        
+        return response([
+            'data' => new UserResource($user->fresh())
+        ], Response::HTTP_CREATED);
     }
 }

@@ -2,7 +2,9 @@
 	<div> 
 		<div class="row">
 			<div class="col-sm-12 col-md-4">
-				<label>{{ trans.get('universal.show') }} 
+				<label>
+					{{ trans.get('universal.show') }} 
+
 					<select class="form-control-sm" v-model="perpage" @change="getUsers" :disabled="loading">
 						<option value="10">10</option>
 						<option value="25">25</option>
@@ -12,11 +14,13 @@
 				</label>
 			</div>
 			<div class="col-sm-12 col-md-4">
-				<label>Role
+				<label>{{ trans.get('universal.role') }}
 					<select class="form-control-sm" v-model="role_id" @change="getUsers" :disabled="loading">
-						<option value="-1">All</option>
+						<option value="-1">
+							{{ trans.get('universal.choose') }}
+						</option>
 						<option v-for="role in roles" :value="role.id">
-							{{ role.name }}
+							{{ trans.get('universal.' + role.name) }}
 						</option>
 					</select>
 				</label>
@@ -24,7 +28,9 @@
 			<div class="col-sm-12 col-md-4">
 				<label> {{ trans.get('companies.singular') }}
 					<select class="form-control-sm" v-model="company_id" @change="getUsers" :disabled="loading">
-						<option value="-1">All</option>
+						<option value="-1">
+							{{ trans.get('universal.choose') }}
+						</option>
 						<option v-for="company in companies" :value="company.id">
 							{{ company.name }}
 						</option>
@@ -36,13 +42,14 @@
 		<table class="table table-responsive m-table table-bordered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Photo</th>
-					<th>Full Name</th>
-					<th>Company Name</th>
-					<th>Username</th>
-					<th>Status</th>
-					<th>Type</th>
+					<th>{{ trans.get('universal.id') }}</th>
+					<th>{{ trans.get('universal.photo') }}</th>
+					<th>{{ trans.get('universal.full_name') }}</th>
+					<th>{{ trans.get('companies.singular') }}</th>
+					<th>{{ trans.get('universal.username') }}</th>
+					<th>{{ trans.get('universal.status') }}</th>
+					<th>{{ trans.get('universal.role') }}</th>
+					<th>{{ trans.get('universal.actions') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,18 +58,33 @@
 						<div class="m-loader" style="width: 30px; display: inline-block;"></div>
 					</td>
 				</tr>
-				<tr v-for="user in users.data">
+				<tr v-for="user, key in users.data">
 					<th scope="row">{{ user.id }}</th>
 					<td>
 						<img src="photo/male.png" width="80" height="80">
 					</td>
-					<td>{{ user.name}}</td>
+					<td>{{ user.name }}</td>
 					<td>Company</td>
 					<td>{{ user.email }}</td>
 					<td>
-						<span class="m-badge m-badge--brand m-badge--wide">Pending</span>
+						<span v-if="user.deleted" class="m-badge m-badge--danger m-badge--wide">	
+							{{ trans.get('universal.deleted') }}
+						</span>
+						<div v-else>
+							<span class="m-badge m-badge--success m-badge--wide">
+								{{ trans.get('universal.active') }}
+							</span>
+						</div>
 					</td>
-					<td>{{ user.role }}</td>
+					<td>{{ trans.get('universal.' + user.role) }}</td>
+					<td>
+						<button type="button" class="btn" 
+							v-if="user.id > 1"
+							v-bind:class="{ 'btn-danger': !user.deleted, 'btn-success': user.deleted}" 
+						 	@click="deleteUser(user.id, key)">
+							{{ user.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
+						</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -77,6 +99,7 @@
 </template>
 
 <script>
+
 	export default {
 		props: ['roles', 'companies'],
 		data() {
@@ -109,6 +132,21 @@
 
 					this.users = response.data;
 				});
+			},
+
+			deleteUser(id, key) {
+				if(confirm(this.trans.get('universal.confirm'))){
+					this.loading = true;
+
+					var ajax_url = '/api/users/' + id;
+
+					axios.delete(ajax_url)
+					.then(response => {
+						this.loading = false;
+
+						this.users.data.splice(key, 1, response.data.data);
+					});
+				}
 			}
 		}
 
