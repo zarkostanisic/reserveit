@@ -1863,14 +1863,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies'],
+  props: ['roles', 'companies', 'user_role', 'user_company'],
   data: function data() {
     return {
       users: {},
       perpage: 25,
-      role_id: -1,
-      company_id: -1,
+      role_id: 0,
+      company_id: 0,
       loading: false
     };
   },
@@ -1886,7 +1887,7 @@ __webpack_require__.r(__webpack_exports__);
       var ajax_url = '/api/users?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
       ajax_url += '&role_id=' + this.role_id;
-      ajax_url += '&company_id=' + this.company_id;
+      ajax_url += '&company_id=' + (this.user_company > 0 ? this.user_company : this.company_id);
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
         _this.loading = false;
@@ -40044,7 +40045,7 @@ var render = function() {
                 }
               },
               [
-                _c("option", { attrs: { value: "-1" } }, [
+                _c("option", { attrs: { value: "0" } }, [
                   _vm._v(
                     "\n\t\t\t\t\t\t" +
                       _vm._s(_vm.trans.get("universal.choose")) +
@@ -40067,64 +40068,70 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-          _c("label", [
-            _vm._v(
-              " " + _vm._s(_vm.trans.get("companies.singular")) + "\n\t\t\t\t"
-            ),
-            _c(
-              "select",
-              {
-                directives: [
+        _vm.user_role == "administrator"
+          ? _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+              _c("label", [
+                _vm._v(
+                  " " +
+                    _vm._s(_vm.trans.get("companies.singular")) +
+                    "\n\t\t\t\t"
+                ),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.company_id,
-                    expression: "company_id"
-                  }
-                ],
-                staticClass: "form-control-sm",
-                attrs: { disabled: _vm.loading },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.company_id = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    _vm.getUsers
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "-1" } }, [
-                  _vm._v(
-                    "\n\t\t\t\t\t\t" +
-                      _vm._s(_vm.trans.get("universal.choose")) +
-                      "\n\t\t\t\t\t"
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.companies, function(company) {
-                  return _c("option", { domProps: { value: company.id } }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t" + _vm._s(company.name) + "\n\t\t\t\t\t"
-                    )
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ])
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.company_id,
+                        expression: "company_id"
+                      }
+                    ],
+                    staticClass: "form-control-sm",
+                    attrs: { disabled: _vm.loading },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.company_id = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.getUsers
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t" +
+                          _vm._s(_vm.trans.get("universal.choose")) +
+                          "\n\t\t\t\t\t"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.companies, function(company) {
+                      return _c("option", { domProps: { value: company.id } }, [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(company.name) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c(
@@ -40139,7 +40146,11 @@ var render = function() {
               _vm._v(" "),
               _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.full_name")))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("companies.singular")))]),
+              _vm.user_company == 0
+                ? _c("th", [
+                    _vm._v(_vm._s(_vm.trans.get("companies.singular")))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.username")))]),
               _vm._v(" "),
@@ -40166,7 +40177,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(user.name))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("Company")]),
+                  _vm.user_company == 0
+                    ? _c("td", [_vm._v(_vm._s(user.company))])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(user.email))]),
                   _vm._v(" "),

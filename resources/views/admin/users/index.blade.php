@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="m-portlet__body">
-				<admin-users-index :roles="{{ $roles }}" :companies="{{ $companies }}"></admin-users-index>
+				<admin-users-index :user_role="'{{ $role }}'" :user_company="'{{ $company }}'" :roles="{{ $roles }}" :companies="{{ $companies }}"></admin-users-index>
 			</div>
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 			<div class="col-sm-12 col-md-4">
 				<label>{{ trans.get('universal.role') }}
 					<select class="form-control-sm" v-model="role_id" @change="getUsers" :disabled="loading">
-						<option value="-1">
+						<option value="0">
 							{{ trans.get('universal.choose') }}
 						</option>
 						<option v-for="role in roles" :value="role.id">
@@ -25,10 +25,11 @@
 					</select>
 				</label>
 			</div>
-			<div class="col-sm-12 col-md-4">
+
+			<div class="col-sm-12 col-md-4" v-if="user_role == 'administrator'">
 				<label> {{ trans.get('companies.singular') }}
 					<select class="form-control-sm" v-model="company_id" @change="getUsers" :disabled="loading">
-						<option value="-1">
+						<option value="0">
 							{{ trans.get('universal.choose') }}
 						</option>
 						<option v-for="company in companies" :value="company.id">
@@ -45,7 +46,7 @@
 					<th>{{ trans.get('universal.id') }}</th>
 					<th>{{ trans.get('universal.photo') }}</th>
 					<th>{{ trans.get('universal.full_name') }}</th>
-					<th>{{ trans.get('companies.singular') }}</th>
+					<th v-if="user_company == 0">{{ trans.get('companies.singular') }}</th>
 					<th>{{ trans.get('universal.username') }}</th>
 					<th>{{ trans.get('universal.status') }}</th>
 					<th>{{ trans.get('universal.role') }}</th>
@@ -64,7 +65,7 @@
 						<img src="photo/male.png" width="80" height="80">
 					</td>
 					<td>{{ user.name }}</td>
-					<td>Company</td>
+					<td v-if="user_company == 0">{{ user.company }}</td>
 					<td>{{ user.email }}</td>
 					<td>
 						<span v-if="user.deleted" class="m-badge m-badge--danger m-badge--wide">	
@@ -101,13 +102,13 @@
 <script>
 
 	export default {
-		props: ['roles', 'companies'],
+		props: ['roles', 'companies', 'user_role', 'user_company'],
 		data() {
 			return {
 				users: {},
 				perpage: 25,
-				role_id: -1,
-				company_id: -1,
+				role_id: 0,
+				company_id: 0,
 				loading: false
 			}
 		},
@@ -123,7 +124,7 @@
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
 				ajax_url += '&role_id=' + this.role_id;
-				ajax_url += '&company_id=' + this.company_id;
+				ajax_url += '&company_id=' + (this.user_company > 0 ? this.user_company : this.company_id);
 
 				axios.get(ajax_url)
 				.then(response => {

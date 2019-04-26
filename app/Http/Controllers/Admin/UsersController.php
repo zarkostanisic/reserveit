@@ -16,10 +16,21 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = [];
+        $company = 0;
         $companies = Company::all();
+        $role = auth()->user()->role->name;
 
-        return view('admin.users.index', compact('roles', 'companies'));
+        if(in_array($role, ['administrator', 'manager'])){
+           $roles = Role::all();
+           
+           if($role == 'manager'){
+                unset($roles[0]);
+                $company = auth()->user()->company->id ?? 0;
+           } 
+        }
+
+        return view('admin.users.index', compact('roles', 'companies', 'role', 'company'));
     }
 
     /**
