@@ -1866,6 +1866,7 @@ __webpack_require__.r(__webpack_exports__);
       ajax_url += '&role_id=' + this.role_id;
       ajax_url += '&company_id=' + this.company_id;
       axios.get(ajax_url).then(function (response) {
+        $(document).scrollTop(0);
         _this.loading = false;
         _this.users = response.data;
       });

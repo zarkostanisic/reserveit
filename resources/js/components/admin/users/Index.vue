@@ -104,6 +104,7 @@
 
 				axios.get(ajax_url)
 				.then(response => {
+					$(document).scrollTop(0);
 					this.loading = false;
 
 					this.users = response.data;
