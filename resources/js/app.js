@@ -21,6 +21,10 @@ Vue.prototype.trans = new Lang({
   fallback: fallback_locale
 });
 
+import BlockUI from 'vue-blockui'
+ 
+Vue.use(BlockUI);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

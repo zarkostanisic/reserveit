@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-4">
 				<label>{{ trans.get('universal.show') }} 
-					<select class="form-control-sm" v-model="perpage" @change="getUsers">
+					<select class="form-control-sm" v-model="perpage" @change="getUsers" :disabled="loading">
 						<option value="10">10</option>
 						<option value="25">25</option>
 						<option value="50">50</option>
@@ -13,7 +13,7 @@
 			</div>
 			<div class="col-sm-12 col-md-4">
 				<label>Role
-					<select class="form-control-sm" v-model="role_id" @change="getUsers">
+					<select class="form-control-sm" v-model="role_id" @change="getUsers" :disabled="loading">
 						<option value="-1">All</option>
 						<option v-for="role in roles" :value="role.id">
 							{{ role.name }}
@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-sm-12 col-md-4">
 				<label> {{ trans.get('companies.singular') }}
-					<select class="form-control-sm" v-model="company_id" @change="getUsers">
+					<select class="form-control-sm" v-model="company_id" @change="getUsers" :disabled="loading">
 						<option value="-1">All</option>
 						<option v-for="company in companies" :value="company.id">
 							{{ company.name }}
@@ -46,6 +46,11 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr v-if="loading">
+					<td colspan="7">
+						<div class="m-loader" style="width: 30px; display: inline-block;"></div>
+					</td>
+				</tr>
 				<tr v-for="user in users.data">
 					<th scope="row">{{ user.id }}</th>
 					<td>
@@ -61,7 +66,13 @@
 				</tr>
 			</tbody>
 		</table>
+
 		<pagination :data="users" @pagination-change-page="getUsers"></pagination>
+
+		<BlockUI v-if="loading">
+		  <div class="m-loader m-loader--brand" style="width: 30px; display: inline-block;">
+		  </div>
+		</BlockUI>
 	</div>
 </template>
 
@@ -73,7 +84,8 @@
 				users: {},
 				perpage: 25,
 				role_id: -1,
-				company_id: -1
+				company_id: -1,
+				loading: false
 			}
 		},
 
@@ -83,6 +95,8 @@
 
 		methods: {
 			getUsers(page = 1) {
+				this.loading = true;
+
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
 				ajax_url += '&role_id=' + this.role_id;
@@ -90,6 +104,8 @@
 
 				axios.get(ajax_url)
 				.then(response => {
+					this.loading = false;
+
 					this.users = response.data;
 				});
 			}

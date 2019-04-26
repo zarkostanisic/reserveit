@@ -28,6 +28,7 @@
     "dependencies": {
         "lang-js": "^2.2.1",
         "lang.js": "^1.1.14",
-        "laravel-vue-pagination": "^2.3.0"
+        "laravel-vue-pagination": "^2.3.0",
+        "vue-blockui": "^1.1.7"
     }
 }
