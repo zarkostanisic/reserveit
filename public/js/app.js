@@ -1754,10 +1754,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Index.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/users/Index.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1769,6 +1769,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Index.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/users/Index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/users/Create.vue");
 //
 //
 //
@@ -1859,20 +1873,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies', 'user_company'],
+  props: ['roles', 'companies'],
+  components: {
+    AdminUsersCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
+      create: false,
       users: {},
       perpage: 25,
       role_id: 0,
       company_id: 0,
-      loading: false
+      loading: false,
+      user_company: this.$gate.user.company_id
     };
   },
   mounted: function mounted() {
     this.getUsers();
-    console.log(this.$gate.isAdmin());
   },
   methods: {
     getUsers: function getUsers() {
@@ -39934,6 +39993,30 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n\tCreate\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Index.vue?vue&type=template&id=0e35b6f0&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/users/Index.vue?vue&type=template&id=0e35b6f0& ***!
@@ -39949,324 +40032,450 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-          _c("label", [
-            _vm._v(
-              "\n\t\t\t\t" +
-                _vm._s(_vm.trans.get("universal.show")) +
-                " \n\n\t\t\t\t"
-            ),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.perpage,
-                    expression: "perpage"
-                  }
-                ],
-                staticClass: "form-control-sm",
-                attrs: { disabled: _vm.loading },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.perpage = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    _vm.getUsers
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-          _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("universal.role")) + "\n\t\t\t\t"),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.role_id,
-                    expression: "role_id"
-                  }
-                ],
-                staticClass: "form-control-sm",
-                attrs: { disabled: _vm.loading },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.role_id = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    _vm.getUsers
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v(
-                    "\n\t\t\t\t\t\t" +
-                      _vm._s(_vm.trans.get("universal.choose")) +
-                      "\n\t\t\t\t\t"
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.roles, function(role) {
-                  return _c("option", { domProps: { value: role.id } }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t" +
-                        _vm._s(_vm.trans.get("universal." + role.name)) +
-                        "\n\t\t\t\t\t"
-                    )
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.$gate.isAdmin()
-          ? _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-              _c("label", [
-                _vm._v(
-                  " " +
-                    _vm._s(_vm.trans.get("companies.singular")) +
-                    "\n\t\t\t\t"
-                ),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.company_id,
-                        expression: "company_id"
-                      }
-                    ],
-                    staticClass: "form-control-sm",
-                    attrs: { disabled: _vm.loading },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.company_id = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        _vm.getUsers
-                      ]
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "0" } }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t" +
-                          _vm._s(_vm.trans.get("universal.choose")) +
-                          "\n\t\t\t\t\t"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.companies, function(company) {
-                      return _c("option", { domProps: { value: company.id } }, [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t" +
-                            _vm._s(company.name) +
-                            "\n\t\t\t\t\t"
-                        )
-                      ])
-                    })
-                  ],
-                  2
-                )
-              ])
+  return _c("div", [
+    _c("div", { staticClass: "m-portlet m-portlet--mobile" }, [
+      _c("div", { staticClass: "m-portlet__head" }, [
+        _c("div", { staticClass: "m-portlet__head-caption" }, [
+          _c("div", { staticClass: "m-portlet__head-title" }, [
+            _c("h3", { staticClass: "m-portlet__head-text" }, [
+              _vm._v(
+                "\n\t\t\t\t\t\t" +
+                  _vm._s(_vm.trans.get("users.list")) +
+                  "\n\t\t\t\t\t"
+              )
             ])
-          : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "m-portlet__head-tools" }, [
+          _c("ul", { staticClass: "m-portlet__nav" }, [
+            _c("li", { staticClass: "m-portlet__nav-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air",
+                  on: {
+                    click: function($event) {
+                      _vm.create = !_vm.create
+                    }
+                  }
+                },
+                [
+                  _c("span", [
+                    _c("i", { staticClass: "la la-plus" }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("users.singular")))
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "m-portlet__nav-item" })
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c(
-        "table",
-        { staticClass: "table table-responsive m-table table-bordered" },
+        "div",
+        { staticClass: "m-portlet__body" },
         [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.id")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.photo")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.full_name")))]),
-              _vm._v(" "),
-              _vm.user_company == 0
-                ? _c("th", [
-                    _vm._v(_vm._s(_vm.trans.get("companies.singular")))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.username")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.status")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.role")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.actions")))])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.users.data, function(user, key) {
-              return _c("tr", [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(_vm._s(user.id))
-                ]),
-                _vm._v(" "),
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.name))]),
-                _vm._v(" "),
-                _vm.user_company == 0
-                  ? _c("td", [_vm._v(_vm._s(user.company))])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.email))]),
-                _vm._v(" "),
-                _c("td", [
-                  user.deleted
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "m-badge m-badge--danger m-badge--wide"
-                        },
-                        [
-                          _vm._v(
-                            "\t\n\t\t\t\t\t\t" +
-                              _vm._s(_vm.trans.get("universal.deleted")) +
-                              "\n\t\t\t\t\t"
-                          )
-                        ]
-                      )
-                    : _c("div", [
+          _vm.create
+            ? _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-sm-12 col-md-4" },
+                  [
+                    _c("admin-users-create", {
+                      attrs: { roles: _vm.roles, companies: _vm.companies }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _c(
+                "div",
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                      _c("label", [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t" +
+                            _vm._s(_vm.trans.get("universal.show")) +
+                            " \n\n\t\t\t\t\t\t\t"
+                        ),
                         _c(
-                          "span",
+                          "select",
                           {
-                            staticClass:
-                              "m-badge m-badge--success m-badge--wide"
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.perpage,
+                                expression: "perpage"
+                              }
+                            ],
+                            staticClass: "form-control-sm",
+                            attrs: { disabled: _vm.loading },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.perpage = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                _vm.getUsers
+                              ]
+                            }
                           },
                           [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t" +
-                                _vm._s(_vm.trans.get("universal.active")) +
-                                "\n\t\t\t\t\t\t"
-                            )
+                            _c("option", { attrs: { value: "10" } }, [
+                              _vm._v("10")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "25" } }, [
+                              _vm._v("25")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "50" } }, [
+                              _vm._v("50")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "100" } }, [
+                              _vm._v("100")
+                            ])
                           ]
                         )
                       ])
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(_vm.trans.get("universal." + user.role)))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  user.id > 1 && _vm.$gate.isAdmin()
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn",
-                          class: {
-                            "btn-danger": !user.deleted,
-                            "btn-success": user.deleted
-                          },
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteUser(user.id, key)
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                      _c("label", [
+                        _vm._v(
+                          _vm._s(_vm.trans.get("universal.role")) +
+                            "\n\t\t\t\t\t\t\t"
+                        ),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.role_id,
+                                expression: "role_id"
+                              }
+                            ],
+                            staticClass: "form-control-sm",
+                            attrs: { disabled: _vm.loading },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.role_id = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                _vm.getUsers
+                              ]
                             }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n\t\t\t\t\t\t" +
-                              _vm._s(
-                                user.deleted
-                                  ? _vm.trans.get("universal.restore")
-                                  : _vm.trans.get("universal.delete")
-                              ) +
-                              "\n\t\t\t\t\t"
-                          )
-                        ]
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\t" +
+                                  _vm._s(_vm.trans.get("universal.choose")) +
+                                  "\n\t\t\t\t\t\t\t\t"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.roles, function(role) {
+                              return _c(
+                                "option",
+                                { domProps: { value: role.id } },
+                                [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t" +
+                                      _vm._s(
+                                        _vm.trans.get("universal." + role.name)
+                                      ) +
+                                      "\n\t\t\t\t\t\t\t\t"
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.$gate.isAdmin()
+                      ? _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                          _c("label", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.trans.get("companies.singular")) +
+                                "\n\t\t\t\t\t\t\t"
+                            ),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.company_id,
+                                    expression: "company_id"
+                                  }
+                                ],
+                                staticClass: "form-control-sm",
+                                attrs: { disabled: _vm.loading },
+                                on: {
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.company_id = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    _vm.getUsers
+                                  ]
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t" +
+                                      _vm._s(
+                                        _vm.trans.get("universal.choose")
+                                      ) +
+                                      "\n\t\t\t\t\t\t\t\t"
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.companies, function(company) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: company.id } },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(company.name) +
+                                          "\n\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ])
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "table",
+                    {
+                      staticClass:
+                        "table table-responsive m-table table-bordered"
+                    },
+                    [
+                      _c("thead", [
+                        _c("tr", [
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.id")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.photo")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.full_name")))
+                          ]),
+                          _vm._v(" "),
+                          _vm.user_company == 0
+                            ? _c("th", [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("companies.singular"))
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.username")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.status")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.role")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm.trans.get("universal.actions")))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.users.data, function(user, key) {
+                          return _c("tr", [
+                            _c("th", { attrs: { scope: "row" } }, [
+                              _vm._v(_vm._s(user.id))
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.name))]),
+                            _vm._v(" "),
+                            _vm.user_company == 0
+                              ? _c("td", [_vm._v(_vm._s(user.company))])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.email))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              user.deleted
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "m-badge m-badge--danger m-badge--wide"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\t\n\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            _vm.trans.get("universal.deleted")
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _c("div", [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "m-badge m-badge--success m-badge--wide"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(
+                                              _vm.trans.get("universal.active")
+                                            ) +
+                                            "\n\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("universal." + user.role))
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              user.id > 1 && _vm.$gate.isAdmin()
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-danger": !user.deleted,
+                                        "btn-success": user.deleted
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteUser(user.id, key)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            user.deleted
+                                              ? _vm.trans.get(
+                                                  "universal.restore"
+                                                )
+                                              : _vm.trans.get(
+                                                  "universal.delete"
+                                                )
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        }),
+                        0
                       )
-                    : _vm._e()
-                ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("pagination", {
+                    attrs: { data: _vm.users },
+                    on: { "pagination-change-page": _vm.getUsers }
+                  })
+                ],
+                1
+              ),
+          _vm._v(" "),
+          _vm.loading
+            ? _c("BlockUI", [
+                _c("div", {
+                  staticClass: "m-loader m-loader--brand",
+                  staticStyle: { width: "30px", display: "inline-block" }
+                })
               ])
-            }),
-            0
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("pagination", {
-        attrs: { data: _vm.users },
-        on: { "pagination-change-page": _vm.getUsers }
-      }),
-      _vm._v(" "),
-      _vm.loading
-        ? _c("BlockUI", [
-            _c("div", {
-              staticClass: "m-loader m-loader--brand",
-              staticStyle: { width: "30px", display: "inline-block" }
-            })
-          ])
-        : _vm._e()
-    ],
-    1
-  )
+            : _vm._e()
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -52450,6 +52659,16 @@ function () {
     value: function isAdmin() {
       return this.user.role.name == 'administrator';
     }
+  }, {
+    key: "isManager",
+    value: function isManager() {
+      return this.user.role.name == 'manager';
+    }
+  }, {
+    key: "isHostess",
+    value: function isHostess() {
+      return this.user.role.name == 'hostess';
+    }
   }]);
 
   return Gate;
@@ -52572,6 +52791,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/users/Create.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/admin/users/Create.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=3f951c64& */ "./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64&");
+/* harmony import */ var _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/users/Create.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=template&id=3f951c64& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/users/Create.vue?vue&type=template&id=3f951c64&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3f951c64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

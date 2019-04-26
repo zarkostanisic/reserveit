@@ -4,7 +4,14 @@ export default class Gate{
 	}
 
 	isAdmin(){
-
 		return this.user.role.name == 'administrator';
+	}
+
+	isManager(){
+		return this.user.role.name == 'manager';
+	}
+
+	isHostess(){
+		return this.user.role.name == 'hostess';
 	}
 }

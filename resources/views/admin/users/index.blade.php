@@ -29,34 +29,7 @@
 <div class="m-content">
 
     <div class="m-section">
-		<div class="m-portlet m-portlet--mobile">
-			<div class="m-portlet__head">
-				<div class="m-portlet__head-caption">
-					<div class="m-portlet__head-title">
-						<h3 class="m-portlet__head-text">
-							{{ trans('users.list') }}
-						</h3>
-					</div>
-				</div>
-				<div class="m-portlet__head-tools">
-					<ul class="m-portlet__nav">
-						<li class="m-portlet__nav-item">
-							<a href="new_user.php" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air">
-								<span>
-									<i class="la la-plus"></i>
-									<span>{{ __('users.singular') }}</span>
-								</span>
-							</a>
-						</li>
-						<li class="m-portlet__nav-item"></li>
-					
-					</ul>
-				</div>
-			</div>
-			<div class="m-portlet__body">
-				<admin-users-index :user_company="'{{ $company }}'" :roles="{{ $roles }}" :companies="{{ $companies }}"></admin-users-index>
-			</div>
-		</div>
+    	<admin-users-index :roles="{{ $roles }}" :companies="{{ $companies }}"></admin-users-index>
 	</div>
 
 </div>					
