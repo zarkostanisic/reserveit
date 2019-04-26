@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Role;
 use App\Company;
+use App\User;
 
 class UsersController extends Controller
 {

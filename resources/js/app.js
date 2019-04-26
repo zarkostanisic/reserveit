@@ -21,6 +21,9 @@ Vue.prototype.trans = new Lang({
   fallback: fallback_locale
 });
 
+import Gate from './Gate'
+Vue.prototype.$gate = new Gate(window.user);
+
 import BlockUI from 'vue-blockui'
  
 Vue.use(BlockUI);

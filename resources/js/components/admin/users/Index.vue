@@ -26,7 +26,7 @@
 				</label>
 			</div>
 
-			<div class="col-sm-12 col-md-4" v-if="user_role == 'administrator'">
+			<div class="col-sm-12 col-md-4" v-if="$gate.isAdmin()">
 				<label> {{ trans.get('companies.singular') }}
 					<select class="form-control-sm" v-model="company_id" @change="getUsers" :disabled="loading">
 						<option value="0">
@@ -54,11 +54,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-if="loading">
-					<td colspan="7">
-						<div class="m-loader" style="width: 30px; display: inline-block;"></div>
-					</td>
-				</tr>
 				<tr v-for="user, key in users.data">
 					<th scope="row">{{ user.id }}</th>
 					<td>
@@ -80,7 +75,7 @@
 					<td>{{ trans.get('universal.' + user.role) }}</td>
 					<td>
 						<button type="button" class="btn" 
-							v-if="user.id > 1"
+							v-if="user.id > 1 && $gate.isAdmin()"
 							v-bind:class="{ 'btn-danger': !user.deleted, 'btn-success': user.deleted}" 
 						 	@click="deleteUser(user.id, key)">
 							{{ user.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
@@ -102,7 +97,7 @@
 <script>
 
 	export default {
-		props: ['roles', 'companies', 'user_role', 'user_company'],
+		props: ['roles', 'companies', 'user_company'],
 		data() {
 			return {
 				users: {},
@@ -115,6 +110,7 @@
 
 		mounted() {
 			this.getUsers();
+			console.log(this.$gate.isAdmin());
 		},
 
 		methods: {

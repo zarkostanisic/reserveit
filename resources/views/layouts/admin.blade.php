@@ -29,6 +29,10 @@
 		    window.fallback_locale = "{{ config('app.fallback_locale') }}";
 		    window.messages = @json($messages);
 
+		    @auth
+		    	window.user = @json(auth()->user());
+		    @endauth
+
 		</script>
 
         <!-- Scripts -->

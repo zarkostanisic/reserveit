@@ -1859,13 +1859,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies', 'user_role', 'user_company'],
+  props: ['roles', 'companies', 'user_company'],
   data: function data() {
     return {
       users: {},
@@ -1877,6 +1872,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getUsers();
+    console.log(this.$gate.isAdmin());
   },
   methods: {
     getUsers: function getUsers() {
@@ -40068,7 +40064,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm.user_role == "administrator"
+        _vm.$gate.isAdmin()
           ? _c("div", { staticClass: "col-sm-12 col-md-4" }, [
               _c("label", [
                 _vm._v(
@@ -40164,97 +40160,93 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            [
-              _vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.users.data, function(user, key) {
-                return _c("tr", [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _vm._v(_vm._s(user.id))
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(1, true),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.name))]),
-                  _vm._v(" "),
-                  _vm.user_company == 0
-                    ? _c("td", [_vm._v(_vm._s(user.company))])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.email))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    user.deleted
-                      ? _c(
+            _vm._l(_vm.users.data, function(user, key) {
+              return _c("tr", [
+                _c("th", { attrs: { scope: "row" } }, [
+                  _vm._v(_vm._s(user.id))
+                ]),
+                _vm._v(" "),
+                _vm._m(0, true),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.name))]),
+                _vm._v(" "),
+                _vm.user_company == 0
+                  ? _c("td", [_vm._v(_vm._s(user.company))])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.email))]),
+                _vm._v(" "),
+                _c("td", [
+                  user.deleted
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "m-badge m-badge--danger m-badge--wide"
+                        },
+                        [
+                          _vm._v(
+                            "\t\n\t\t\t\t\t\t" +
+                              _vm._s(_vm.trans.get("universal.deleted")) +
+                              "\n\t\t\t\t\t"
+                          )
+                        ]
+                      )
+                    : _c("div", [
+                        _c(
                           "span",
                           {
-                            staticClass: "m-badge m-badge--danger m-badge--wide"
+                            staticClass:
+                              "m-badge m-badge--success m-badge--wide"
                           },
                           [
                             _vm._v(
-                              "\t\n\t\t\t\t\t\t" +
-                                _vm._s(_vm.trans.get("universal.deleted")) +
-                                "\n\t\t\t\t\t"
+                              "\n\t\t\t\t\t\t\t" +
+                                _vm._s(_vm.trans.get("universal.active")) +
+                                "\n\t\t\t\t\t\t"
                             )
                           ]
                         )
-                      : _c("div", [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "m-badge m-badge--success m-badge--wide"
-                            },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t" +
-                                  _vm._s(_vm.trans.get("universal.active")) +
-                                  "\n\t\t\t\t\t\t"
-                              )
-                            ]
-                          )
-                        ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm.trans.get("universal." + user.role)))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    user.id > 1
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn",
-                            class: {
-                              "btn-danger": !user.deleted,
-                              "btn-success": user.deleted
-                            },
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteUser(user.id, key)
-                              }
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(_vm.trans.get("universal." + user.role)))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  user.id > 1 && _vm.$gate.isAdmin()
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn",
+                          class: {
+                            "btn-danger": !user.deleted,
+                            "btn-success": user.deleted
+                          },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteUser(user.id, key)
                             }
-                          },
-                          [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t" +
-                                _vm._s(
-                                  user.deleted
-                                    ? _vm.trans.get("universal.restore")
-                                    : _vm.trans.get("universal.delete")
-                                ) +
-                                "\n\t\t\t\t\t"
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ])
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t" +
+                              _vm._s(
+                                user.deleted
+                                  ? _vm.trans.get("universal.restore")
+                                  : _vm.trans.get("universal.delete")
+                              ) +
+                              "\n\t\t\t\t\t"
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
-              })
-            ],
-            2
+              ])
+            }),
+            0
           )
         ]
       ),
@@ -40277,17 +40269,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "7" } }, [
-      _c("div", {
-        staticClass: "m-loader",
-        staticStyle: { width: "30px", display: "inline-block" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -52439,6 +52420,45 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/Gate.js":
+/*!******************************!*\
+  !*** ./resources/js/Gate.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Gate; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Gate =
+/*#__PURE__*/
+function () {
+  function Gate(user) {
+    _classCallCheck(this, Gate);
+
+    this.user = user;
+  }
+
+  _createClass(Gate, [{
+    key: "isAdmin",
+    value: function isAdmin() {
+      return this.user.role.name == 'administrator';
+    }
+  }]);
+
+  return Gate;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -52450,7 +52470,8 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lang.js */ "./node_modules/lang.js/src/lang.js");
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lang_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_blockui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-blockui */ "./node_modules/vue-blockui/index.js");
+/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
+/* harmony import */ var vue_blockui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-blockui */ "./node_modules/vue-blockui/index.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -52469,7 +52490,9 @@ Vue.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
   fallback: fallback_locale
 });
 
-Vue.use(vue_blockui__WEBPACK_IMPORTED_MODULE_1__["default"]);
+Vue.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_1__["default"](window.user);
+
+Vue.use(vue_blockui__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

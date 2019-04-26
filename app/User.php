@@ -59,4 +59,16 @@ class User extends Authenticatable
         if($role_id > 0) $users = $query->where('role_id', $role_id);
         if($company_id > 0) $users = $query->where('company_id', $company_id);
     }
+
+    public function isAdmin(){
+        return $this->role->name == 'administrator';
+    }
+
+    public function isManager(){
+        return $this->role->name == 'manager';
+    }
+
+    public function isHostess(){
+        return $this->role->name == 'hostess';
+    }
 }
