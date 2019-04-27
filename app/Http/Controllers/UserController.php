@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
@@ -25,15 +26,6 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -41,9 +33,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
-        //
+        $user = new User();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        
+        return response([
+            'data' => new UserResource($user)
+        ], Response::HTTP_CREATED);
     }
 
     /**

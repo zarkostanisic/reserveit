@@ -17,7 +17,6 @@ return [
     'administrator' => 'Administrator',
     'manager' => 'Manager', 
     'hostess' => 'Hostess',
-
     'show' => 'Show',
     'confirm' => 'Are you sure?',
     'choose' => 'Choose',
@@ -31,6 +30,10 @@ return [
     'delete' => 'Delete',
     'restore' => 'Restore',
     'deleted' => 'Deleted',
-    'active' => 'Active'
+    'active' => 'Active',
+
+    //not translated
+    'create' => 'Create',
+    'edit' => 'Edit',
 
 ];
