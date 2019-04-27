@@ -13,6 +13,7 @@ return [
 
     'singular' => 'User',
     'plural' => 'Users',
-    'list' => 'List of users'
+    'list' => 'List of users',
+    'permissions' => 'Type of user and access level'
 
 ];

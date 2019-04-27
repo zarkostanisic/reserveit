@@ -35,5 +35,8 @@ return [
     //not translated
     'create' => 'Create',
     'edit' => 'Edit',
+    'email' => 'Email',
+    'name' => 'Name',
+    'password' => 'Password'
 
 ];

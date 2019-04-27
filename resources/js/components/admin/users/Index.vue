@@ -52,7 +52,7 @@
 						</label>
 					</div>
 
-					<div class="col-sm-12 col-md-4" v-if="$gate.isAdmin()">
+					<div class="col-sm-12 col-md-4" v-if="$gate.isAdmin() && role_id != 1">
 						<label> {{ trans.get('companies.singular') }}
 							<select class="custom-select custom-select-sm" v-model="company_id" @change="getUsers" :disabled="loading">
 								<option value="0">
@@ -73,7 +73,7 @@
 							<th>{{ trans.get('universal.photo') }}</th>
 							<th>{{ trans.get('universal.full_name') }}</th>
 							<th v-if="user_company == 0">{{ trans.get('companies.singular') }}</th>
-							<th>{{ trans.get('universal.username') }}</th>
+							<th>{{ trans.get('universal.email') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.role') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>

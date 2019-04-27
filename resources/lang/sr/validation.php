@@ -127,8 +127,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'role_id' => [
+            'required' => 'Pozicija je obavezna.',
         ],
     ],
 

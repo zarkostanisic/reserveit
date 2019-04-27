@@ -41,4 +41,5 @@
 @endsection
 
 @section ('scripts')
+<script src="/assets/demo/demo12/custom/crud/forms/widgets/select2.js" type="text/javascript"></script>
 @endsection

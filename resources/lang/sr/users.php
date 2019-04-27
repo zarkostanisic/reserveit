@@ -13,6 +13,6 @@ return [
 
     'singular' => 'Korisnik',
     'plural' => 'Korisnici',
-    'list' => 'Lista korisnika'
-
+    'list' => 'Lista korisnika',
+    'permissions' => 'Vrsta naloga i nivo pristupa'
 ];

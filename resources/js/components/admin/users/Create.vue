@@ -16,24 +16,33 @@
 						<form class="m-form m-form--fit m-form--label-align-right">
 							<div class="m-form__section m-form__section--first">
 								<div class="form-group m-form__group row">
-									<label for="name" class="col-lg-2 col-form-label">Name</label>
+									<label for="name" class="col-lg-2 col-form-label">{{ trans.get('universal.full_name') }}</label>
 									<div class="col-lg-8">
 										<input v-model="user.name" type="text" class="form-control m-input" placeholder="" id="name">
 										<span v-if="errors.name"class="m-form__help">{{ errors.name[0] }}</span>
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
-									<label for="email" class="col-lg-2 col-form-label">Email</label>
+									<label for="email" class="col-lg-2 col-form-label">{{ trans.get('universal.email') }}</label>
 									<div class="col-lg-8">
 										<input v-model="user.email" type="text" class="form-control m-input" placeholder="" id="email">
 										<span v-if="errors.email"class="m-form__help">{{ errors.email[0] }}</span>
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
-									<label for="password" class="col-lg-2 col-form-label">Password</label>
+									<label for="password" class="col-lg-2 col-form-label">{{ trans.get('universal.password') }}</label>
 									<div class="col-lg-8">
 										<input v-model="user.password" type="text" class="form-control m-input" placeholder="" id="password">
 										<span v-if="errors.password"class="m-form__help">{{ errors.password[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">Objekat</label>
+									<div class="col-lg-6">
+										<select class="form-control m-select2" id="m_select2_1" name="param">
+											<option value="AK">Alaska</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -41,14 +50,14 @@
 							<div class="m-form__seperator m-form__seperator--dashed"></div>
 							<div class="m-form__section m-form__section--last">
 								<div class="m-form__heading">
-									<h3 class="m-form__heading-title">Vrsta naloga i nivo pristupa </h3>
+									<h3 class="m-form__heading-title">{{ trans.get('users.permissions') }}</h3>
 								</div>
 								<div class="m-form__group form-group row">
-									<label class="col-lg-2 col-form-label">Tip korisnika:</label>
+									<label class="col-lg-2 col-form-label">{{ trans.get('universal.role') }}</label>
 									<div class="col-lg-6">
 										<div class="m-radio-list">
 											<label v-for="role in roles" class="m-radio">
-												<input type="radio" v-model="user.role_id" :value="role.id"> {{ role.name }}
+												<input type="radio" v-model="user.role_id" :value="role.id"> {{ trans.get('universal.' + role.name) }}
 												<span></span>
 											</label>
 										</div>

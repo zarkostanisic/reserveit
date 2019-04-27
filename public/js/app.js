@@ -1843,6 +1843,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var User = function User(user) {
   _classCallCheck(this, User);
 
@@ -40202,7 +40211,11 @@ var render = function() {
                                 staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "name" }
                               },
-                              [_vm._v("Name")]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("universal.full_name"))
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-8" }, [
@@ -40255,7 +40268,7 @@ var render = function() {
                                 staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "email" }
                               },
-                              [_vm._v("Email")]
+                              [_vm._v(_vm._s(_vm.trans.get("universal.email")))]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-8" }, [
@@ -40308,7 +40321,11 @@ var render = function() {
                                 staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "password" }
                               },
-                              [_vm._v("Password")]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("universal.password"))
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-8" }, [
@@ -40349,7 +40366,9 @@ var render = function() {
                                 : _vm._e()
                             ])
                           ]
-                        )
+                        ),
+                        _vm._v(" "),
+                        _vm._m(1)
                       ]
                     ),
                     _vm._v(" "),
@@ -40361,7 +40380,11 @@ var render = function() {
                       "div",
                       { staticClass: "m-form__section m-form__section--last" },
                       [
-                        _vm._m(1),
+                        _c("div", { staticClass: "m-form__heading" }, [
+                          _c("h3", { staticClass: "m-form__heading-title" }, [
+                            _vm._v(_vm._s(_vm.trans.get("users.permissions")))
+                          ])
+                        ]),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -40370,7 +40393,7 @@ var render = function() {
                             _c(
                               "label",
                               { staticClass: "col-lg-2 col-form-label" },
-                              [_vm._v("Tip korisnika:")]
+                              [_vm._v(_vm._s(_vm.trans.get("universal.role")))]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-6" }, [
@@ -40411,7 +40434,11 @@ var render = function() {
                                       }),
                                       _vm._v(
                                         " " +
-                                          _vm._s(role.name) +
+                                          _vm._s(
+                                            _vm.trans.get(
+                                              "universal." + role.name
+                                            )
+                                          ) +
                                           "\n\t\t\t\t\t\t\t\t\t\t\t"
                                       ),
                                       _c("span")
@@ -40502,9 +40529,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-form__heading" }, [
-      _c("h3", { staticClass: "m-form__heading-title" }, [
-        _vm._v("Vrsta naloga i nivo pristupa ")
+    return _c("div", { staticClass: "form-group m-form__group row" }, [
+      _c("label", { staticClass: "col-lg-2 col-form-label" }, [
+        _vm._v("Objekat")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6" }, [
+        _c(
+          "select",
+          {
+            staticClass: "form-control m-select2",
+            attrs: { id: "m_select2_1", name: "param" }
+          },
+          [_c("option", { attrs: { value: "AK" } }, [_vm._v("Alaska")])]
+        )
       ])
     ])
   }
@@ -40702,7 +40740,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.$gate.isAdmin()
+              _vm.$gate.isAdmin() && _vm.role_id != 1
                 ? _c("div", { staticClass: "col-sm-12 col-md-4" }, [
                     _c("label", [
                       _vm._v(
@@ -40795,7 +40833,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _c("th", [
-                      _vm._v(_vm._s(_vm.trans.get("universal.username")))
+                      _vm._v(_vm._s(_vm.trans.get("universal.email")))
                     ]),
                     _vm._v(" "),
                     _c("th", [
