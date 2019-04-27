@@ -48,12 +48,9 @@
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Page Vendors Styles -->
-		<link href="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-
+		@yield ('styles')
 		<!--end::Page Vendors Styles -->
 		<link rel="shortcut icon" href="/assets/demo/demo12/media/img/logo/favicon.ico" />
-
-		@yield ('styles')
 	</head>
 
 	<!-- end::Head -->

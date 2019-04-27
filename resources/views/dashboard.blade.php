@@ -152,6 +152,10 @@
 </div>
 @endsection
 
+@section ('styles')
+<link href="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+@endsection
+
 @section ('scripts')
 <script src="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
 
