@@ -1842,6 +1842,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
 var User = function User(user) {
   _classCallCheck(this, User);
 
@@ -1849,7 +1850,7 @@ var User = function User(user) {
   this.email = user.email || '';
   this.password = user.password || '';
   this.password_confirmation = user.password_confirmation || '';
-  this.role_id = user.role_id || 0;
+  this.role_id = user.role_id || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1880,8 +1881,6 @@ var User = function User(user) {
     createUser: function createUser() {
       var _this2 = this;
 
-      // console.log(user);
-      // return;
       axios.post('/api/users', this.user).then(function (response) {
         _this2.$parent.$emit('user_created', response.data.data);
 
@@ -40420,7 +40419,13 @@ var render = function() {
                                   )
                                 }),
                                 0
-                              )
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.role_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.role_id[0]))
+                                  ])
+                                : _vm._e()
                             ])
                           ]
                         )

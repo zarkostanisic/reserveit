@@ -52,6 +52,7 @@
 												<span></span>
 											</label>
 										</div>
+										<span v-if="errors.role_id"class="m-form__help">{{ errors.role_id[0] }}</span>
 									</div>
 								</div>
 							</div>
@@ -82,7 +83,7 @@
 			this.email = user.email || '';
 			this.password = user.password || '';
 			this.password_confirmation = user.password_confirmation || '';
-			this.role_id = user.role_id || 0;
+			this.role_id = user.role_id || '';
 		}
 	}
 
@@ -110,8 +111,6 @@
 		},
 		methods: {
 			createUser(){
-				// console.log(user);
-				// return;
 				axios.post('/api/users', this.user)
 				.then(response => {
 					this.$parent.$emit('user_created', response.data.data);
