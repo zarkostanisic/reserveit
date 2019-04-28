@@ -37,7 +37,7 @@
 									</div>
 								</div>
 
-								<div class="form-group m-form__group row" v-show="$gate.isAdmin() && user.role_id != 1" :disabled="$gate.isAdmin() && user.role_id != 1">
+								<div class="form-group m-form__group row" v-show="$gate.isAdmin() && user.role_id != 1">
 									<label class="col-lg-2 col-form-label">
 										{{ trans.get('companies.singular') }}
 									</label>
@@ -117,7 +117,8 @@
 			return {
 				user: {},
 				errors: {},
-				editing: false
+				editing: false,
+				user_company: this.$gate.user.company_id
 			}
 		},
 		mounted(){
@@ -141,6 +142,10 @@
 		},
 		methods: {
 			createUser(){
+				if(this.user_company > 0){
+					this.user.company_id = this.user_company;
+				}
+
 				axios.post('/api/users', this.user)
 				.then(response => {
 					this.$parent.$emit('user_created', response.data.data);

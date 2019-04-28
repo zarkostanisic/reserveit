@@ -86,7 +86,9 @@
 								<img src="photo/male.png" width="80" height="80">
 							</td>
 							<td>{{ user.name }}</td>
-							<td v-if="user_company == 0">{{ user.company }}</td>
+							<td v-if="user_company == 0">
+								{{ user.role_id == 1 ? '-' : user.company }}
+							</td>
 							<td>{{ user.email }}</td>
 							<td>
 								<span v-if="user.deleted" class="m-badge m-badge--danger m-badge--wide">	
@@ -101,7 +103,12 @@
 							<td>{{ trans.get('universal.' + user.role) }}</td>
 							<td>
 
-								<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#m_modal_create_user" @click="editUser(user)">
+								<button v-if="user.id > 1"
+									type="button" 
+									class="btn btn-outline-info" 
+									data-toggle="modal" 
+									data-target="#m_modal_create_user"
+									@click="editUser(user)">
 									{{ trans.get('universal.edit') }}
 								</button>
 
@@ -148,7 +155,6 @@
 				user_company: this.$gate.user.company_id
 			}
 		},
-
 		mounted() {
 			this.getUsers();
 
@@ -167,6 +173,7 @@
 		methods: {
 			getUsers(page = 1) {
 				this.loading = true;
+				if(this.role_id == 1) this.company_id = 0;
 
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;

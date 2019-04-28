@@ -4,6 +4,7 @@ use App\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\Role;
+use App\Company;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
         'role_id' => function(){
     		return Role::all()->random();
-    	}
+    	},
+        'company_id' => function(array $user){
+            return $user['role_id'] > 1 ? Company::all()->random() : 0;
+        }
     ];
 });

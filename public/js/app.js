@@ -1883,7 +1883,8 @@ var User = function User(user) {
     return {
       user: {},
       errors: {},
-      editing: false
+      editing: false,
+      user_company: this.$gate.user.company_id
     };
   },
   mounted: function mounted() {
@@ -1908,6 +1909,10 @@ var User = function User(user) {
   methods: {
     createUser: function createUser() {
       var _this2 = this;
+
+      if (this.user_company > 0) {
+        this.user.company_id = this.user_company;
+      }
 
       axios.post('/api/users', this.user).then(function (response) {
         _this2.$parent.$emit('user_created', response.data.data);
@@ -1943,6 +1948,13 @@ var User = function User(user) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/users/Create.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2112,6 +2124,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
+      if (this.role_id == 1) this.company_id = 0;
       var ajax_url = '/api/users?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
       ajax_url += '&role_id=' + this.role_id;
@@ -22750,11 +22763,7 @@ var render = function() {
                                   "$gate.isAdmin() && user.role_id != 1"
                               }
                             ],
-                            staticClass: "form-group m-form__group row",
-                            attrs: {
-                              disabled:
-                                _vm.$gate.isAdmin() && _vm.user.role_id != 1
-                            }
+                            staticClass: "form-group m-form__group row"
                           },
                           [
                             _c(
@@ -23318,7 +23327,13 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(user.name))]),
                       _vm._v(" "),
                       _vm.user_company == 0
-                        ? _c("td", [_vm._v(_vm._s(user.company))])
+                        ? _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t" +
+                                _vm._s(user.role_id == 1 ? "-" : user.company) +
+                                "\n\t\t\t\t\t\t"
+                            )
+                          ])
                         : _vm._e(),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
@@ -23364,29 +23379,31 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-outline-info",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#m_modal_create_user"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.editUser(user)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t" +
-                                _vm._s(_vm.trans.get("universal.edit")) +
-                                "\n\t\t\t\t\t\t\t"
+                        user.id > 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-info",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "modal",
+                                  "data-target": "#m_modal_create_user"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editUser(user)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.edit")) +
+                                    "\n\t\t\t\t\t\t\t"
+                                )
+                              ]
                             )
-                          ]
-                        ),
+                          : _vm._e(),
                         _vm._v(" "),
                         user.id > 1 && _vm.$gate.isAdmin()
                           ? _c(

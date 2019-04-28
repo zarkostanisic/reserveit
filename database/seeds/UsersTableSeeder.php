@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
 	        'email_verified_at' => now(),
 	        'password' => bcrypt('administrator'),
 	        'remember_token' => Str::random(10),
-	        'role_id' => 1
+	        'role_id' => 1,
+            'company_id' => 0
     	]);
 
     	User::create([
@@ -27,7 +28,8 @@ class UsersTableSeeder extends Seeder
 	        'email_verified_at' => now(),
 	        'password' => bcrypt('manager'),
 	        'remember_token' => Str::random(10),
-	        'role_id' => 2
+	        'role_id' => 2,
+            'company_id' => 1
     	]);
 
     	User::create([
@@ -36,7 +38,8 @@ class UsersTableSeeder extends Seeder
 	        'email_verified_at' => now(),
 	        'password' => bcrypt('hostess'),
 	        'remember_token' => Str::random(10),
-	        'role_id' => 3
+	        'role_id' => 3,
+            'company_id' => 2
     	]);
 
         factory(User::class, 100)->create();

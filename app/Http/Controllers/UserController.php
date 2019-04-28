@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
     {
         $perpage = request()->query('perpage') ?? 10;
         $role_id = request()->query('role_id') ?? 0;
-        $company_id = request()->query('company_id') && $role_id > 1 ? request()->query('company_id') : 0;
+        $company_id = request()->query('company_id') ?? 0;
 
         $users = User::withTrashed()->filter($role_id, $company_id)->paginate($perpage);
 
@@ -78,7 +79,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserEditRequest $request, User $user)
     {
         $user->name = $request->name;
         $user->email = $request->email;
