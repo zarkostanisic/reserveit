@@ -45,6 +45,12 @@
 
 		<link href="/assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />
 
+		<style type="text/css">
+			.select2-container{
+				width: 100%!important;
+			}
+		</style>
+
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Page Vendors Styles -->

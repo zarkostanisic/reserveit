@@ -48,6 +48,26 @@ Vue.component('pagination', require('laravel-vue-pagination'));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+Vue.directive('select2', {
+  twoWay: true,
+  bind: function (el, binding, vnode) {
+    $(el).select2().on("select2:select", (e) => {
+      el.dispatchEvent(new Event('change', { target: e.target }));
+    });
+  },
+});
+
+Vue.directive('datepicker', {
+  twoWay: true,
+  bind: function (el, binding, vnode) {
+    $(el).datepicker().on("changeDate", (e) => {
+      el.dispatchEvent(new Event('input', { target: e.target }));
+    });
+  },
+});
+
 const app = new Vue({
     el: '#app'
 });
+

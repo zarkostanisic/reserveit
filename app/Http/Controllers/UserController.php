@@ -41,6 +41,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->role_id = $request->role_id;
+        $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
         $user->save();
         
         return response([

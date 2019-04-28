@@ -8,11 +8,12 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+    // window.Popper = require('popper.js').default;
+    // window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    // require('bootstrap');
 } catch (e) {}
+$.fn.modal.Constructor.prototype._enforceFocus = function() {};
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

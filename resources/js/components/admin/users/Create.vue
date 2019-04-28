@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--begin::Modal-->
-		<div class="modal fade" id="m_modal_create_user" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal fade" id="m_modal_create_user" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -37,11 +37,18 @@
 									</div>
 								</div>
 
-								<div class="form-group m-form__group row">
+								<div class="form-group m-form__group row" v-show="$gate.isAdmin() && user.role_id != 1" :disabled="$gate.isAdmin() && user.role_id != 1">
 									<label class="col-lg-2 col-form-label">Objekat</label>
-									<div class="col-lg-6">
-										<select class="form-control m-select2" id="m_select2_1" name="param">
-											<option value="AK">Alaska</option>
+									<div class="col-lg-8">
+										<select class="form-control m-select2" id="m_select2_1" 
+										v-model="user.company_id" 
+										v-select2='user.company_id'
+										placeholder="test">
+											<option v-for="company in companies" 
+											:value="company.id"
+											>
+												{{ company.name }}
+											</option>
 										</select>
 									</div>
 								</div>
@@ -93,11 +100,12 @@
 			this.password = user.password || '';
 			this.password_confirmation = user.password_confirmation || '';
 			this.role_id = user.role_id || '';
+			this.company_id = user.company_id || 0;
 		}
 	}
 
 	export default{
-		props: ['roles'],
+		props: ['roles', 'companies'],
 		data(){
 			return {
 				user: {},
@@ -117,6 +125,10 @@
 				this.user = new User(user);
 				this.errors = {};
 			});
+
+			$("#m_select2_1, #m_select2_1_validate").select2({
+	            placeholder: this.trans.get('universal.choose')
+	        })
 		},
 		methods: {
 			createUser(){
@@ -125,7 +137,7 @@
 					this.$parent.$emit('user_created', response.data.data);
 
 					$('#m_modal_create_user').modal('hide');
-					$('.modal-backdrop').remove();
+					
 				}).catch(error => {
 					this.errors = error.response.data.errors;
 				});
