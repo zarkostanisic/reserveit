@@ -31,6 +31,7 @@
 
 		    @auth
 		    	window.user = @json(auth()->user());
+		    	window.apiToken = "{{ auth()->user()->api_token ?? null }}";
 		    @endauth
 
 		</script>
@@ -46,7 +47,7 @@
 		<link href="/assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />
 
 		<style type="text/css">
-			.select2-container{
+			.select2.select2-container{
 				width: 100%!important;
 			}
 		</style>

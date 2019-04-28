@@ -23,8 +23,11 @@ $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 
 window.axios = require('axios');
 
+const apiToken = window.apiToken;
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['X-Localization'] = default_locale;
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

@@ -10,6 +10,9 @@ use App\User;
 
 class UsersController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'roles:administrator|manager']);
+    }
     /**
      * Display a listing of the resource.
      *

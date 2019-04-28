@@ -11,11 +11,15 @@ use App\Http\Requests\UserEditRequest;
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth:api', 'roles:administrator|manager,api']);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $perpage = request()->query('perpage') ?? 10;
