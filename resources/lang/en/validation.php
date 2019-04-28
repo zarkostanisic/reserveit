@@ -131,6 +131,10 @@ return [
         'role_id' => [
            'required' => 'The role is required.',
         ],
+        'company_id' => [
+           'required' => 'The company is required.',
+           'required_if' => 'The company is required.',
+        ],
     ],
 
     /*

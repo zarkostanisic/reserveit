@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $perpage = request()->query('perpage') ?? 10;
         $role_id = request()->query('role_id') ?? 0;
-        $company_id = request()->query('company_id') ?? 0;
+        $company_id = request()->query('company_id') && $role_id > 1 ? request()->query('company_id') : 0;
 
         $users = User::withTrashed()->filter($role_id, $company_id)->paginate($perpage);
 
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        
     }
 
     /**
@@ -80,7 +80,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if(!empty($request->password)){
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->role_id = $request->role_id;
+        $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
+        $user->save();
+        
+        return response([
+            'data' => new UserResource($user->fresh())
+        ], Response::HTTP_CREATED);
     }
 
     /**

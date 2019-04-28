@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role_id' => $this->role->id,
             'role' => $this->role->name ?? '',
+            'company_id' => $this->company_id,
             'company' => $this->company->name ?? '',
             'deleted' => $this->trashed()
         ];

@@ -130,6 +130,10 @@ return [
         'role_id' => [
             'required' => 'Pozicija je obavezna.',
         ],
+        'company_id' => [
+            'required' => 'Kompanija je obavezna.',
+            'required_if' => 'Kompanija je obavezna.',
+        ],
     ],
 
     /*

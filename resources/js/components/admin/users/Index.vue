@@ -155,6 +155,14 @@
 			this.$on('user_created', (user) => {
 				this.users.data.unshift(user);
 			});
+
+			this.$on('user_updated', (user) => {
+				let userIndex = this.users.data.findIndex(u => {
+					return user.id == u.id;
+				});
+
+				this.users.data.splice(userIndex, 1, user);
+			});
 		},
 		methods: {
 			getUsers(page = 1) {

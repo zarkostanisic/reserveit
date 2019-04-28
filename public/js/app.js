@@ -1859,15 +1859,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var User = function User(user) {
   _classCallCheck(this, User);
 
+  this.id = user.id || '';
   this.name = user.name || '';
   this.email = user.email || '';
   this.password = user.password || '';
   this.password_confirmation = user.password_confirmation || '';
   this.role_id = user.role_id || '';
-  this.company_id = user.company_id || 0;
+  this.company_id = user.company_id || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1892,8 +1899,9 @@ var User = function User(user) {
       _this.editing = true;
       _this.user = new User(user);
       _this.errors = {};
+      $('#company_id').val(_this.user.company_id).trigger('change');
     });
-    $("#m_select2_1, #m_select2_1_validate").select2({
+    $("#company_id").select2({
       placeholder: this.trans.get('universal.choose')
     });
   },
@@ -1910,7 +1918,15 @@ var User = function User(user) {
       });
     },
     editUser: function editUser() {
-      alert('edit');
+      var _this3 = this;
+
+      axios.put('/api/users/' + this.user.id, this.user).then(function (response) {
+        _this3.$parent.$emit('user_updated', response.data.data);
+
+        $('#m_modal_create_user').modal('hide');
+      })["catch"](function (error) {
+        _this3.errors = error.response.data.errors;
+      });
     }
   }
 });
@@ -2081,6 +2097,13 @@ __webpack_require__.r(__webpack_exports__);
     this.getUsers();
     this.$on('user_created', function (user) {
       _this.users.data.unshift(user);
+    });
+    this.$on('user_updated', function (user) {
+      var userIndex = _this.users.data.findIndex(function (u) {
+        return user.id == u.id;
+      });
+
+      _this.users.data.splice(userIndex, 1, user);
     });
   },
   methods: {
@@ -22737,7 +22760,15 @@ var render = function() {
                             _c(
                               "label",
                               { staticClass: "col-lg-2 col-form-label" },
-                              [_vm._v("Objekat")]
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(
+                                      _vm.trans.get("companies.singular")
+                                    ) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-8" }, [
@@ -22760,7 +22791,7 @@ var render = function() {
                                   ],
                                   staticClass: "form-control m-select2",
                                   attrs: {
-                                    id: "m_select2_1",
+                                    id: "company_id",
                                     placeholder: "test"
                                   },
                                   on: {
@@ -22800,7 +22831,13 @@ var render = function() {
                                   )
                                 }),
                                 0
-                              )
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.company_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.company_id[0]))
+                                  ])
+                                : _vm._e()
                             ])
                           ]
                         )
@@ -22828,7 +22865,13 @@ var render = function() {
                             _c(
                               "label",
                               { staticClass: "col-lg-2 col-form-label" },
-                              [_vm._v(_vm._s(_vm.trans.get("universal.role")))]
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.role")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-6" }, [

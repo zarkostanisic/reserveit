@@ -38,9 +38,11 @@
 								</div>
 
 								<div class="form-group m-form__group row" v-show="$gate.isAdmin() && user.role_id != 1" :disabled="$gate.isAdmin() && user.role_id != 1">
-									<label class="col-lg-2 col-form-label">Objekat</label>
+									<label class="col-lg-2 col-form-label">
+										{{ trans.get('companies.singular') }}
+									</label>
 									<div class="col-lg-8">
-										<select class="form-control m-select2" id="m_select2_1" 
+										<select class="form-control m-select2" id="company_id" 
 										v-model="user.company_id" 
 										v-select2='user.company_id'
 										placeholder="test">
@@ -50,6 +52,8 @@
 												{{ company.name }}
 											</option>
 										</select>
+
+										<span v-if="errors.company_id"class="m-form__help">{{ errors.company_id[0] }}</span>
 									</div>
 								</div>
 							</div>
@@ -60,7 +64,9 @@
 									<h3 class="m-form__heading-title">{{ trans.get('users.permissions') }}</h3>
 								</div>
 								<div class="m-form__group form-group row">
-									<label class="col-lg-2 col-form-label">{{ trans.get('universal.role') }}</label>
+									<label class="col-lg-2 col-form-label">
+										{{ trans.get('universal.role') }}
+									</label>
 									<div class="col-lg-6">
 										<div class="m-radio-list">
 											<label v-for="role in roles" class="m-radio">
@@ -95,12 +101,13 @@
 <script>
 	class User{
 		constructor(user){
+			this.id = user.id || '';
 			this.name = user.name || '';
 			this.email = user.email || '';
 			this.password = user.password || '';
 			this.password_confirmation = user.password_confirmation || '';
 			this.role_id = user.role_id || '';
-			this.company_id = user.company_id || 0;
+			this.company_id = user.company_id || '';
 		}
 	}
 
@@ -124,9 +131,11 @@
 				this.editing = true;
 				this.user = new User(user);
 				this.errors = {};
+
+				$('#company_id').val(this.user.company_id).trigger('change');
 			});
 
-			$("#m_select2_1, #m_select2_1_validate").select2({
+			$("#company_id").select2({
 	            placeholder: this.trans.get('universal.choose')
 	        })
 		},
@@ -143,7 +152,15 @@
 				});
 			},
 			editUser(){
-				alert('edit');
+				axios.put('/api/users/' + this.user.id, this.user)
+				.then(response => {
+					this.$parent.$emit('user_updated', response.data.data);
+
+					$('#m_modal_create_user').modal('hide');
+					
+				}).catch(error => {
+					this.errors = error.response.data.errors;
+				});
 			}
 		}
 	}
