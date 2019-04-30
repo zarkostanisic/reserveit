@@ -44,7 +44,8 @@
 
 							<input type="text" 
 								class="form-control form-control-sm" v-bind:value="name" 
-								@input="name = $event.target.value; searchByName()"
+								@input="name = $event.target.value"
+								@keyup="searchByName()"
 								>
 						</label>
 					</div>

@@ -2043,6 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -26042,7 +26043,9 @@ var render = function() {
                     on: {
                       input: function($event) {
                         _vm.name = $event.target.value
-                        _vm.searchByName()
+                      },
+                      keyup: function($event) {
+                        return _vm.searchByName()
                       }
                     }
                   })

@@ -10,6 +10,6 @@ class Company extends Model
     use SoftDeletes;
 
     public function scopeFilter($query, $name){
-    	if($name != '') $query->where('name', 'like', '%' . $name . '%');
+    	if($name != '') $query->where('name', 'like', $name . '%');
     }
 }
