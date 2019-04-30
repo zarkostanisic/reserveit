@@ -12,6 +12,7 @@ return [
     */
     
     'singular' => 'Kompanija',
-    'plural' => 'Kompanije'
+    'plural' => 'Kompanije',
+    'list' => 'Lista korisnika'
 
 ];

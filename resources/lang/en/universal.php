@@ -31,8 +31,6 @@ return [
     'restore' => 'Restore',
     'deleted' => 'Deleted',
     'active' => 'Active',
-
-    //not translated
     'create' => 'Create',
     'edit' => 'Edit',
     'email' => 'Email',

@@ -31,6 +31,12 @@ return [
     'delete' => 'Ukloni',
     'restore' => 'Vrati',
     'deleted' => 'Izbrisan',
-    'active' => 'Aktivan'
+    'active' => 'Aktivan',
+    'create' => 'Kreiraj',
+    'edit' => 'Uredi',
+    'email' => 'Email',
+    'name' => 'Naziv',
+    'password' => 'Lozinka',
+    'success' => 'Uspešno!'
 
 ];

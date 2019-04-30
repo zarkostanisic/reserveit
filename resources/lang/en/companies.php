@@ -13,7 +13,5 @@ return [
     
     'singular' => 'Company',
     'plural' => 'Companies',
-
-    // not translated
     'list' => 'List of companies'
 ];
