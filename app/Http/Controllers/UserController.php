@@ -66,17 +66,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -98,7 +87,7 @@ class UserController extends Controller
         
         return response([
             'data' => new UserResource($user->fresh())
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_ACCEPTED);
     }
 
     /**

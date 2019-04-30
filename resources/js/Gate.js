@@ -14,4 +14,8 @@ export default class Gate{
 	isHostess(){
 		return this.user.role.name == 'hostess';
 	}
+
+	getCompanyId(){
+		return this.user.company_id;
+	}
 }

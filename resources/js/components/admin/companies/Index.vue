@@ -27,8 +27,8 @@
 
 			<div class="m-portlet__body">
 				<div class="row">
-					<div class="col-sm-12 col-md-4">
-						<label>
+					<div class="col-sm-12 col-md-12">
+						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
 							<select class="custom-select custom-select-sm" v-model="perpage" @change="getCompanies" :disabled="loading">
@@ -89,7 +89,7 @@
 					</tbody>
 				</table>
 
-				<pagination :limit="3" :data="companies.data" @pagination-change-page="getCompanies" align="right"></pagination>
+				<pagination :limit="3" :data="companies" @pagination-change-page="getCompanies" align="right"></pagination>
 			</div>
 
 			<BlockUI v-if="loading">
@@ -97,18 +97,18 @@
 			  </div>
 			</BlockUI>
 
-			<!-- <admin-companies-create :roles="roles" :companies="companies"></admin-companies-create> -->
+			<admin-companies-create></admin-companies-create>
 		</div>
 	</div>
 </template>
 
 <script>
-	// import AdminCompaniesCreate from './Create'	
+	import AdminCompaniesCreate from './Create'	
 
 	export default {
-		// components: {
-		//     AdminCompaniesCreate
-		// },
+		components: {
+		    AdminCompaniesCreate
+		},
 		data() {
 			return {
 				companies: {},
@@ -119,7 +119,7 @@
 		mounted() {
 			this.getCompanies();
 
-			this.$on('companies_created', (company) => {
+			this.$on('company_created', (company) => {
 				this.companies.data.unshift(company);
 			});
 

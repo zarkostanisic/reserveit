@@ -27,8 +27,8 @@
 
 			<div class="m-portlet__body">
 				<div class="row">
-					<div class="col-sm-12 col-md-4">
-						<label>
+					<div class="col-sm-12 col-md-12">
+						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
 							<select class="custom-select custom-select-sm" v-model="perpage" @change="getUsers" :disabled="loading">
@@ -38,9 +38,8 @@
 								<option value="100">100</option>
 							</select>
 						</label>
-					</div>
-					<div class="col-sm-12 col-md-4">
-						<label>{{ trans.get('universal.role') }}
+
+						<label class="col-sm-12 col-md-2">{{ trans.get('universal.role') }}
 							<select class="custom-select custom-select-sm" v-model="role_id" @change="getUsers" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
@@ -50,10 +49,10 @@
 								</option>
 							</select>
 						</label>
-					</div>
 
-					<div class="col-sm-12 col-md-4" v-if="$gate.isAdmin() && role_id != 1">
-						<label> {{ trans.get('companies.singular') }}
+						<label class="col-sm-12 col-md-2"
+							v-if="$gate.isAdmin() && role_id != 1"
+							> {{ trans.get('companies.singular') }}
 							<select class="custom-select custom-select-sm" v-model="company_id" @change="getUsers" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
@@ -72,7 +71,7 @@
 							<th>{{ trans.get('universal.id') }}</th>
 							<th>{{ trans.get('universal.photo') }}</th>
 							<th>{{ trans.get('universal.full_name') }}</th>
-							<th v-if="user_company == 0">{{ trans.get('companies.singular') }}</th>
+							<th v-if="user_company_id == 0">{{ trans.get('companies.singular') }}</th>
 							<th>{{ trans.get('universal.email') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.role') }}</th>
@@ -86,7 +85,7 @@
 								<img src="photo/male.png" width="80" height="80">
 							</td>
 							<td>{{ user.name }}</td>
-							<td v-if="user_company == 0">
+							<td v-if="user_company_id == 0">
 								{{ user.role_id == 1 ? '-' : user.company }}
 							</td>
 							<td>{{ user.email }}</td>
@@ -150,7 +149,7 @@
 				role_id: 0,
 				company_id: 0,
 				loading: false,
-				user_company: this.$gate.user.company_id
+				user_company_id: this.$gate.getCompanyId()
 			}
 		},
 		mounted() {
@@ -171,12 +170,13 @@
 		methods: {
 			getUsers(page = 1) {
 				this.loading = true;
+				if(this.user_company_id > 0) this.company_id = this.user_company_id;
 				if(this.role_id == 1) this.company_id = 0;
 
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
 				ajax_url += '&role_id=' + this.role_id;
-				ajax_url += '&company_id=' + (this.user_company > 0 ? this.user_company : this.company_id);
+				ajax_url += '&company_id=' + this.company_id;
 
 				axios.get(ajax_url)
 				.then(response => {
@@ -188,7 +188,7 @@
 			},
 
 			createUser(){
-				this.$emit('create_user');
+				this.$emit('create_user', this.role_id, this.company_id);
 			},
 
 			editUser(user){

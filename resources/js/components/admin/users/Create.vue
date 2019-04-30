@@ -118,14 +118,19 @@
 				user: {},
 				errors: {},
 				editing: false,
-				user_company: this.$gate.user.company_id
+				user_company_id: this.$gate.getCompanyId()
 			}
 		},
 		mounted(){
-			this.$parent.$on('create_user', () => {
+			this.$parent.$on('create_user', (role_id, company_id) => {
 				this.editing = false;
 				this.user = new User({});
 				this.errors = {};
+
+				// set role and company from search values
+				// this.user.role_id = role_id;
+				// this.user.company_id = company_id;
+				// this.changeCompanyId(this.user.company_id);
 			});
 
 			this.$parent.$on('edit_user', ({user}) => {
@@ -133,24 +138,24 @@
 				this.user = new User(user);
 				this.errors = {};
 
-				$('#company_id').val(this.user.company_id).trigger('change');
+				this.changeCompanyId(this.user.company_id);
 			});
 
 			$("#company_id").select2({
 	            placeholder: this.trans.get('universal.choose')
-	        })
+	        });
 		},
 		methods: {
 			createUser(){
-				if(this.user_company > 0){
-					this.user.company_id = this.user_company;
+				if(this.user_company_id > 0){
+					this.user.company_id = this.user_company_id;
 				}
 
 				axios.post('/api/users', this.user)
 				.then(response => {
 					this.$parent.$emit('user_created', response.data.data);
 
-					$('#m_modal_create_user').modal('hide');
+					this.modalHide();
 					
 				}).catch(error => {
 					this.errors = error.response.data.errors;
@@ -161,11 +166,17 @@
 				.then(response => {
 					this.$parent.$emit('user_updated', response.data.data);
 
-					$('#m_modal_create_user').modal('hide');
+					this.modalHide();
 					
 				}).catch(error => {
 					this.errors = error.response.data.errors;
 				});
+			},
+			changeCompanyId(val){
+				$('#company_id').val(val).trigger('change');
+			},
+			modalHide(){
+				$('#m_modal_create_user').modal('hide');
 			}
 		}
 	}

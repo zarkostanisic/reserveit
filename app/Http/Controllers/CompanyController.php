@@ -6,6 +6,7 @@ use App\Company;
 use Illuminate\Http\Request;
 use App\Http\Resources\CompanyResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\CompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -24,24 +25,21 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
-        //
+        $company = new Company();
+
+        $company->name = $request->name;
+        $company->save();
+        
+        return response([
+            'data' => new CompanyResource($company)
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -56,17 +54,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Company $company)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -75,7 +62,12 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $company->name = $request->name;
+        $company->save();
+        
+        return response([
+            'data' => new CompanyResource($company->fresh())
+        ], Response::HTTP_ACCEPTED);
     }
 
     /**
