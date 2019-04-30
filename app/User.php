@@ -56,8 +56,8 @@ class User extends Authenticatable
 
     public function scopeFilter($query, $role_id, $company_id)
     {
-        if($role_id > 0) $users = $query->where('role_id', $role_id);
-        if($company_id > 0) $users = $query->where('company_id', $company_id);
+        if($role_id > 0) $query->where('role_id', $role_id);
+        if($company_id > 0) $query->where('company_id', $company_id);
     }
 
     public function isAdmin(){

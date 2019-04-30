@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Company extends Model
 {
     use SoftDeletes;
+
+    public function scopeFilter($query, $name){
+    	if($name != '') $query->where('name', 'like', '%' . $name . '%');
+    }
 }

@@ -2028,7 +2028,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
+var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     AdminCompaniesCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2037,7 +2044,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       companies: {},
       perpage: 25,
-      loading: false
+      loading: false,
+      name: ''
     };
   },
   mounted: function mounted() {
@@ -2066,6 +2074,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       var ajax_url = '/api/companies?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
+      if (this.name != '') ajax_url += '&name=' + this.name;
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
         _this2.loading = false;
@@ -2094,6 +2103,14 @@ __webpack_require__.r(__webpack_exports__);
           window.noty(_this3.trans.get('universal.success'), 'success');
         });
       }
+    },
+    searchByName: function searchByName() {
+      var _this4 = this;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        _this4.getCompanies();
+      }, 500);
     }
   }
 });
@@ -25992,6 +26009,35 @@ var render = function() {
                       _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
                     ]
                   )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "col-sm-12 col-md-1" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.name")) +
+                      " \n\n\t\t\t\t\t\t"
+                  ),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.name },
+                    on: {
+                      keyup: _vm.searchByName,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      }
+                    }
+                  })
                 ])
               ])
             ]),
@@ -39666,7 +39712,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/admin/companies/Index.vue?vue&type=template&id=261ae083& ***!
   \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

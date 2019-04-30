@@ -38,6 +38,12 @@
 								<option value="100">100</option>
 							</select>
 						</label>
+
+						<label class="col-sm-12 col-md-1">
+							{{ trans.get('universal.name') }} 
+
+							<input type="text" v-model="name" @keyup="searchByName">
+						</label>
 					</div>
 				</div>
 				<table class="table table-responsive m-table table-bordered">
@@ -104,6 +110,7 @@
 
 <script>
 	import AdminCompaniesCreate from './Create'	
+	let timeout = null;
 
 	export default {
 		components: {
@@ -114,6 +121,7 @@
 				companies: {},
 				perpage: 25,
 				loading: false,
+				name: ''
 			}
 		},
 		mounted() {
@@ -140,6 +148,7 @@
 
 				var ajax_url = '/api/companies?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
+				if(this.name != '') ajax_url += '&name=' + this.name;
 
 				axios.get(ajax_url)
 				.then(response => {
@@ -173,6 +182,13 @@
 						window.noty(this.trans.get('universal.success'), 'success');
 					});
 				}
+			},
+			searchByName(){
+				clearTimeout(timeout);
+
+				timeout = setTimeout(() => {
+					this.getCompanies();
+				}, 500);
 			}
 		}
 

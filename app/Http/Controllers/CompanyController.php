@@ -21,8 +21,9 @@ class CompanyController extends Controller
     public function index()
     {
         $perpage = request()->query('perpage') ?? 10;
+        $name = request()->query('name') ?? '';
 
-        $companies = Company::withTrashed()->paginate($perpage);
+        $companies = Company::withTrashed()->filter($name)->paginate($perpage);
 
         return CompanyResource::collection($companies);
     }
