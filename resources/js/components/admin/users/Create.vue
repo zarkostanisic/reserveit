@@ -82,11 +82,19 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button v-if="editing" type="button" class="btn btn-primary" @click="editUser">
+						<button v-if="editing" type="button"
+							class="btn btn-primary" 
+							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}"
+							@click="editUser"
+							>
 							{{ trans.get('universal.edit') }}
 						</button>
 
-						<button v-else="editing" type="button" class="btn btn-primary" @click="createUser">
+						<button v-else type="button" 
+							class="btn btn-primary"
+							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}" 
+							@click="createUser"
+							>
 							{{ trans.get('universal.create') }}
 						</button>
 					</div>
@@ -118,7 +126,8 @@
 				user: {},
 				errors: {},
 				editing: false,
-				user_company_id: this.$gate.getCompanyId()
+				user_company_id: this.$gate.getCompanyId(),
+				saving: false
 			}
 		},
 		mounted(){
@@ -147,28 +156,34 @@
 		},
 		methods: {
 			createUser(){
+				this.saving = true;
 				if(this.user_company_id > 0){
 					this.user.company_id = this.user_company_id;
 				}
 
 				axios.post('/api/users', this.user)
 				.then(response => {
+					this.saving = false;
 					this.$parent.$emit('user_created', response.data.data);
 
 					this.modalHide();
 					
 				}).catch(error => {
+					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
 			},
 			editUser(){
+				this.saving = true;
 				axios.put('/api/users/' + this.user.id, this.user)
 				.then(response => {
+					this.saving = false;
 					this.$parent.$emit('user_updated', response.data.data);
 
 					this.modalHide();
 					
 				}).catch(error => {
+					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
 			},

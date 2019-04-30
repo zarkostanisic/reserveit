@@ -27,11 +27,18 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button v-if="editing" type="button" class="btn btn-primary" @click="editCompany">
+						<button v-if="editing" type="button"
+							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}"
+							class="btn btn-primary"
+						 	@click="editCompany"
+						 	>
 							{{ trans.get('universal.edit') }}
 						</button>
 
-						<button v-else="editing" type="button" class="btn btn-primary" @click="createCompany">
+						<button v-else type="button" class="btn btn-primary"
+							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}" 
+							@click="createCompany"
+							>
 							{{ trans.get('universal.create') }}
 						</button>
 					</div>
@@ -57,6 +64,7 @@
 				company: {},
 				errors: {},
 				editing: false,
+				saving: false
 			}
 		},
 		mounted(){
@@ -75,24 +83,30 @@
 		},
 		methods: {
 			createCompany(){
+				this.saving = true;
 				axios.post('/api/companies', this.company)
 				.then(response => {
+					this.saving = false;
 					this.$parent.$emit('company_created', response.data.data);
 
 					this.modalHide();
 					
 				}).catch(error => {
+					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
 			},
 			editCompany(){
+				this.saving = true;
 				axios.put('/api/companies/' + this.company.id, this.company)
 				.then(response => {
+					this.saving = false;
 					this.$parent.$emit('company_updated', response.data.data);
 
 					this.modalHide();
 					
 				}).catch(error => {
+					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
 			},

@@ -8,6 +8,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.events = new Vue();
+
+window.noty = function(notification, type){
+  window.events.$emit('notification', notification, type);
+}
 
 import Lang from 'lang.js';
 
@@ -47,6 +52,9 @@ Vue.component('admin-companies-index', require('./components/admin/companies/Ind
 
 // paginsation
 Vue.component('pagination', require('laravel-vue-pagination'));
+
+// notification
+Vue.component('vue-noty', require('./components/Noty.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -10,6 +10,9 @@ use App\Http\Requests\CompanyRequest;
 
 class CompanyController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth:api', 'roles:administrator,api']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +63,7 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
         $company->name = $request->name;
         $company->save();

@@ -37,6 +37,7 @@ return [
     'edit' => 'Edit',
     'email' => 'Email',
     'name' => 'Name',
-    'password' => 'Password'
+    'password' => 'Password',
+    'success' => 'Success!'
 
 ];

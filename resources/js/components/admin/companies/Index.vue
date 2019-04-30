@@ -120,7 +120,8 @@
 			this.getCompanies();
 
 			this.$on('company_created', (company) => {
-				this.companies.data.unshift(company);
+				// this.companies.data.unshift(company);
+				window.noty(this.trans.get('universal.success'), 'success');
 			});
 
 			this.$on('company_updated', (company) => {
@@ -129,6 +130,8 @@
 				});
 
 				this.companies.data.splice(companyIndex, 1, company);
+
+				window.noty(this.trans.get('universal.success'), 'success');
 			});
 		},
 		methods: {
@@ -166,6 +169,8 @@
 						this.loading = false;
 
 						this.companies.data.splice(key, 1, response.data.data);
+
+						window.noty(this.trans.get('universal.success'), 'success');
 					});
 				}
 			}

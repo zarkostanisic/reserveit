@@ -156,7 +156,8 @@
 			this.getUsers();
 
 			this.$on('user_created', (user) => {
-				this.users.data.unshift(user);
+				// this.users.data.unshift(user);
+				window.noty(this.trans.get('universal.success'), 'success');
 			});
 
 			this.$on('user_updated', (user) => {
@@ -165,6 +166,8 @@
 				});
 
 				this.users.data.splice(userIndex, 1, user);
+
+				window.noty(this.trans.get('universal.success'), 'success');
 			});
 		},
 		methods: {
@@ -206,6 +209,8 @@
 						this.loading = false;
 
 						this.users.data.splice(key, 1, response.data.data);
+
+						window.noty(this.trans.get('universal.success'), 'success');
 					});
 				}
 			}
