@@ -12,6 +12,8 @@ return [
     */
     
     'singular' => 'Company',
-    'plural' => 'Companies'
+    'plural' => 'Companies',
 
+    // not translated
+    'list' => 'List of companies'
 ];

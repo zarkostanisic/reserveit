@@ -39,7 +39,13 @@ Vue.use(BlockUI);
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+// users
 Vue.component('admin-users-index', require('./components/admin/users/Index.vue').default);
+
+// companies
+Vue.component('admin-companies-index', require('./components/admin/companies/Index.vue').default);
+
+// paginsation
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**

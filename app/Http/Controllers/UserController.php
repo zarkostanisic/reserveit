@@ -118,6 +118,6 @@ class UserController extends Controller
         
         return response([
             'data' => new UserResource($user->fresh())
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_ACCEPTED);
     }
 }

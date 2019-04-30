@@ -102,7 +102,6 @@
 							</td>
 							<td>{{ trans.get('universal.' + user.role) }}</td>
 							<td>
-
 								<button v-if="user.id > 1"
 									type="button" 
 									class="btn btn-outline-info" 
@@ -146,7 +145,6 @@
 		},
 		data() {
 			return {
-				action: 'create',
 				users: {},
 				perpage: 25,
 				role_id: 0,
