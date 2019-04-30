@@ -31,7 +31,7 @@
 						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
-							<select class="custom-select custom-select-sm" v-model="perpage" @change="getCompanies" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getCompanies" :disabled="loading">
 								<option value="10">10</option>
 								<option value="25">25</option>
 								<option value="50">50</option>
@@ -39,10 +39,13 @@
 							</select>
 						</label>
 
-						<label class="col-sm-12 col-md-1">
+						<label class="col-sm-12 col-md-2">
 							{{ trans.get('universal.name') }} 
 
-							<input type="text" v-model="name" @keyup="searchByName">
+							<input type="text" 
+								class="form-control form-control-sm" v-bind:value="name" 
+								@input="name = $event.target.value; searchByName()"
+								>
 						</label>
 					</div>
 				</div>
@@ -74,22 +77,28 @@
 								</div>
 							</td>
 							<td>
+								<div class="m-stack m-stack--ver m-stack--general" style="width: 160px">
+									<div class="m-stack__item">
+										<button
+											type="button" 
+											class="btn btn-outline-info" 
+											data-toggle="modal" 
+											data-target="#m_modal_create_company"
+											@click="editCompany(company)">
+											{{ trans.get('universal.edit') }}
+										</button>
+									</div>
 
-								<button
-									type="button" 
-									class="btn btn-outline-info" 
-									data-toggle="modal" 
-									data-target="#m_modal_create_company"
-									@click="editCompany(company)">
-									{{ trans.get('universal.edit') }}
-								</button>
+									<div class="m-stack__item">
 
-								<button type="button" class="btn" 
-									v-if="$gate.isAdmin()"
-									v-bind:class="{ 'btn-outline-danger': !company.deleted, 'btn-outline-success': company.deleted}" 
-								 	@click="deleteCompany(company.id, key)">
-									{{ company.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
-								</button>
+										<button type="button" class="btn" 
+											v-if="$gate.isAdmin()"
+											v-bind:class="{ 'btn-outline-danger': !company.deleted, 'btn-outline-success': company.deleted}" 
+										 	@click="deleteCompany(company.id, key)">
+											{{ company.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
+										</button>
+									</div>
+								</div>
 							</td>
 						</tr>
 					</tbody>

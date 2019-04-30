@@ -31,7 +31,7 @@
 						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
-							<select class="custom-select custom-select-sm" v-model="perpage" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getUsers" :disabled="loading">
 								<option value="10">10</option>
 								<option value="25">25</option>
 								<option value="50">50</option>
@@ -40,7 +40,7 @@
 						</label>
 
 						<label class="col-sm-12 col-md-2">{{ trans.get('universal.role') }}
-							<select class="custom-select custom-select-sm" v-model="role_id" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="role_id" @change="getUsers" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
 								</option>
@@ -53,7 +53,7 @@
 						<label class="col-sm-12 col-md-2"
 							v-if="$gate.isAdmin() && role_id != 1"
 							> {{ trans.get('companies.singular') }}
-							<select class="custom-select custom-select-sm" v-model="company_id" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="company_id" @change="getUsers" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
 								</option>
@@ -101,21 +101,29 @@
 							</td>
 							<td>{{ trans.get('universal.' + user.role) }}</td>
 							<td>
-								<button v-if="user.id > 1"
-									type="button" 
-									class="btn btn-outline-info" 
-									data-toggle="modal" 
-									data-target="#m_modal_create_user"
-									@click="editUser(user)">
-									{{ trans.get('universal.edit') }}
-								</button>
+								<div class="m-stack m-stack--ver m-stack--general" style="width: 160px">
+									<div class="m-stack__item">
+													
+										<button v-if="user.id > 1"
+											type="button" 
+											class="btn btn-outline-info" 
+											data-toggle="modal" 
+											data-target="#m_modal_create_user"
+											@click="editUser(user)">
+											{{ trans.get('universal.edit') }}
+										</button>
+									</div>
 
-								<button type="button" class="btn" 
-									v-if="user.id > 1 && $gate.isAdmin()"
-									v-bind:class="{ 'btn-outline-danger': !user.deleted, 'btn-outline-success': user.deleted}" 
-								 	@click="deleteUser(user.id, key)">
-									{{ user.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
-								</button>
+									<div class="m-stack__item">
+										<button type="button" class="btn" 
+											v-if="user.id > 1 && $gate.isAdmin()"
+											v-bind:class="{ 'btn-outline-danger': !user.deleted, 'btn-outline-success': user.deleted}" 
+										 	@click="deleteUser(user.id, key)">
+											{{ user.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
+										</button>
+
+									</div>
+								</div>
 							</td>
 						</tr>
 					</tbody>

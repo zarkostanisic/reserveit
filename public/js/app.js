@@ -2034,6 +2034,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2339,6 +2348,14 @@ var User = function User(user) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/users/Create.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -25978,7 +25995,8 @@ var render = function() {
                           expression: "perpage"
                         }
                       ],
-                      staticClass: "custom-select custom-select-sm",
+                      staticClass:
+                        "form-control form-control-sm custom-select custom-select-sm",
                       attrs: { disabled: _vm.loading },
                       on: {
                         change: [
@@ -26011,30 +26029,20 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("label", { staticClass: "col-sm-12 col-md-1" }, [
+                _c("label", { staticClass: "col-sm-12 col-md-2" }, [
                   _vm._v(
                     "\n\t\t\t\t\t\t" +
                       _vm._s(_vm.trans.get("universal.name")) +
                       " \n\n\t\t\t\t\t\t"
                   ),
                   _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.name,
-                        expression: "name"
-                      }
-                    ],
+                    staticClass: "form-control form-control-sm",
                     attrs: { type: "text" },
                     domProps: { value: _vm.name },
                     on: {
-                      keyup: _vm.searchByName,
                       input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
                         _vm.name = $event.target.value
+                        _vm.searchByName()
                       }
                     }
                   })
@@ -26116,58 +26124,79 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _c(
-                          "button",
+                          "div",
                           {
-                            staticClass: "btn btn-outline-info",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#m_modal_create_company"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.editCompany(company)
-                              }
-                            }
+                            staticClass:
+                              "m-stack m-stack--ver m-stack--general",
+                            staticStyle: { width: "160px" }
                           },
                           [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t" +
-                                _vm._s(_vm.trans.get("universal.edit")) +
-                                "\n\t\t\t\t\t\t\t"
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.$gate.isAdmin()
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn",
-                                class: {
-                                  "btn-outline-danger": !company.deleted,
-                                  "btn-outline-success": company.deleted
-                                },
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteCompany(company.id, key)
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-info",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "modal",
+                                    "data-target": "#m_modal_create_company"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editCompany(company)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t" +
-                                    _vm._s(
-                                      company.deleted
-                                        ? _vm.trans.get("universal.restore")
-                                        : _vm.trans.get("universal.delete")
-                                    ) +
-                                    "\n\t\t\t\t\t\t\t"
-                                )
-                              ]
-                            )
-                          : _vm._e()
+                                },
+                                [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t\t" +
+                                      _vm._s(_vm.trans.get("universal.edit")) +
+                                      "\n\t\t\t\t\t\t\t\t\t"
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              _vm.$gate.isAdmin()
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-outline-danger": !company.deleted,
+                                        "btn-outline-success": company.deleted
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteCompany(
+                                            company.id,
+                                            key
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            company.deleted
+                                              ? _vm.trans.get(
+                                                  "universal.restore"
+                                                )
+                                              : _vm.trans.get(
+                                                  "universal.delete"
+                                                )
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]
+                        )
                       ])
                     ])
                   }),
@@ -26810,7 +26839,8 @@ var render = function() {
                           expression: "perpage"
                         }
                       ],
-                      staticClass: "custom-select custom-select-sm",
+                      staticClass:
+                        "form-control form-control-sm custom-select custom-select-sm",
                       attrs: { disabled: _vm.loading },
                       on: {
                         change: [
@@ -26858,7 +26888,8 @@ var render = function() {
                           expression: "role_id"
                         }
                       ],
-                      staticClass: "custom-select custom-select-sm",
+                      staticClass:
+                        "form-control form-control-sm custom-select custom-select-sm",
                       attrs: { disabled: _vm.loading },
                       on: {
                         change: [
@@ -26920,7 +26951,8 @@ var render = function() {
                               expression: "company_id"
                             }
                           ],
-                          staticClass: "custom-select custom-select-sm",
+                          staticClass:
+                            "form-control form-control-sm custom-select custom-select-sm",
                           attrs: { disabled: _vm.loading },
                           on: {
                             change: [
@@ -27074,61 +27106,81 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        user.id > 1
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-outline-info",
-                                attrs: {
-                                  type: "button",
-                                  "data-toggle": "modal",
-                                  "data-target": "#m_modal_create_user"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editUser(user)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t" +
-                                    _vm._s(_vm.trans.get("universal.edit")) +
-                                    "\n\t\t\t\t\t\t\t"
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.id > 1 && _vm.$gate.isAdmin()
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn",
-                                class: {
-                                  "btn-outline-danger": !user.deleted,
-                                  "btn-outline-success": user.deleted
-                                },
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteUser(user.id, key)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t" +
-                                    _vm._s(
-                                      user.deleted
-                                        ? _vm.trans.get("universal.restore")
-                                        : _vm.trans.get("universal.delete")
-                                    ) +
-                                    "\n\t\t\t\t\t\t\t"
-                                )
-                              ]
-                            )
-                          : _vm._e()
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "m-stack m-stack--ver m-stack--general",
+                            staticStyle: { width: "160px" }
+                          },
+                          [
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              user.id > 1
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-outline-info",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "modal",
+                                        "data-target": "#m_modal_create_user"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editUser(user)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            _vm.trans.get("universal.edit")
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              user.id > 1 && _vm.$gate.isAdmin()
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-outline-danger": !user.deleted,
+                                        "btn-outline-success": user.deleted
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteUser(user.id, key)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            user.deleted
+                                              ? _vm.trans.get(
+                                                  "universal.restore"
+                                                )
+                                              : _vm.trans.get(
+                                                  "universal.delete"
+                                                )
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]
+                        )
                       ])
                     ])
                   }),
@@ -39712,7 +39764,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/admin/companies/Index.vue?vue&type=template&id=261ae083& ***!
   \******************************************************************************************/
-/*! no static exports found */
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
