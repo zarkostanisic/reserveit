@@ -36,6 +36,10 @@ return [
     'email' => 'Email',
     'name' => 'Name',
     'password' => 'Password',
-    'success' => 'Success!'
-
+    'success' => 'Success!',
+    'birthdate' => 'Birthdate',
+    'address' => 'Address',
+    'phone' => 'Phone',
+    //not translated
+    'password_confirmation' => 'Confirm password'
 ];

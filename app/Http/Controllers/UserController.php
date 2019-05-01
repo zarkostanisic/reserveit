@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -44,6 +45,9 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->birthdate = Carbon::createFromFormat('d-m-Y', $request->birthdate)->toDateString();
+        $user->address = $request->address;
+        $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->role_id = $request->role_id;
         $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
@@ -76,6 +80,9 @@ class UserController extends Controller
     {
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->birthdate = Carbon::createFromFormat('d-m-Y', $request->birthdate)->toDateString();
+        $user->address = $request->address;
+        $user->phone = $request->phone;
 
         if(!empty($request->password)){
             $user->password = bcrypt($request->password);

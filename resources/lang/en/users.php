@@ -14,6 +14,7 @@ return [
     'singular' => 'User',
     'plural' => 'Users',
     'list' => 'List of users',
-    'permissions' => 'Type of user and access level'
+    'permissions' => 'Type of user and access level',
+    'birthdate' => 'Birthdate'
 
 ];

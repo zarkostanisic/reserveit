@@ -26,7 +26,10 @@ class UserEditRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $this->id,
-            'password' => 'nullable|string|min:8',
+            'birthdate' => 'required|date_format:d-m-Y',
+            'address' => 'required',
+            'phone' => 'required',
+            'password' => 'nullable|string|min:8|confirmed',
             'role_id' => 'required',
             'company_id' => "required_if:role_id,2|required_if:role_id,3"
         ];

@@ -17,7 +17,6 @@ return [
     'administrator' => 'Administrator',
     'manager' => 'Menadžer', 
     'hostess' => 'Hostesa',
-
     'show' => 'Prikaži',
     'confirm' => 'Da li ste sigurni?',
     'choose' => 'Izaberi',
@@ -37,6 +36,9 @@ return [
     'email' => 'Email',
     'name' => 'Naziv',
     'password' => 'Lozinka',
-    'success' => 'Uspešno!'
+    'success' => 'Uspešno!',
+    'birthdate' => 'Datum rođenja',
+    'address' => 'Addresa',
+    'phone' => 'Telefon'
 
 ];

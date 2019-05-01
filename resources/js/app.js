@@ -63,6 +63,9 @@ Vue.component('vue-noty', require('./components/Noty.vue').default);
  */
 
 
+import { VueMaskDirective } from 'v-mask'
+Vue.directive('mask', VueMaskDirective);
+
 Vue.directive('select2', {
   twoWay: true,
   bind: function (el, binding, vnode) {
@@ -75,7 +78,7 @@ Vue.directive('select2', {
 Vue.directive('datepicker', {
   twoWay: true,
   bind: function (el, binding, vnode) {
-    $(el).datepicker().on("changeDate", (e) => {
+    $(el).datepicker({format: 'dd-mm-yyyy', language: default_locale}).on("changeDate", (e) => {
       el.dispatchEvent(new Event('input', { target: e.target }));
     });
   },

@@ -2246,14 +2246,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var User = function User(user) {
   _classCallCheck(this, User);
 
   this.id = user.id || '';
   this.name = user.name || '';
   this.email = user.email || '';
-  this.password = user.password || '';
-  this.password_confirmation = user.password_confirmation || '';
+  this.birthdate = user.birthdate || '';
+  this.address = user.address || '';
+  this.phone = user.phone || '';
+  this.password = '';
+  this.password_confirmation = '';
   this.role_id = user.role_id || '';
   this.company_id = user.company_id || '';
 };
@@ -2275,10 +2314,13 @@ var User = function User(user) {
     this.$parent.$on('create_user', function (role_id, company_id) {
       _this.editing = false;
       _this.user = new User({});
-      _this.errors = {}; // set role and company from search values
+      _this.errors = {};
+
+      _this.changeCompanyId(_this.user.company_id); // set role and company from search values not used
       // this.user.role_id = role_id;
       // this.user.company_id = company_id;
       // this.changeCompanyId(this.user.company_id);
+
     });
     this.$parent.$on('edit_user', function (_ref) {
       var user = _ref.user;
@@ -2287,6 +2329,8 @@ var User = function User(user) {
       _this.errors = {};
 
       _this.changeCompanyId(_this.user.company_id);
+
+      $('#birthdate').datepicker('setDate', moment(_this.user.birthdate).format('DD-MM-YYYY'));
     });
     $("#company_id").select2({
       placeholder: this.trans.get('universal.choose')
@@ -25621,6 +25665,150 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/v-mask/dist/v-mask.esm.js":
+/*!************************************************!*\
+  !*** ./node_modules/v-mask/dist/v-mask.esm.js ***!
+  \************************************************/
+/*! exports provided: default, VueMaskPlugin, VueMaskDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskPlugin", function() { return plugin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskDirective", function() { return directive; });
+function format (text, wholeMask) {
+  if (!wholeMask) return text;
+
+  var maskStartRegExp = /^([^#ANX]+)/;
+
+  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
+    text = maskStartRegExp.exec(wholeMask)[0] + text;
+  }
+
+  var newText = '';
+  var charOffset = 0;
+
+  for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
+    var mask = wholeMask.charAt(maskIndex);
+    switch (mask) {
+      case '#':
+        break;
+      case 'A':
+        break;
+      case '?':
+        break;
+      case 'N':
+        break;
+      case 'X':
+        break;
+      default:
+        text = text.replace(mask, '');
+    }
+  }
+  for (var _maskIndex = 0, x = 1; x && _maskIndex < wholeMask.length; _maskIndex += 1) {
+    var char = text.charAt(_maskIndex - charOffset);
+    var _mask = wholeMask.charAt(_maskIndex);
+
+    switch (_mask) {
+      case '#':
+        /\d/.test(char) ? newText += char : x = 0;
+        break;
+      case 'A':
+        /[a-z]/i.test(char) ? newText += char : x = 0;
+        break;
+      case 'N':
+        /[a-z0-9]/i.test(char) ? newText += char : x = 0;
+        break;
+
+      case '?':
+        charOffset += 1;
+        break;
+      case 'X':
+        newText += char;
+        break;
+      default:
+        newText += _mask;
+
+        if (char && char !== _mask) {
+          text = ' ' + text;
+        }
+
+        break;
+    }
+  }
+  return newText;
+}
+
+var trigger = function trigger(el, type) {
+  var e = document.createEvent('HTMLEvents');
+  e.initEvent(type, true, true);
+  el.dispatchEvent(e);
+};
+
+var inBrowser = typeof window !== 'undefined';
+var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+var isEdge = UA && UA.indexOf('edge/') > 0;
+var isAndroid = UA && UA.indexOf('android') > 0;
+var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+
+function updateValue(el) {
+  var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var value = el.value,
+      _el$dataset = el.dataset,
+      _el$dataset$previousV = _el$dataset.previousValue,
+      previousValue = _el$dataset$previousV === undefined ? '' : _el$dataset$previousV,
+      mask = _el$dataset.mask;
+
+
+  if (force || value && value !== previousValue && value.length > previousValue.length) {
+    el.value = format(value, mask);
+    if (isAndroid && isChrome) {
+      setTimeout(function () {
+        return trigger(el, 'input');
+      }, 0);
+    } else {
+      trigger(el, 'input');
+    }
+  }
+
+  el.dataset.previousValue = value;
+}
+
+function updateMask(el, mask) {
+  el.dataset.mask = mask;
+}
+
+var directive = {
+  bind: function bind(el, _ref) {
+    var value = _ref.value;
+
+    updateMask(el, value);
+    updateValue(el);
+  },
+  componentUpdated: function componentUpdated(el, _ref2) {
+    var value = _ref2.value,
+        oldValue = _ref2.oldValue;
+
+    var isMaskChanged = value !== oldValue;
+
+    if (isMaskChanged) {
+      updateMask(el, value);
+    }
+
+    updateValue(el, isMaskChanged);
+  }
+};
+
+var plugin = (function (Vue) {
+  Vue.directive('mask', directive);
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (plugin);
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-blockui/dist/vue-blockui.common.js":
 /*!*************************************************************!*\
   !*** ./node_modules/vue-blockui/dist/vue-blockui.common.js ***!
@@ -26444,11 +26632,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control m-input",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "",
-                                  id: "password"
-                                },
+                                attrs: { type: "password", id: "password" },
                                 domProps: { value: _vm.user.password },
                                 on: {
                                   input: function($event) {
@@ -26469,6 +26653,62 @@ var render = function() {
                                     _vm._v(_vm._s(_vm.errors.password[0]))
                                   ])
                                 : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "password" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans.get(
+                                      "universal.password_confirmation"
+                                    )
+                                  )
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.password_confirmation,
+                                    expression: "user.password_confirmation"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: {
+                                  type: "password",
+                                  id: "password_confirmation"
+                                },
+                                domProps: {
+                                  value: _vm.user.password_confirmation
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "password_confirmation",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
                             ])
                           ]
                         ),
@@ -26522,10 +26762,7 @@ var render = function() {
                                     }
                                   ],
                                   staticClass: "form-control m-select2",
-                                  attrs: {
-                                    id: "company_id",
-                                    placeholder: "test"
-                                  },
+                                  attrs: { id: "company_id" },
                                   on: {
                                     change: function($event) {
                                       var $$selectedVal = Array.prototype.filter
@@ -26568,6 +26805,180 @@ var render = function() {
                               _vm.errors.company_id
                                 ? _c("span", { staticClass: "m-form__help" }, [
                                     _vm._v(_vm._s(_vm.errors.company_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "birthdate" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("universal.birthdate"))
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.birthdate,
+                                    expression: "user.birthdate"
+                                  },
+                                  {
+                                    name: "datepicker",
+                                    rawName: "v-datepicker",
+                                    value: _vm.user.birthdate,
+                                    expression: "user.birthdate"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: _vm.trans.get(
+                                    "universal.choose"
+                                  ),
+                                  id: "birthdate",
+                                  readonly: ""
+                                },
+                                domProps: { value: _vm.user.birthdate },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "birthdate",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.birthdate
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.birthdate[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "address" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("universal.address"))
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.address,
+                                    expression: "user.address"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: { type: "text", id: "address" },
+                                domProps: { value: _vm.user.address },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.address
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.address[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "phone" }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("universal.phone")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.phone,
+                                    expression: "user.phone"
+                                  },
+                                  {
+                                    name: "mask",
+                                    rawName: "v-mask",
+                                    value: "### #######",
+                                    expression: "'### #######'"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: { type: "text", id: "phone" },
+                                domProps: { value: _vm.user.phone },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "phone",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.phone
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.phone[0]))
                                   ])
                                 : _vm._e()
                             ])
@@ -39436,6 +39847,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lang_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
 /* harmony import */ var vue_blockui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-blockui */ "./node_modules/vue-blockui/index.js");
+/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -39487,6 +39899,8 @@ Vue.component('vue-noty', __webpack_require__(/*! ./components/Noty.vue */ "./re
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+Vue.directive('mask', v_mask__WEBPACK_IMPORTED_MODULE_3__["VueMaskDirective"]);
 Vue.directive('select2', {
   twoWay: true,
   bind: function bind(el, binding, vnode) {
@@ -39500,7 +39914,10 @@ Vue.directive('select2', {
 Vue.directive('datepicker', {
   twoWay: true,
   bind: function bind(el, binding, vnode) {
-    $(el).datepicker().on("changeDate", function (e) {
+    $(el).datepicker({
+      format: 'dd-mm-yyyy',
+      language: default_locale
+    }).on("changeDate", function (e) {
       el.dispatchEvent(new Event('input', {
         target: e.target
       }));

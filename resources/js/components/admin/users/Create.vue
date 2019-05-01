@@ -32,8 +32,15 @@
 								<div class="form-group m-form__group row">
 									<label for="password" class="col-lg-2 col-form-label">{{ trans.get('universal.password') }}</label>
 									<div class="col-lg-8">
-										<input v-model="user.password" type="text" class="form-control m-input" placeholder="" id="password">
+										<input v-model="user.password" type="password" class="form-control m-input" id="password">
 										<span v-if="errors.password"class="m-form__help">{{ errors.password[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="password" class="col-lg-2 col-form-label">{{ trans.get('universal.password_confirmation') }}</label>
+									<div class="col-lg-8">
+										<input v-model="user.password_confirmation" type="password" class="form-control m-input" id="password_confirmation">
 									</div>
 								</div>
 
@@ -45,7 +52,7 @@
 										<select class="form-control m-select2" id="company_id" 
 										v-model="user.company_id" 
 										v-select2='user.company_id'
-										placeholder="test">
+										>
 											<option v-for="company in companies" 
 											:value="company.id"
 											>
@@ -54,6 +61,35 @@
 										</select>
 
 										<span v-if="errors.company_id"class="m-form__help">{{ errors.company_id[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="birthdate" class="col-lg-2 col-form-label">{{ trans.get('universal.birthdate') }}</label>
+									<div class="col-lg-8">
+										<input type="text" v-model="user.birthdate" v-datepicker="user.birthdate"
+											class="form-control" 
+											:placeholder="trans.get('universal.choose')" 
+											id="birthdate"
+											readonly 
+											>
+										<span v-if="errors.birthdate"class="m-form__help">{{ errors.birthdate[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="address" class="col-lg-2 col-form-label">{{ trans.get('universal.address') }}</label>
+									<div class="col-lg-8">
+										<input v-model="user.address" type="text" class="form-control m-input" id="address">
+										<span v-if="errors.address"class="m-form__help">{{ errors.address[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="phone" class="col-lg-2 col-form-label">{{ trans.get('universal.phone') }}</label>
+									<div class="col-lg-8">
+										<input v-model="user.phone" v-mask="'### #######'" type="text" class="form-control m-input" id="phone">
+										<span v-if="errors.phone"class="m-form__help">{{ errors.phone[0] }}</span>
 									</div>
 								</div>
 							</div>
@@ -112,8 +148,11 @@
 			this.id = user.id || '';
 			this.name = user.name || '';
 			this.email = user.email || '';
-			this.password = user.password || '';
-			this.password_confirmation = user.password_confirmation || '';
+			this.birthdate = user.birthdate || '';
+			this.address = user.address || '';
+			this.phone = user.phone || '';
+			this.password = '';
+			this.password_confirmation = '';
 			this.role_id = user.role_id || '';
 			this.company_id = user.company_id || '';
 		}
@@ -136,7 +175,9 @@
 				this.user = new User({});
 				this.errors = {};
 
-				// set role and company from search values
+				this.changeCompanyId(this.user.company_id);
+
+				// set role and company from search values not used
 				// this.user.role_id = role_id;
 				// this.user.company_id = company_id;
 				// this.changeCompanyId(this.user.company_id);
@@ -148,6 +189,7 @@
 				this.errors = {};
 
 				this.changeCompanyId(this.user.company_id);
+				$('#birthdate').datepicker('setDate', moment(this.user.birthdate).format('DD-MM-YYYY'));
 			});
 
 			$("#company_id").select2({
