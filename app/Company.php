@@ -11,12 +11,16 @@ class Company extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'name', 'city_id', 'quarter_id'
+    	'name', 'logo', 'city_id', 'quarter_id'
     ];
 
     protected $with = [
     	'city', 'quarter'
     ];
+
+    public function getLogoPathAttribute(){
+        return '/images/companies/' . $this->logo;
+    }
 
     public function scopeFilter($query, $name){
     	if($name != '') $query->where('name', 'like', $name . '%');

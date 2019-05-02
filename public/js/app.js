@@ -1790,6 +1790,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //
@@ -1885,11 +1886,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+
+
 var Company = function Company(company) {
   _classCallCheck(this, Company);
 
   this.id = company.id || '';
   this.name = company.name || '';
+  this.logo = company.logo || null;
   this.city_id = company.city_id || '';
   this.quarter_id = company.quarter_id || 0;
 };
@@ -1909,6 +1921,8 @@ var Company = function Company(company) {
     var _this = this;
 
     this.$parent.$on('create_company', function () {
+      _this.setFileValue('#logo', '', 'company', 'logo');
+
       _this.editing = false;
       _this.company = new Company({});
       _this.errors = {};
@@ -1916,6 +1930,9 @@ var Company = function Company(company) {
     });
     this.$parent.$on('edit_company', function (_ref) {
       var company = _ref.company;
+
+      _this.setFileValue('#logo', '', 'company', 'logo');
+
       _this.editing = true;
       _this.company = new Company(company);
       _this.errors = {};
@@ -1971,7 +1988,9 @@ var Company = function Company(company) {
       for (var g in this.geos) {
         if (this.geos[g].id == city_id) this.municipalities = this.geos[g].municipalities;
       }
-    }
+    },
+    onFileChange: _Helpers__WEBPACK_IMPORTED_MODULE_0__["onFileChange"],
+    setFileValue: _Helpers__WEBPACK_IMPORTED_MODULE_0__["setFileValue"]
   }
 });
 
@@ -26004,7 +26023,8 @@ var render = function() {
                 _c(
                   "form",
                   {
-                    staticClass: "m-form m-form--fit m-form--label-align-right"
+                    staticClass: "m-form m-form--fit m-form--label-align-right",
+                    attrs: { enctype: "multipart/form-data" }
                   },
                   [
                     _c(
@@ -26241,6 +26261,39 @@ var render = function() {
                                 ],
                                 2
                               )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "logo" }
+                              },
+                              [_vm._v("Logo")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                staticClass: "form-control m-input",
+                                attrs: { type: "file", id: "logo" },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.onFileChange("company", "logo")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.logo
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.logo[0]))
+                                  ])
+                                : _vm._e()
                             ])
                           ]
                         )
@@ -26485,9 +26538,7 @@ var render = function() {
                   _c("tr", [
                     _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.id")))]),
                     _vm._v(" "),
-                    _c("th", [
-                      _vm._v(_vm._s(_vm.trans.get("universal.photo")))
-                    ]),
+                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.logo")))]),
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.name")))]),
                     _vm._v(" "),
@@ -26515,7 +26566,15 @@ var render = function() {
                         _vm._v(_vm._s(company.id))
                       ]),
                       _vm._v(" "),
-                      _vm._m(0, true),
+                      _c("td", [
+                        _c("img", {
+                          attrs: {
+                            src: company.logo,
+                            width: "80",
+                            height: "80"
+                          }
+                        })
+                      ]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.name))]),
                       _vm._v(" "),
@@ -26665,16 +26724,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("img", { attrs: { src: "photo/male.png", width: "80", height: "80" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40086,12 +40136,14 @@ function () {
 /*!*********************************!*\
   !*** ./resources/js/Helpers.js ***!
   \*********************************/
-/*! exports provided: default */
+/*! exports provided: default, onFileChange, setFileValue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Helpers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onFileChange", function() { return onFileChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setFileValue", function() { return setFileValue; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -40127,6 +40179,25 @@ function () {
 }();
 
 
+function onFileChange(c, p) {
+  var e = window.event;
+  var files = e.target.files || e.dataTransfer.files;
+  if (!files.length) return;
+  var reader = new FileReader();
+  var vm = this;
+
+  reader.onload = function (e) {
+    vm[c][p] = e.target.result;
+  };
+
+  reader.readAsDataURL(files[0]);
+}
+;
+function setFileValue(name, val, c, p) {
+  var vm = this;
+  vm[c][p] = null;
+  $(name).val(val);
+}
 
 /***/ }),
 

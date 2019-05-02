@@ -54,7 +54,7 @@
 					<thead>
 						<tr>
 							<th>{{ trans.get('universal.id') }}</th>
-							<th>{{ trans.get('universal.photo') }}</th>
+							<th>{{ trans.get('universal.logo') }}</th>
 							<th>{{ trans.get('universal.name') }}</th>
 							<th>{{ trans.get('universal.city') }}</th>
 							<th>{{ trans.get('universal.quarter') }}</th>
@@ -66,7 +66,7 @@
 						<tr v-for="company, key in companies.data">
 							<th scope="row">{{ company.id }}</th>
 							<td>
-								<img src="photo/male.png" width="80" height="80">
+								<img :src="company.logo" width="80" height="80">
 							</td>
 							<td>{{ company.name }}</td>
 							<td>{{ company.city }}</td>

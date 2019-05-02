@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Resources\CompanyResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\CompanyRequest;
+use App\UploadTrait;
 
 class CompanyController extends Controller
 {
+    use UploadTrait;
+
     public function __construct(){
         $this->middleware(['auth:api', 'roles:administrator,api']);
     }
@@ -71,8 +74,18 @@ class CompanyController extends Controller
         $company->name = $request->name;
         $company->city_id = $request->city_id;
         $company->quarter_id = $request->quarter_id;
-        $company->save();
+
         
+        $path = 'images/companies/';
+        $remove_path = public_path($path) . $company->logo;
+        if($fileName = $this->doUpload('logo', $path)){
+            $company->logo = $fileName;
+        }
+
+        $company->save();
+
+        $this->removeOldFile($remove_path);
+           
         return response([
             'data' => new CompanyResource($company->fresh())
         ], Response::HTTP_ACCEPTED);

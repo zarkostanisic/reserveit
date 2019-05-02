@@ -13,7 +13,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form class="m-form m-form--fit m-form--label-align-right">
+						<form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
 							<div class="m-form__section m-form__section--first">
 								<div class="form-group m-form__group row">
 									<label for="name" class="col-lg-2 col-form-label">{{ trans.get('universal.name') }}</label>
@@ -62,6 +62,13 @@
 
 									</div>
 								</div>
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label" for="logo">Logo</label>
+									<div class="col-lg-8">
+										<input type="file" class="form-control m-input" v-on:change="onFileChange('company', 'logo')" id="logo">
+										<span v-if="errors.logo"class="m-form__help">{{ errors.logo[0] }}</span>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -92,10 +99,14 @@
 </template>
 
 <script>
+	import {onFileChange} from '../../../Helpers'
+	import {setFileValue} from '../../../Helpers'
+
 	class Company{
 		constructor(company){
 			this.id = company.id || '';
 			this.name = company.name || '';
+			this.logo = company.logo || null;
 			this.city_id = company.city_id || '';
 			this.quarter_id = company.quarter_id || 0;
 		}
@@ -114,6 +125,7 @@
 		},
 		mounted(){
 			this.$parent.$on('create_company', () => {
+				this.setFileValue('#logo', '', 'company', 'logo');
 				this.editing = false;
 				this.company = new Company({});
 				this.errors = {};
@@ -122,6 +134,7 @@
 			});
 
 			this.$parent.$on('edit_company', ({company}) => {
+				this.setFileValue('#logo', '', 'company', 'logo');
 				this.editing = true;
 				this.company = new Company(company);
 				this.errors = {};
@@ -171,7 +184,9 @@
 				for(var g in this.geos){
 					if(this.geos[g].id == city_id) this.municipalities = this.geos[g].municipalities;
 				}
-			}
+			},
+			onFileChange,
+			setFileValue
 		}
 	}
 </script>
