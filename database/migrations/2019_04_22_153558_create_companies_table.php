@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('city_id')->nullable();
-            $table->integer('municipality_id')->nullable();
+            $table->integer('quarter_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

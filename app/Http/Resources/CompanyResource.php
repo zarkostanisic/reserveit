@@ -18,9 +18,9 @@ class CompanyResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'city_id' => $this->city_id,
-            'municipality_id' => $this->municipality_id,
+            'quarter_id' => $this->quarter_id,
             'city' => $this->city['name'],
-            'municipality' => $this->municipality['name'],
+            'quarter' => $this->quarter['name'],
             'deleted' => $this->trashed()
         ];
     }

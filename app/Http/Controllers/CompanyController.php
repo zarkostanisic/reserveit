@@ -40,7 +40,7 @@ class CompanyController extends Controller
 
         $company->name = $request->name;
         $company->city_id = $request->city_id;
-        $company->municipality_id = $request->municipality_id;
+        $company->quarter_id = $request->quarter_id;
         $company->save();
         
         return response([
@@ -70,7 +70,7 @@ class CompanyController extends Controller
     {
         $company->name = $request->name;
         $company->city_id = $request->city_id;
-        $company->municipality_id = $request->municipality_id;
+        $company->quarter_id = $request->quarter_id;
         $company->save();
         
         return response([

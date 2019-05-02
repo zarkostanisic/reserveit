@@ -42,5 +42,5 @@ return [
     'phone' => 'Telefon',
     'password_confirmation' => 'Potvrdi lozinku',
     'city' => 'Grad',
-    'municipality' => 'Opština'
+    'quarter' => 'Deo grada'
 ];

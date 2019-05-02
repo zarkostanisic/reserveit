@@ -42,5 +42,5 @@ return [
     'phone' => 'Phone',
     'password_confirmation' => 'Confirm password',
     'city' => 'City',
-    'municipality' => 'Municipality'
+    'quarter' => 'Quarter'
 ];

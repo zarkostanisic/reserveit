@@ -46,17 +46,17 @@
 
 								<div class="form-group m-form__group row" v-show="municipalities.length > 0">
 									<label class="col-lg-2 col-form-label">
-										{{ trans.get('universal.municipality') }}
+										{{ trans.get('universal.quarter') }}
 									</label>
 									<div class="col-lg-8">
-										<select class="form-control custom-select" id="municipality_id"
-										v-model="company.municipality_id" 
+										<select class="form-control custom-select" id="quarter_id"
+										v-model="company.quarter_id" 
 										>
 											<option value="0">{{ trans.get('universal.choose') }}</option>
-											<option v-for="municipality in municipalities" 
-											:value="municipality.id"
+											<option v-for="quarter in municipalities" 
+											:value="quarter.id"
 											>
-												{{ municipality.name }}
+												{{ quarter.name }}
 											</option>
 										</select>
 
@@ -97,7 +97,7 @@
 			this.id = company.id || '';
 			this.name = company.name || '';
 			this.city_id = company.city_id || '';
-			this.municipality_id = company.municipality_id || 0;
+			this.quarter_id = company.quarter_id || 0;
 		}
 	}
 
@@ -128,7 +128,7 @@
 
 				this.$helpers.changeSelect('#city_id', this.company.city_id);
 				this.changeCity(true);
-				this.$helpers.changeSelect('#municipality_id', this.company.municipality_id);
+				this.$helpers.changeSelect('#quarter_id', this.company.quarter_id);
 			});
 		},
 		methods: {
@@ -162,7 +162,7 @@
 			},
 			changeCity(edit=false){
 				if(edit === false){
-					this.company.municipality_id = 0;
+					this.company.quarter_id = 0;
 				}
 				this.municipalities = {};
 

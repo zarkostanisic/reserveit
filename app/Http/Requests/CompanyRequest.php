@@ -26,7 +26,7 @@ class CompanyRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'city_id' => 'required|integer',
-            'municipality_id' => 'integer'
+            'quarter_id' => 'integer'
         ];
     }
 }

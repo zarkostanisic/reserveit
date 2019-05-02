@@ -1891,7 +1891,7 @@ var Company = function Company(company) {
   this.id = company.id || '';
   this.name = company.name || '';
   this.city_id = company.city_id || '';
-  this.municipality_id = company.municipality_id || 0;
+  this.quarter_id = company.quarter_id || 0;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1924,7 +1924,7 @@ var Company = function Company(company) {
 
       _this.changeCity(true);
 
-      _this.$helpers.changeSelect('#municipality_id', _this.company.municipality_id);
+      _this.$helpers.changeSelect('#quarter_id', _this.company.quarter_id);
     });
   },
   methods: {
@@ -1962,7 +1962,7 @@ var Company = function Company(company) {
       var edit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
       if (edit === false) {
-        this.company.municipality_id = 0;
+        this.company.quarter_id = 0;
       }
 
       this.municipalities = {};
@@ -26175,9 +26175,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   "\n\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(
-                                      _vm.trans.get("universal.municipality")
-                                    ) +
+                                    _vm._s(_vm.trans.get("universal.quarter")) +
                                     "\n\t\t\t\t\t\t\t\t"
                                 )
                               ]
@@ -26191,12 +26189,12 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.company.municipality_id,
-                                      expression: "company.municipality_id"
+                                      value: _vm.company.quarter_id,
+                                      expression: "company.quarter_id"
                                     }
                                   ],
                                   staticClass: "form-control custom-select",
-                                  attrs: { id: "municipality_id" },
+                                  attrs: { id: "quarter_id" },
                                   on: {
                                     change: function($event) {
                                       var $$selectedVal = Array.prototype.filter
@@ -26212,7 +26210,7 @@ var render = function() {
                                         })
                                       _vm.$set(
                                         _vm.company,
-                                        "municipality_id",
+                                        "quarter_id",
                                         $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
@@ -26227,16 +26225,14 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(_vm.municipalities, function(
-                                    municipality
-                                  ) {
+                                  _vm._l(_vm.municipalities, function(quarter) {
                                     return _c(
                                       "option",
-                                      { domProps: { value: municipality.id } },
+                                      { domProps: { value: quarter.id } },
                                       [
                                         _vm._v(
                                           "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                            _vm._s(municipality.name) +
+                                            _vm._s(quarter.name) +
                                             "\n\t\t\t\t\t\t\t\t\t\t"
                                         )
                                       ]
@@ -26498,7 +26494,7 @@ var render = function() {
                     _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.city")))]),
                     _vm._v(" "),
                     _c("th", [
-                      _vm._v(_vm._s(_vm.trans.get("universal.municipality")))
+                      _vm._v(_vm._s(_vm.trans.get("universal.quarter")))
                     ]),
                     _vm._v(" "),
                     _c("th", [
@@ -26525,7 +26521,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.city))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(company.municipality))]),
+                      _c("td", [_vm._v(_vm._s(company.quarter))]),
                       _vm._v(" "),
                       _c("td", [
                         company.deleted

@@ -11,11 +11,11 @@ class Company extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'name', 'city_id', 'municipality_id'
+    	'name', 'city_id', 'quarter_id'
     ];
 
     protected $with = [
-    	'city', 'municipality'
+    	'city', 'quarter'
     ];
 
     public function scopeFilter($query, $name){
@@ -26,7 +26,7 @@ class Company extends Model
         return $this->belongsTo(Geo::class, 'city_id', 'id');
     }
 
-    public function municipality(){
-        return $this->belongsTo(Geo::class, 'municipality_id', 'id');
+    public function quarter(){
+        return $this->belongsTo(Geo::class, 'quarter_id', 'id');
     }
 }
