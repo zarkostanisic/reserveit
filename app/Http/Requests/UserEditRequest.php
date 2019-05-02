@@ -30,8 +30,8 @@ class UserEditRequest extends FormRequest
             'address' => 'required',
             'phone' => 'required',
             'password' => 'nullable|string|min:8|confirmed',
-            'role_id' => 'required',
-            'company_id' => "required_if:role_id,2|required_if:role_id,3"
+            'role_id' => 'required|integer',
+            'company_id' => "required_if:role_id,2|required_if:role_id,3|integer"
         ];
     }
 }

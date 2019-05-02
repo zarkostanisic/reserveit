@@ -1844,16 +1844,61 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Company = function Company(company) {
   _classCallCheck(this, Company);
 
   this.id = company.id || '';
   this.name = company.name || '';
+  this.city_id = company.city_id || '';
+  this.municipality_id = company.municipality_id || 0;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['geos'],
   data: function data() {
     return {
+      municipalities: {},
       company: {},
       errors: {},
       editing: false,
@@ -1867,12 +1912,19 @@ var Company = function Company(company) {
       _this.editing = false;
       _this.company = new Company({});
       _this.errors = {};
+      _this.municipalities = {};
     });
     this.$parent.$on('edit_company', function (_ref) {
       var company = _ref.company;
       _this.editing = true;
       _this.company = new Company(company);
       _this.errors = {};
+
+      _this.$helpers.changeSelect('#city_id', _this.company.city_id);
+
+      _this.changeCity(true);
+
+      _this.$helpers.changeSelect('#municipality_id', _this.company.municipality_id);
     });
   },
   methods: {
@@ -1885,7 +1937,7 @@ var Company = function Company(company) {
 
         _this2.$parent.$emit('company_created', response.data.data);
 
-        _this2.modalHide();
+        _this2.$helpers.modalHide('#m_modal_create_company');
       })["catch"](function (error) {
         _this2.saving = false;
         _this2.errors = error.response.data.errors;
@@ -1900,14 +1952,25 @@ var Company = function Company(company) {
 
         _this3.$parent.$emit('company_updated', response.data.data);
 
-        _this3.modalHide();
+        _this3.$helpers.modalHide('#m_modal_create_company');
       })["catch"](function (error) {
         _this3.saving = false;
         _this3.errors = error.response.data.errors;
       });
     },
-    modalHide: function modalHide() {
-      $('#m_modal_create_company').modal('hide');
+    changeCity: function changeCity() {
+      var edit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (edit === false) {
+        this.company.municipality_id = 0;
+      }
+
+      this.municipalities = {};
+      var city_id = this.company.city_id;
+
+      for (var g in this.geos) {
+        if (this.geos[g].id == city_id) this.municipalities = this.geos[g].municipalities;
+      }
     }
   }
 });
@@ -2044,9 +2107,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['geos'],
   components: {
     AdminCompaniesCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2311,16 +2379,12 @@ var User = function User(user) {
   mounted: function mounted() {
     var _this = this;
 
-    this.$parent.$on('create_user', function (role_id, company_id) {
+    this.$parent.$on('create_user', function () {
       _this.editing = false;
       _this.user = new User({});
       _this.errors = {};
 
-      _this.changeCompanyId(_this.user.company_id); // set role and company from search values not used
-      // this.user.role_id = role_id;
-      // this.user.company_id = company_id;
-      // this.changeCompanyId(this.user.company_id);
-
+      _this.$helpers.changeSelect('#company_id', _this.user.company_id);
     });
     this.$parent.$on('edit_user', function (_ref) {
       var user = _ref.user;
@@ -2328,12 +2392,9 @@ var User = function User(user) {
       _this.user = new User(user);
       _this.errors = {};
 
-      _this.changeCompanyId(_this.user.company_id);
+      _this.$helpers.changeSelect(_this.user.company_id);
 
-      $('#birthdate').datepicker('setDate', moment(_this.user.birthdate).format('DD-MM-YYYY'));
-    });
-    $("#company_id").select2({
-      placeholder: this.trans.get('universal.choose')
+      _this.$helpers.setDate('#birthdate', moment(_this.user.birthdate).format('DD-MM-YYYY'));
     });
   },
   methods: {
@@ -2351,7 +2412,7 @@ var User = function User(user) {
 
         _this2.$parent.$emit('user_created', response.data.data);
 
-        _this2.modalHide();
+        _this2.$helpers.modalHide('#m_modal_create_user');
       })["catch"](function (error) {
         _this2.saving = false;
         _this2.errors = error.response.data.errors;
@@ -2366,17 +2427,11 @@ var User = function User(user) {
 
         _this3.$parent.$emit('user_updated', response.data.data);
 
-        _this3.modalHide();
+        _this3.$helpers.modalHide('#m_modal_create_user');
       })["catch"](function (error) {
         _this3.saving = false;
         _this3.errors = error.response.data.errors;
       });
-    },
-    changeCompanyId: function changeCompanyId(val) {
-      $('#company_id').val(val).trigger('change');
-    },
-    modalHide: function modalHide() {
-      $('#m_modal_create_user').modal('hide');
     }
   }
 });
@@ -2590,7 +2645,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
-      this.$emit('create_user', this.role_id, this.company_id);
+      this.$emit('create_user');
     },
     editUser: function editUser(user) {
       this.$emit('edit_user', {
@@ -26007,6 +26062,191 @@ var render = function() {
                                 : _vm._e()
                             ])
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.city")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.company.city_id,
+                                      expression: "company.city_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "city_id" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.company,
+                                          "city_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      function($event) {
+                                        return _vm.changeCity()
+                                      }
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.geos, function(geo) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: geo.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(geo.name) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.city_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.city_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.municipalities.length > 0,
+                                expression: "municipalities.length > 0"
+                              }
+                            ],
+                            staticClass: "form-group m-form__group row"
+                          },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(
+                                      _vm.trans.get("universal.municipality")
+                                    ) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.company.municipality_id,
+                                      expression: "company.municipality_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "municipality_id" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.company,
+                                        "municipality_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.municipalities, function(
+                                    municipality
+                                  ) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: municipality.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(municipality.name) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]
                         )
                       ]
                     )
@@ -26255,6 +26495,12 @@ var render = function() {
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.name")))]),
                     _vm._v(" "),
+                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.city")))]),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.municipality")))
+                    ]),
+                    _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.status")))
                     ]),
@@ -26276,6 +26522,10 @@ var render = function() {
                       _vm._m(0, true),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(company.city))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(company.municipality))]),
                       _vm._v(" "),
                       _c("td", [
                         company.deleted
@@ -26413,7 +26663,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("admin-companies-create")
+        _c("admin-companies-create", { attrs: { geos: _vm.geos } })
       ],
       1
     )
@@ -26753,15 +27003,9 @@ var render = function() {
                                       rawName: "v-model",
                                       value: _vm.user.company_id,
                                       expression: "user.company_id"
-                                    },
-                                    {
-                                      name: "select2",
-                                      rawName: "v-select2",
-                                      value: _vm.user.company_id,
-                                      expression: "user.company_id"
                                     }
                                   ],
-                                  staticClass: "form-control m-select2",
+                                  staticClass: "form-control custom-select",
                                   attrs: { id: "company_id" },
                                   on: {
                                     change: function($event) {
@@ -26786,20 +27030,28 @@ var render = function() {
                                     }
                                   }
                                 },
-                                _vm._l(_vm.companies, function(company) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: company.id } },
-                                    [
-                                      _vm._v(
-                                        "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                          _vm._s(company.name) +
-                                          "\n\t\t\t\t\t\t\t\t\t\t"
-                                      )
-                                    ]
-                                  )
-                                }),
-                                0
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.companies, function(company) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: company.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(company.name) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
                               ),
                               _vm._v(" "),
                               _vm.errors.company_id
@@ -39834,6 +40086,54 @@ function () {
 
 /***/ }),
 
+/***/ "./resources/js/Helpers.js":
+/*!*********************************!*\
+  !*** ./resources/js/Helpers.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Helpers; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Helpers =
+/*#__PURE__*/
+function () {
+  function Helpers() {
+    _classCallCheck(this, Helpers);
+  }
+
+  _createClass(Helpers, [{
+    key: "changeSelect",
+    value: function changeSelect(name, val) {
+      $(name).val(val).trigger('change');
+    }
+  }, {
+    key: "modalHide",
+    value: function modalHide(name) {
+      $(name).modal('hide');
+    }
+  }, {
+    key: "setDate",
+    value: function setDate(name, value) {
+      // value format DD-MM-YYYY
+      $(name).datepicker('setDate', value);
+    }
+  }]);
+
+  return Helpers;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -39846,8 +40146,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lang.js */ "./node_modules/lang.js/src/lang.js");
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lang_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
-/* harmony import */ var vue_blockui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-blockui */ "./node_modules/vue-blockui/index.js");
-/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Helpers */ "./resources/js/Helpers.js");
+/* harmony import */ var vue_blockui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-blockui */ "./node_modules/vue-blockui/index.js");
+/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -39874,7 +40175,9 @@ Vue.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 Vue.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_1__["default"](window.user);
 
-Vue.use(vue_blockui__WEBPACK_IMPORTED_MODULE_2__["default"]);
+Vue.prototype.$helpers = new _Helpers__WEBPACK_IMPORTED_MODULE_2__["default"]();
+
+Vue.use(vue_blockui__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -39900,17 +40203,15 @@ Vue.component('vue-noty', __webpack_require__(/*! ./components/Noty.vue */ "./re
  */
 
 
-Vue.directive('mask', v_mask__WEBPACK_IMPORTED_MODULE_3__["VueMaskDirective"]);
-Vue.directive('select2', {
-  twoWay: true,
-  bind: function bind(el, binding, vnode) {
-    $(el).select2().on("select2:select", function (e) {
-      el.dispatchEvent(new Event('change', {
-        target: e.target
-      }));
-    });
-  }
-});
+Vue.directive('mask', v_mask__WEBPACK_IMPORTED_MODULE_4__["VueMaskDirective"]); // Vue.directive('select2', {
+//   twoWay: true,
+//   bind: function (el, binding, vnode) {
+//     $(el).select2().on("select2:select", (e) => {
+//       el.dispatchEvent(new Event('change', { target: e.target }));
+//     });
+//   },
+// });
+
 Vue.directive('datepicker', {
   twoWay: true,
   bind: function bind(el, binding, vnode) {

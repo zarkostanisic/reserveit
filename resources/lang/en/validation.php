@@ -149,7 +149,8 @@ return [
         'role_id' => 'role',
         'company_id' => 'company',
         'birthdate' => 'birthdate',
-        'password' => 'password'
+        'password' => 'password',
+        'city_id' => 'city'
     ],
 
 ];

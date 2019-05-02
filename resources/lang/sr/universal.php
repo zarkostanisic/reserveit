@@ -39,6 +39,8 @@ return [
     'success' => 'Uspešno!',
     'birthdate' => 'Datum rođenja',
     'address' => 'Addresa',
-    'phone' => 'Telefon'
-
+    'phone' => 'Telefon',
+    'password_confirmation' => 'Potvrdi lozinku',
+    'city' => 'Grad',
+    'municipality' => 'Opština'
 ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Geo;
 
 class CompaniesController extends Controller
 {
@@ -17,6 +18,8 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        return view('admin.companies.index');
+        $geos = Geo::where('geo_id', 0)->get();
+
+        return view('admin.companies.index', compact('geos'));
     }
 }

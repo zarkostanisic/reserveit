@@ -199,7 +199,7 @@
 			},
 
 			createUser(){
-				this.$emit('create_user', this.role_id, this.company_id);
+				this.$emit('create_user');
 			},
 
 			editUser(user){

@@ -23,6 +23,7 @@ class UsersController extends Controller
         $roles = [];
         $company = 0;
         $companies = Company::all();
+
         $role = auth()->user()->role->name;
 
         if(in_array($role, ['administrator', 'manager'])){

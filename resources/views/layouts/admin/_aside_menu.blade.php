@@ -7,9 +7,12 @@
 		</li>
 		<li class="m-menu__item  {{ request()->routeIs('dashboard') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('dashboard') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">{{ __('dashboard.title') }}</span></a></li>
 
-		<li class="m-menu__item  {{ request()->routeIs('companies.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ route('companies.index') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('companies.plural') }}</span></a></li>
-
-		<li class="m-menu__item  {{ request()->routeIs('users.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('users.index')}}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-avatar"></i><span class="m-menu__link-text">{{ __('users.plural') }}</span></a></li>
+		@if (Auth()->user()->isAdmin())
+			<li class="m-menu__item  {{ request()->routeIs('companies.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ route('companies.index') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('companies.plural') }}</span></a></li>
+		@endif
+		@if (Auth()->user()->isAdmin() || Auth()->user()->isManager())
+			<li class="m-menu__item  {{ request()->routeIs('users.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('users.index')}}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-avatar"></i><span class="m-menu__link-text">{{ __('users.plural') }}</span></a></li>
+		@endif
 
 		<li class="m-menu__item  {{ request()->routeIs('events') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="#" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-signs"></i><span class="m-menu__link-text">{{ __('aside_menu.events') }}</span></a></li>
 

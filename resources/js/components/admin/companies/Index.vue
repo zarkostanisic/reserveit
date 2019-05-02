@@ -56,6 +56,8 @@
 							<th>{{ trans.get('universal.id') }}</th>
 							<th>{{ trans.get('universal.photo') }}</th>
 							<th>{{ trans.get('universal.name') }}</th>
+							<th>{{ trans.get('universal.city') }}</th>
+							<th>{{ trans.get('universal.municipality') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>
 						</tr>
@@ -67,6 +69,8 @@
 								<img src="photo/male.png" width="80" height="80">
 							</td>
 							<td>{{ company.name }}</td>
+							<td>{{ company.city }}</td>
+							<td>{{ company.municipality }}</td>
 							<td>
 								<span v-if="company.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}
@@ -113,7 +117,7 @@
 			  </div>
 			</BlockUI>
 
-			<admin-companies-create></admin-companies-create>
+			<admin-companies-create :geos="geos"></admin-companies-create>
 		</div>
 	</div>
 </template>
@@ -123,6 +127,7 @@
 	let timeout = null;
 
 	export default {
+		props: ['geos'],
 		components: {
 		    AdminCompaniesCreate
 		},

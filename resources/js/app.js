@@ -29,6 +29,9 @@ Vue.prototype.trans = new Lang({
 import Gate from './Gate'
 Vue.prototype.$gate = new Gate(window.user);
 
+import Helpers from './Helpers'
+Vue.prototype.$helpers = new Helpers();
+
 import BlockUI from 'vue-blockui'
  
 Vue.use(BlockUI);
@@ -66,14 +69,14 @@ Vue.component('vue-noty', require('./components/Noty.vue').default);
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 
-Vue.directive('select2', {
-  twoWay: true,
-  bind: function (el, binding, vnode) {
-    $(el).select2().on("select2:select", (e) => {
-      el.dispatchEvent(new Event('change', { target: e.target }));
-    });
-  },
-});
+// Vue.directive('select2', {
+//   twoWay: true,
+//   bind: function (el, binding, vnode) {
+//     $(el).select2().on("select2:select", (e) => {
+//       el.dispatchEvent(new Event('change', { target: e.target }));
+//     });
+//   },
+// });
 
 Vue.directive('datepicker', {
   twoWay: true,

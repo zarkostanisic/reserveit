@@ -40,6 +40,7 @@ return [
     'birthdate' => 'Birthdate',
     'address' => 'Address',
     'phone' => 'Phone',
-    //not translated
-    'password_confirmation' => 'Confirm password'
+    'password_confirmation' => 'Confirm password',
+    'city' => 'City',
+    'municipality' => 'Municipality'
 ];

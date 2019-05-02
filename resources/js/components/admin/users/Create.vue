@@ -49,10 +49,10 @@
 										{{ trans.get('companies.singular') }}
 									</label>
 									<div class="col-lg-8">
-										<select class="form-control m-select2" id="company_id" 
-										v-model="user.company_id" 
-										v-select2='user.company_id'
+										<select class="form-control custom-select" id="company_id" 
+										v-model="user.company_id"
 										>
+											<option value="">{{ trans.get('universal.choose') }}</option>
 											<option v-for="company in companies" 
 											:value="company.id"
 											>
@@ -170,17 +170,12 @@
 			}
 		},
 		mounted(){
-			this.$parent.$on('create_user', (role_id, company_id) => {
+			this.$parent.$on('create_user', () => {
 				this.editing = false;
 				this.user = new User({});
 				this.errors = {};
 
-				this.changeCompanyId(this.user.company_id);
-
-				// set role and company from search values not used
-				// this.user.role_id = role_id;
-				// this.user.company_id = company_id;
-				// this.changeCompanyId(this.user.company_id);
+				this.$helpers.changeSelect('#company_id', this.user.company_id);
 			});
 
 			this.$parent.$on('edit_user', ({user}) => {
@@ -188,13 +183,9 @@
 				this.user = new User(user);
 				this.errors = {};
 
-				this.changeCompanyId(this.user.company_id);
-				$('#birthdate').datepicker('setDate', moment(this.user.birthdate).format('DD-MM-YYYY'));
+				this.$helpers.changeSelect(this.user.company_id);
+				this.$helpers.setDate('#birthdate', moment(this.user.birthdate).format('DD-MM-YYYY'))
 			});
-
-			$("#company_id").select2({
-	            placeholder: this.trans.get('universal.choose')
-	        });
 		},
 		methods: {
 			createUser(){
@@ -208,7 +199,7 @@
 					this.saving = false;
 					this.$parent.$emit('user_created', response.data.data);
 
-					this.modalHide();
+					this.$helpers.modalHide('#m_modal_create_user');
 					
 				}).catch(error => {
 					this.saving = false;
@@ -222,18 +213,12 @@
 					this.saving = false;
 					this.$parent.$emit('user_updated', response.data.data);
 
-					this.modalHide();
+					this.$helpers.modalHide('#m_modal_create_user');
 					
 				}).catch(error => {
 					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
-			},
-			changeCompanyId(val){
-				$('#company_id').val(val).trigger('change');
-			},
-			modalHide(){
-				$('#m_modal_create_user').modal('hide');
 			}
 		}
 	}

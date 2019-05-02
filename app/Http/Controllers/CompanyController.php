@@ -39,6 +39,8 @@ class CompanyController extends Controller
         $company = new Company();
 
         $company->name = $request->name;
+        $company->city_id = $request->city_id;
+        $company->municipality_id = $request->municipality_id;
         $company->save();
         
         return response([
@@ -67,6 +69,8 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, Company $company)
     {
         $company->name = $request->name;
+        $company->city_id = $request->city_id;
+        $company->municipality_id = $request->municipality_id;
         $company->save();
         
         return response([
