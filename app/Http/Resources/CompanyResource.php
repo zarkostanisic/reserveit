@@ -17,7 +17,7 @@ class CompanyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' => $this->logoPath,
+            'logo' => $this->logo ? $this->logoPath : '',
             'city_id' => $this->city_id,
             'quarter_id' => $this->quarter_id,
             'city' => $this->city['name'],

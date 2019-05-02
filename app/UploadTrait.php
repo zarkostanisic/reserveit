@@ -18,7 +18,7 @@ trait UploadTrait{
     }
 
     public function removeOldFile($remove_path){
-    	if(file_exists($remove_path)) {
+    	if(is_file($remove_path)) {
             unlink($remove_path);
         }
     }
