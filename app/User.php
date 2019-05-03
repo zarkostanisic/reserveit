@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'birthdate', 'address', 'phone', 'role_id', 'company_id'
+        'name', 'photo', 'email', 'password', 'birthdate', 'address', 'phone', 'role_id', 'company_id'
     ];
 
     /**
@@ -52,6 +52,10 @@ class User extends Authenticatable
 
     public function company(){
         return $this->belongsTo(Company::class);
+    }
+
+     public function getPhotoPathAttribute(){
+        return '/images/users/' . $this->photo;
     }
 
     public function scopeFilter($query, $role_id, $company_id)

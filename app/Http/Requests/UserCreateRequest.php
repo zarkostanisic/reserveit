@@ -25,13 +25,14 @@ class UserCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'photo' => 'image64:jpeg,jpg,png',
             'email' => 'required|string|email|max:255|unique:users',
             'birthdate' => 'required|date_format:d-m-Y',
             'address' => 'required',
             'phone' => 'required',
             'password' => 'required|string|min:8|confirmed',
             'role_id' => 'required|integer',
-            'company_id' => 'required_if:role_id,2|required_if:role_id,3|integer'
+            'company_id' => 'required_if:role_id,2|required_if:role_id,3'
         ];
     }
 }

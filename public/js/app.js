@@ -1901,7 +1901,7 @@ var Company = function Company(company) {
 
   this.id = company.id || '';
   this.name = company.name || '';
-  this.logo = company.logo || null;
+  this.logo = '';
   this.city_id = company.city_id || '';
   this.quarter_id = company.quarter_id || 0;
 };
@@ -2223,6 +2223,7 @@ var timeout = null;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //
@@ -2369,11 +2370,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 var User = function User(user) {
   _classCallCheck(this, User);
 
   this.id = user.id || '';
   this.name = user.name || '';
+  this.photo = '';
   this.email = user.email || '';
   this.birthdate = user.birthdate || '';
   this.address = user.address || '';
@@ -2399,6 +2412,8 @@ var User = function User(user) {
     var _this = this;
 
     this.$parent.$on('create_user', function () {
+      _this.setFileValue('#photo', '', 'user', 'photo');
+
       _this.editing = false;
       _this.user = new User({});
       _this.errors = {};
@@ -2407,6 +2422,9 @@ var User = function User(user) {
     });
     this.$parent.$on('edit_user', function (_ref) {
       var user = _ref.user;
+
+      _this.setFileValue('#photo', '', 'user', 'photo');
+
       _this.editing = true;
       _this.user = new User(user);
       _this.errors = {};
@@ -2451,7 +2469,9 @@ var User = function User(user) {
         _this3.saving = false;
         _this3.errors = error.response.data.errors;
       });
-    }
+    },
+    onFileChange: _Helpers__WEBPACK_IMPORTED_MODULE_0__["onFileChange"],
+    setFileValue: _Helpers__WEBPACK_IMPORTED_MODULE_0__["setFileValue"]
   }
 });
 
@@ -26275,7 +26295,7 @@ var render = function() {
                                 staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "logo" }
                               },
-                              [_vm._v("Logo")]
+                              [_vm._v(_vm._s(_vm.trans.get("universal.logo")))]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-lg-8" }, [
@@ -26580,7 +26600,11 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.city))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(company.quarter))]),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(company.quarter != "" ? company.quarter : "-")
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("td", [
                         company.deleted
@@ -27281,6 +27305,39 @@ var render = function() {
                                 : _vm._e()
                             ])
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "photo" }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("universal.photo")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                staticClass: "form-control m-input",
+                                attrs: { type: "file", id: "photo" },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.onFileChange("user", "photo")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.photo
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.photo[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
                         )
                       ]
                     ),
@@ -27761,7 +27818,11 @@ var render = function() {
                         _vm._v(_vm._s(user.id))
                       ]),
                       _vm._v(" "),
-                      _vm._m(0, true),
+                      _c("td", [
+                        _c("img", {
+                          attrs: { src: user.photo, width: "80", height: "80" }
+                        })
+                      ]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.name))]),
                       _vm._v(" "),
@@ -27926,16 +27987,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("img", { attrs: { src: "photo/male.png", width: "80", height: "80" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

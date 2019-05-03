@@ -9,9 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
 use Carbon\Carbon;
+use App\UploadTrait;
 
 class UserController extends Controller
 {
+
+    use UploadTrait;
 
     public function __construct(){
         $this->middleware(['auth:api', 'roles:administrator|manager,api']);
@@ -52,6 +55,13 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->role_id = $request->role_id;
         $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
+
+        $path = 'images/users/';
+
+        if($fileName = $this->uploadFile('photo', $path)){
+            $user->photo = $fileName;
+        }
+
         $user->save();
         
         return response([
@@ -91,7 +101,17 @@ class UserController extends Controller
 
         $user->role_id = $request->role_id;
         $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
+
+        $path = 'images/users/';
+        $remove_path = public_path($path) . $user->photo;
+
+        if($fileName = $this->uploadFile('photo', $path)){
+            $user->photo = $fileName;
+        }
+
         $user->save();
+
+        $this->removeFile($remove_path);
         
         return response([
             'data' => new UserResource($user->fresh())

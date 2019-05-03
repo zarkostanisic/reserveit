@@ -92,6 +92,14 @@
 										<span v-if="errors.phone"class="m-form__help">{{ errors.phone[0] }}</span>
 									</div>
 								</div>
+
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label" for="photo">{{ trans.get('universal.photo') }}</label>
+									<div class="col-lg-8">
+										<input type="file" class="form-control m-input" v-on:change="onFileChange('user', 'photo')" id="photo">
+										<span v-if="errors.photo"class="m-form__help">{{ errors.photo[0] }}</span>
+									</div>
+								</div>
 							</div>
 
 							<div class="m-form__seperator m-form__seperator--dashed"></div>
@@ -143,10 +151,14 @@
 </template>
 
 <script>
+	import {onFileChange} from '../../../Helpers'
+	import {setFileValue} from '../../../Helpers'
+
 	class User{
 		constructor(user){
 			this.id = user.id || '';
 			this.name = user.name || '';
+			this.photo = '';
 			this.email = user.email || '';
 			this.birthdate = user.birthdate || '';
 			this.address = user.address || '';
@@ -171,6 +183,7 @@
 		},
 		mounted(){
 			this.$parent.$on('create_user', () => {
+				this.setFileValue('#photo', '', 'user', 'photo');
 				this.editing = false;
 				this.user = new User({});
 				this.errors = {};
@@ -179,6 +192,7 @@
 			});
 
 			this.$parent.$on('edit_user', ({user}) => {
+				this.setFileValue('#photo', '', 'user', 'photo');
 				this.editing = true;
 				this.user = new User(user);
 				this.errors = {};
@@ -219,7 +233,9 @@
 					this.saving = false;
 					this.errors = error.response.data.errors;
 				});
-			}
+			},
+			onFileChange,
+			setFileValue
 		}
 	}
 </script>

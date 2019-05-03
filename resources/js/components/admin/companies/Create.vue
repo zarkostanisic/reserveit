@@ -63,7 +63,7 @@
 									</div>
 								</div>
 								<div class="form-group m-form__group row">
-									<label class="col-lg-2 col-form-label" for="logo">Logo</label>
+									<label class="col-lg-2 col-form-label" for="logo">{{ trans.get('universal.logo') }}</label>
 									<div class="col-lg-8">
 										<input type="file" class="form-control m-input" v-on:change="onFileChange('company', 'logo')" id="logo">
 										<span v-if="errors.logo"class="m-form__help">{{ errors.logo[0] }}</span>
@@ -106,7 +106,7 @@
 		constructor(company){
 			this.id = company.id || '';
 			this.name = company.name || '';
-			this.logo = company.logo || null;
+			this.logo = '';
 			this.city_id = company.city_id || '';
 			this.quarter_id = company.quarter_id || 0;
 		}

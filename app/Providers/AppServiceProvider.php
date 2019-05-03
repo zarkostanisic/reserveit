@@ -35,15 +35,21 @@ class AppServiceProvider extends ServiceProvider
         View::share('messages', ExportLocalization::export()->toFlat());
 
         Validator::extend('image64', function ($attribute, $value, $parameters, $validator) {
-            $type = explode('/', explode(':', substr($value, 0, strpos($value, ';')))[1])[1];
-            if (in_array($type, $parameters)) {
-                return true;
+            if($value != ''){
+                $type = explode('/', explode(':', substr($value, 0, strpos($value, ';')))[1])[1];
+                if (in_array($type, $parameters)) {
+                    return true;
+                }
+                return false;
             }
-            return false;
+
+            return true;
         });
 
         Validator::replacer('image64', function($message, $attribute, $rule, $parameters) {
-            return str_replace(':values',join(",",$parameters),$message);
+            if($message != ''){
+                return str_replace(':values',join(",",$parameters),$message);
+            }
         });
     }
 }

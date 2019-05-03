@@ -44,6 +44,13 @@ class CompanyController extends Controller
         $company->name = $request->name;
         $company->city_id = $request->city_id;
         $company->quarter_id = $request->quarter_id;
+
+        $path = 'images/companies/';
+
+        if($fileName = $this->uploadFile('logo', $path)){
+            $company->logo = $fileName;
+        }
+        
         $company->save();
         
         return response([
@@ -78,14 +85,15 @@ class CompanyController extends Controller
         
         $path = 'images/companies/';
         $remove_path = public_path($path) . $company->logo;
-        if($fileName = $this->doUpload('logo', $path)){
+
+        if($fileName = $this->uploadFile('logo', $path)){
             $company->logo = $fileName;
         }
 
         $company->save();
 
-        $this->removeOldFile($remove_path);
-           
+        $this->removeFile($remove_path);
+
         return response([
             'data' => new CompanyResource($company->fresh())
         ], Response::HTTP_ACCEPTED);

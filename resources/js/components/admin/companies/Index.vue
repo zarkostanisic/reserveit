@@ -70,7 +70,7 @@
 							</td>
 							<td>{{ company.name }}</td>
 							<td>{{ company.city }}</td>
-							<td>{{ company.quarter }}</td>
+							<td>{{ company.quarter != '' ? company.quarter : '-' }}</td>
 							<td>
 								<span v-if="company.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}

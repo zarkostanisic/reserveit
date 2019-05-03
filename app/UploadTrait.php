@@ -4,12 +4,12 @@ use Carbon\Carbon;
 use Image;
 
 trait UploadTrait{
-	public function doUpload($name, $path){
-        if(request()->filled('logo')){
+	public function uploadFile($name, $path){
+        if(request()->filled($name)){
             $imageData = request()->get($name);
 
             $fileName = Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
-            Image::make(request()->get($name))->save(public_path($path).$fileName);
+            Image::make($imageData)->save(public_path($path).$fileName);
 
             return $fileName;
         }
@@ -17,7 +17,7 @@ trait UploadTrait{
         return false;
     }
 
-    public function removeOldFile($remove_path){
+    public function removeFile($remove_path){
     	if(is_file($remove_path)) {
             unlink($remove_path);
         }
