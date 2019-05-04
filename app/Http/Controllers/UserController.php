@@ -97,33 +97,36 @@ class UserController extends Controller
      */
     public function update(UserEditRequest $request, User $user)
     {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->birthdate = Carbon::createFromFormat('d-m-Y', $request->birthdate)->toDateString();
-        $user->address = $request->address;
-        $user->phone = $request->phone;
+        if (auth()->user()->can('update', $user)) {
 
-        if(!empty($request->password)){
-            $user->password = bcrypt($request->password);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->birthdate = Carbon::createFromFormat('d-m-Y', $request->birthdate)->toDateString();
+            $user->address = $request->address;
+            $user->phone = $request->phone;
+
+            if(!empty($request->password)){
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->role_id = $request->role_id;
+            $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
+
+            $path = 'images/users/';
+            $remove_path = public_path($path) . $user->photo;
+
+            if($fileName = $this->uploadFile('photo', $path)){
+                $user->photo = $fileName;
+            }
+
+            $user->save();
+
+            $this->removeFile($remove_path);
+            
+            return response([
+                'data' => new UserResource($user->fresh())
+            ], Response::HTTP_ACCEPTED);
         }
-
-        $user->role_id = $request->role_id;
-        $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
-
-        $path = 'images/users/';
-        $remove_path = public_path($path) . $user->photo;
-
-        if($fileName = $this->uploadFile('photo', $path)){
-            $user->photo = $fileName;
-        }
-
-        $user->save();
-
-        $this->removeFile($remove_path);
-        
-        return response([
-            'data' => new UserResource($user->fresh())
-        ], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -134,11 +137,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->trashed()){
-            $user->restore();
-        }
-        else{
-            $user->delete();
+        if (auth()->user()->can('delete', $user)) {
+            if($user->trashed()){
+                $user->restore();
+            }
+            else{
+                $user->delete();
+            }
         }
         
         return response([

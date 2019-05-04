@@ -132,7 +132,7 @@
 
 									<div class="m-stack__item">
 										<button type="button" class="btn" 
-											v-if="user.id > 1 && $gate.isAdmin()"
+											v-if="user.id > 1 && ($gate.getId() != user.id)"
 											v-bind:class="{ 'btn-outline-danger': !user.deleted, 'btn-outline-success': user.deleted}" 
 										 	@click="deleteUser(user.id, key)">
 											{{ user.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
@@ -185,7 +185,7 @@
 			this.getAllWithFilter();
 
 			this.$on('user_created', (user) => {
-				// this.users.data.unshift(user);
+				this.users.data.unshift(user);
 				window.noty(this.trans.get('universal.success'), 'success');
 			});
 

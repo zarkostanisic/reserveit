@@ -2674,7 +2674,8 @@ __webpack_require__.r(__webpack_exports__);
 
     this.getAllWithFilter();
     this.$on('user_created', function (user) {
-      // this.users.data.unshift(user);
+      _this.users.data.unshift(user);
+
       window.noty(_this.trans.get('universal.success'), 'success');
     });
     this.$on('user_updated', function (user) {
@@ -28017,7 +28018,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "m-stack__item" }, [
-                              user.id > 1 && _vm.$gate.isAdmin()
+                              user.id > 1 && _vm.$gate.getId() != user.id
                                 ? _c(
                                     "button",
                                     {
@@ -40268,6 +40269,11 @@ function () {
     key: "isHostess",
     value: function isHostess() {
       return this.user.role.name == 'hostess';
+    }
+  }, {
+    key: "getId",
+    value: function getId() {
+      return this.user.id;
     }
   }, {
     key: "getCompanyId",

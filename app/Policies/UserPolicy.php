@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        
     }
 
     /**
@@ -41,7 +41,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return true;
+        return $user->isAdmin() || ($user->isManager() && $user->company_id == $model->company_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return ($user->isAdmin() || ($user->isManager() && $user->company_id == $model->company_id)) && $user->id != $model->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $user->isAdmin() || ($user->isManager() && $user->company_id == $model->company_id) && $user->id != $model->id;
     }
 
     /**
