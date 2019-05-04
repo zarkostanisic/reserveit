@@ -2487,6 +2487,7 @@ var User = function User(user) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/users/Create.vue");
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
 //
 //
 //
@@ -2631,6 +2632,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['roles', 'companies'],
@@ -2641,6 +2661,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: {},
       perpage: 25,
+      orderField: 'id',
+      order: 'asc',
       role_id: 0,
       company_id: 0,
       loading: false,
@@ -2650,7 +2672,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    this.getUsers();
+    this.getAllWithFilter();
     this.$on('user_created', function (user) {
       // this.users.data.unshift(user);
       window.noty(_this.trans.get('universal.success'), 'success');
@@ -2666,7 +2688,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    getUsers: function getUsers() {
+    getAllWithFilter: function getAllWithFilter() {
       var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
@@ -2675,7 +2697,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.role_id == 1) this.company_id = 0;
       var ajax_url = '/api/users?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
-      ajax_url += '&role_id=' + this.role_id;
+      ajax_url += '&orderBy=' + this.orderField;
+      ajax_url += '&order=' + this.order, ajax_url += '&role_id=' + this.role_id;
       ajax_url += '&company_id=' + this.company_id;
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
@@ -2705,7 +2728,10 @@ __webpack_require__.r(__webpack_exports__);
           window.noty(_this3.trans.get('universal.success'), 'success');
         });
       }
-    }
+    },
+    getDateWithFormat: _Helpers__WEBPACK_IMPORTED_MODULE_1__["getDateWithFormat"],
+    orderBy: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderBy"],
+    orderActive: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderActive"]
   }
 });
 
@@ -27626,7 +27652,7 @@ var render = function() {
                               ? $$selectedVal
                               : $$selectedVal[0]
                           },
-                          _vm.getUsers
+                          _vm.getAllWithFilter
                         ]
                       }
                     },
@@ -27675,7 +27701,7 @@ var render = function() {
                               ? $$selectedVal
                               : $$selectedVal[0]
                           },
-                          _vm.getUsers
+                          _vm.getAllWithFilter
                         ]
                       }
                     },
@@ -27738,7 +27764,7 @@ var render = function() {
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               },
-                              _vm.getUsers
+                              _vm.getAllWithFilter
                             ]
                           }
                         },
@@ -27778,31 +27804,92 @@ var render = function() {
               [
                 _c("thead", [
                   _c("tr", [
-                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.id")))]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("id"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("id")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.id")))]
+                    ),
                     _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.photo")))
                     ]),
                     _vm._v(" "),
-                    _c("th", [
-                      _vm._v(_vm._s(_vm.trans.get("universal.full_name")))
-                    ]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.full_name")))]
+                    ),
                     _vm._v(" "),
                     _vm.user_company_id == 0
-                      ? _c("th", [
-                          _vm._v(_vm._s(_vm.trans.get("companies.singular")))
-                        ])
+                      ? _c(
+                          "th",
+                          {
+                            class: _vm.orderActive("companies.name"),
+                            on: {
+                              click: function($event) {
+                                return _vm.orderBy("companies.name")
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.trans.get("companies.singular")))]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("email"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("email")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.email")))]
+                    ),
+                    _vm._v(" "),
                     _c("th", [
-                      _vm._v(_vm._s(_vm.trans.get("universal.email")))
+                      _vm._v(_vm._s(_vm.trans.get("universal.address")))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.phone")))
                     ]),
                     _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.status")))
                     ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.role")))]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("roles.name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("roles.name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.role")))]
+                    ),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.created_at")))
+                    ]),
                     _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.actions")))
@@ -27837,6 +27924,10 @@ var render = function() {
                         : _vm._e(),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.address))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.phone))]),
                       _vm._v(" "),
                       _c("td", [
                         user.deleted
@@ -27876,6 +27967,14 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm.trans.get("universal." + user.role)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "100" } }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.getDateWithFormat(user.created_at, "DD-MM-YYYY")
+                          )
+                        )
                       ]),
                       _vm._v(" "),
                       _c("td", [
@@ -27964,7 +28063,7 @@ var render = function() {
             _vm._v(" "),
             _c("pagination", {
               attrs: { limit: 3, data: _vm.users, align: "right" },
-              on: { "pagination-change-page": _vm.getUsers }
+              on: { "pagination-change-page": _vm.getAllWithFilter }
             })
           ],
           1
@@ -40188,7 +40287,7 @@ function () {
 /*!*********************************!*\
   !*** ./resources/js/Helpers.js ***!
   \*********************************/
-/*! exports provided: default, onFileChange, setFileValue */
+/*! exports provided: default, onFileChange, setFileValue, getDateWithFormat, orderBy, orderActive */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40196,6 +40295,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Helpers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onFileChange", function() { return onFileChange; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setFileValue", function() { return setFileValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDateWithFormat", function() { return getDateWithFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "orderBy", function() { return orderBy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "orderActive", function() { return orderActive; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -40249,6 +40351,23 @@ function setFileValue(name, val, c, p) {
   var vm = this;
   vm[c][p] = null;
   $(name).val(val);
+}
+function getDateWithFormat(value, format) {
+  // value format
+  return moment(value).format(format);
+}
+function orderBy(field) {
+  if (this.order == 'asc') this.order = 'desc';else this.order = 'asc';
+  if (field != this.orderField) this.order = 'asc';
+  this.orderField = field;
+  this.getAllWithFilter();
+}
+function orderActive(field) {
+  return {
+    'sorting_asc': this.order == 'asc',
+    'sorting_desc': this.order == 'desc',
+    'active': field == this.orderField
+  };
 }
 
 /***/ }),

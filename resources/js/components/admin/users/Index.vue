@@ -31,7 +31,7 @@
 						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
-							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getAllWithFilter" :disabled="loading">
 								<option value="10">10</option>
 								<option value="25">25</option>
 								<option value="50">50</option>
@@ -40,7 +40,7 @@
 						</label>
 
 						<label class="col-sm-12 col-md-2">{{ trans.get('universal.role') }}
-							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="role_id" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="role_id" @change="getAllWithFilter" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
 								</option>
@@ -53,7 +53,7 @@
 						<label class="col-sm-12 col-md-2"
 							v-if="$gate.isAdmin() && role_id != 1"
 							> {{ trans.get('companies.singular') }}
-							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="company_id" @change="getUsers" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="company_id" @change="getAllWithFilter" :disabled="loading">
 								<option value="0">
 									{{ trans.get('universal.choose') }}
 								</option>
@@ -68,13 +68,26 @@
 				<table class="table table-responsive m-table table-bordered">
 					<thead>
 						<tr>
-							<th>{{ trans.get('universal.id') }}</th>
+							<th 
+								:class="orderActive('id')" 
+								@click="orderBy('id')">{{ trans.get('universal.id') }}</th>
 							<th>{{ trans.get('universal.photo') }}</th>
-							<th>{{ trans.get('universal.full_name') }}</th>
-							<th v-if="user_company_id == 0">{{ trans.get('companies.singular') }}</th>
-							<th>{{ trans.get('universal.email') }}</th>
+							<th 
+								:class="orderActive('name')" 
+								@click="orderBy('name')">{{ trans.get('universal.full_name') }}</th>
+							<th 
+								:class="orderActive('companies.name')"
+								@click="orderBy('companies.name')" v-if="user_company_id == 0">{{ trans.get('companies.singular') }}</th>
+							<th 
+								:class="orderActive('email')"
+								@click="orderBy('email')">{{ trans.get('universal.email') }}</th>
+							<th>{{ trans.get('universal.address') }}</th>
+							<th>{{ trans.get('universal.phone') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
-							<th>{{ trans.get('universal.role') }}</th>
+							<th 
+								:class="orderActive('roles.name')"
+								@click="orderBy('roles.name')">{{ trans.get('universal.role') }}</th>
+							<th>{{ trans.get('universal.created_at') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>
 						</tr>
 					</thead>
@@ -89,6 +102,8 @@
 								{{ user.role_id == 1 ? '-' : user.company }}
 							</td>
 							<td>{{ user.email }}</td>
+							<td>{{ user.address }}</td>
+							<td>{{ user.phone }}</td>
 							<td>
 								<span v-if="user.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}
@@ -100,6 +115,7 @@
 								</div>
 							</td>
 							<td>{{ trans.get('universal.' + user.role) }}</td>
+							<td width="100">{{ getDateWithFormat(user.created_at, 'DD-MM-YYYY') }}</td>
 							<td>
 								<div class="m-stack m-stack--ver m-stack--general" style="width: 160px">
 									<div class="m-stack__item">
@@ -129,7 +145,7 @@
 					</tbody>
 				</table>
 
-				<pagination :limit="3" :data="users" @pagination-change-page="getUsers" align="right"></pagination>
+				<pagination :limit="3" :data="users" @pagination-change-page="getAllWithFilter" align="right"></pagination>
 			</div>
 
 			<BlockUI v-if="loading">
@@ -143,7 +159,10 @@
 </template>
 
 <script>
-	import AdminUsersCreate from './Create'	
+	import AdminUsersCreate from './Create'
+	import {getDateWithFormat} from '../../../Helpers'
+	import {orderBy} from '../../../Helpers'
+	import {orderActive} from '../../../Helpers'
 
 	export default {
 		props: ['roles', 'companies'],
@@ -154,6 +173,8 @@
 			return {
 				users: {},
 				perpage: 25,
+				orderField: 'id',
+				order: 'asc',
 				role_id: 0,
 				company_id: 0,
 				loading: false,
@@ -161,7 +182,7 @@
 			}
 		},
 		mounted() {
-			this.getUsers();
+			this.getAllWithFilter();
 
 			this.$on('user_created', (user) => {
 				// this.users.data.unshift(user);
@@ -179,13 +200,15 @@
 			});
 		},
 		methods: {
-			getUsers(page = 1) {
+			getAllWithFilter(page = 1) {
 				this.loading = true;
 				if(this.user_company_id > 0) this.company_id = this.user_company_id;
 				if(this.role_id == 1) this.company_id = 0;
 
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
+				ajax_url += '&orderBy=' + this.orderField
+				ajax_url += '&order=' + this.order,
 				ajax_url += '&role_id=' + this.role_id;
 				ajax_url += '&company_id=' + this.company_id;
 
@@ -221,7 +244,10 @@
 						window.noty(this.trans.get('universal.success'), 'success');
 					});
 				}
-			}
+			},
+			getDateWithFormat,
+			orderBy,
+			orderActive
 		}
 
 	}

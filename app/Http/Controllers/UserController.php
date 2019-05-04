@@ -30,8 +30,16 @@ class UserController extends Controller
         $perpage = request()->query('perpage') ?? 10;
         $role_id = request()->query('role_id') ?? 0;
         $company_id = request()->query('company_id') ?? 0;
+        $orderBy = request()->query('orderBy') ?? 'id';
+        $order = request()->query('order') ?? 'asc';
 
-        $users = User::withTrashed()->filter($role_id, $company_id)->paginate($perpage);
+        $users = User::withTrashed()
+            ->filter($role_id, $company_id)
+            ->select('users.*')
+            ->leftjoin('companies', 'companies.id', '=', 'users.company_id')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->orderBy($orderBy, $order)
+            ->paginate($perpage);
 
         return UserResource::collection($users);
     }

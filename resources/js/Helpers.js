@@ -32,3 +32,25 @@ export function setFileValue(name, val, c, p){
 	vm[c][p] = null;
 	$(name).val(val);
 }
+
+export function getDateWithFormat(value, format){
+	// value format
+	return moment(value).format(format);
+}
+
+export function orderBy(field){
+	if(this.order == 'asc') this.order = 'desc';
+	else this.order = 'asc';
+	if(field != this.orderField) this.order = 'asc';
+	this.orderField = field;
+
+	this.getAllWithFilter();
+}
+
+export function orderActive(field){
+	return {
+		'sorting_asc': this.order == 'asc',
+		'sorting_desc': this.order == 'desc',
+		'active': field == this.orderField
+	}
+}

@@ -47,8 +47,29 @@
 		<link href="/assets/demo/demo12/base/style.bundle.css" rel="stylesheet" type="text/css" />
 
 		<style type="text/css">
-			.select2.select2-container{
+			/*.select2.select2-container{
 				width: 100%!important;
+			}*/
+			th.sorting_desc, th.sorting_asc{
+				position: relative;
+				padding-right: 30px;
+			}
+			th.sorting_desc:after, th.sorting_desc:before, th.sorting_asc:after, th.sorting_asc:before{
+				position: absolute;
+				bottom: 0.9em;
+				display: block;
+				opacity: 0.3;
+				right: 1em;
+				content: "\2191";
+			}
+
+			th.sorting_desc:after, th.sorting_asc:after{
+				right: 0.5em;
+				content: "\2193";
+			}
+
+			th.sorting_desc.active:after, th.sorting_asc.active:before{
+				opacity: 1;
 			}
 		</style>
 

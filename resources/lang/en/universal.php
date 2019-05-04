@@ -42,5 +42,7 @@ return [
     'phone' => 'Phone',
     'password_confirmation' => 'Confirm password',
     'city' => 'City',
-    'quarter' => 'Quarter'
+    'quarter' => 'Quarter',
+    //not translated
+    'created_at' => 'Created at'
 ];
