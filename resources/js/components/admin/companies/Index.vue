@@ -31,7 +31,7 @@
 						<label class="col-sm-12 col-md-1">
 							{{ trans.get('universal.show') }} 
 
-							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getCompanies" :disabled="loading">
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="perpage" @change="getAllWithFilter" :disabled="loading">
 								<option value="10">10</option>
 								<option value="25">25</option>
 								<option value="50">50</option>
@@ -53,10 +53,16 @@
 				<table class="table table-responsive m-table table-bordered">
 					<thead>
 						<tr>
-							<th>{{ trans.get('universal.id') }}</th>
+							<th 
+								:class="orderActive('id')" 
+								@click="orderBy('id')">{{ trans.get('universal.id') }}</th>
 							<th>{{ trans.get('universal.logo') }}</th>
-							<th>{{ trans.get('universal.name') }}</th>
-							<th>{{ trans.get('universal.city') }}</th>
+							<th 
+								:class="orderActive('name')" 
+								@click="orderBy('name')">{{ trans.get('universal.name') }}</th>
+							<th
+								:class="orderActive('geos.name')" 
+								@click="orderBy('geos.name')">{{ trans.get('universal.city') }}</th>
 							<th>{{ trans.get('universal.quarter') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>
@@ -109,7 +115,7 @@
 					</tbody>
 				</table>
 
-				<pagination :limit="3" :data="companies" @pagination-change-page="getCompanies" align="right"></pagination>
+				<pagination :limit="3" :data="companies" @pagination-change-page="getAllWithFilter" align="right"></pagination>
 			</div>
 
 			<BlockUI v-if="loading">
@@ -124,6 +130,9 @@
 
 <script>
 	import AdminCompaniesCreate from './Create'	
+	import {orderBy} from '../../../Helpers'
+	import {orderActive} from '../../../Helpers'
+
 	let timeout = null;
 
 	export default {
@@ -135,12 +144,14 @@
 			return {
 				companies: {},
 				perpage: 25,
+				orderField: 'id',
+				order: 'asc',
 				loading: false,
 				name: ''
 			}
 		},
 		mounted() {
-			this.getCompanies();
+			this.getAllWithFilter();
 
 			this.$on('company_created', (company) => {
 				// this.companies.data.unshift(company);
@@ -158,11 +169,13 @@
 			});
 		},
 		methods: {
-			getCompanies(page = 1) {
+			getAllWithFilter(page = 1) {
 				this.loading = true;
 
 				var ajax_url = '/api/companies?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
+				ajax_url += '&orderBy=' + this.orderField;
+				ajax_url += '&order=' + this.order;
 				if(this.name != '') ajax_url += '&name=' + this.name;
 
 				axios.get(ajax_url)
@@ -202,9 +215,11 @@
 				clearTimeout(timeout);
 
 				timeout = setTimeout(() => {
-					this.getCompanies();
+					this.getAllWithFilter();
 				}, 500);
-			}
+			},
+			orderBy,
+			orderActive
 		}
 
 	}

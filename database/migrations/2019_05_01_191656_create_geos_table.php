@@ -15,7 +15,7 @@ class CreateGeosTable extends Migration
     {
         Schema::create('geos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('geo_id')->default(0);
+            $table->integer('geo_id')->default(0)->index();
             $table->string('name')->nullable();
             $table->string('lon')->nullable();
             $table->string('lat')->nullable();

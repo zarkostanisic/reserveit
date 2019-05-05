@@ -44,5 +44,6 @@ return [
     'city' => 'City',
     'quarter' => 'Quarter',
     //not translated
-    'created_at' => 'Created at'
+    'created_at' => 'Created at',
+    'logo' => 'Logo'
 ];

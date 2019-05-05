@@ -207,8 +207,8 @@
 
 				var ajax_url = '/api/users?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
-				ajax_url += '&orderBy=' + this.orderField
-				ajax_url += '&order=' + this.order,
+				ajax_url += '&orderBy=' + this.orderField;
+				ajax_url += '&order=' + this.order;
 				ajax_url += '&role_id=' + this.role_id;
 				ajax_url += '&company_id=' + this.company_id;
 

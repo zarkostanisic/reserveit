@@ -2006,6 +2006,7 @@ var Company = function Company(company) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/companies/Create.vue");
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
 //
 //
 //
@@ -2130,6 +2131,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2141,6 +2150,8 @@ var timeout = null;
     return {
       companies: {},
       perpage: 25,
+      orderField: 'id',
+      order: 'asc',
       loading: false,
       name: ''
     };
@@ -2148,7 +2159,7 @@ var timeout = null;
   mounted: function mounted() {
     var _this = this;
 
-    this.getCompanies();
+    this.getAllWithFilter();
     this.$on('company_created', function (company) {
       // this.companies.data.unshift(company);
       window.noty(_this.trans.get('universal.success'), 'success');
@@ -2164,13 +2175,15 @@ var timeout = null;
     });
   },
   methods: {
-    getCompanies: function getCompanies() {
+    getAllWithFilter: function getAllWithFilter() {
       var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
       var ajax_url = '/api/companies?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
+      ajax_url += '&orderBy=' + this.orderField;
+      ajax_url += '&order=' + this.order;
       if (this.name != '') ajax_url += '&name=' + this.name;
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
@@ -2206,9 +2219,11 @@ var timeout = null;
 
       clearTimeout(timeout);
       timeout = setTimeout(function () {
-        _this4.getCompanies();
+        _this4.getAllWithFilter();
       }, 500);
-    }
+    },
+    orderBy: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderBy"],
+    orderActive: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderActive"]
   }
 });
 
@@ -2699,7 +2714,8 @@ __webpack_require__.r(__webpack_exports__);
       var ajax_url = '/api/users?page=' + page;
       ajax_url += '&perpage=' + this.perpage;
       ajax_url += '&orderBy=' + this.orderField;
-      ajax_url += '&order=' + this.order, ajax_url += '&role_id=' + this.role_id;
+      ajax_url += '&order=' + this.order;
+      ajax_url += '&role_id=' + this.role_id;
       ajax_url += '&company_id=' + this.company_id;
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
@@ -26538,7 +26554,7 @@ var render = function() {
                               ? $$selectedVal
                               : $$selectedVal[0]
                           },
-                          _vm.getCompanies
+                          _vm.getAllWithFilter
                         ]
                       }
                     },
@@ -26583,13 +26599,46 @@ var render = function() {
               [
                 _c("thead", [
                   _c("tr", [
-                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.id")))]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("id"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("id")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.id")))]
+                    ),
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.logo")))]),
                     _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.name")))]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.name")))]
+                    ),
                     _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm.trans.get("universal.city")))]),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("geos.name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("geos.name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.city")))]
+                    ),
                     _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.quarter")))
@@ -26754,7 +26803,7 @@ var render = function() {
             _vm._v(" "),
             _c("pagination", {
               attrs: { limit: 3, data: _vm.companies, align: "right" },
-              on: { "pagination-change-page": _vm.getCompanies }
+              on: { "pagination-change-page": _vm.getAllWithFilter }
             })
           ],
           1

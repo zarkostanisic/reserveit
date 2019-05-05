@@ -25,8 +25,15 @@ class CompanyController extends Controller
     {
         $perpage = request()->query('perpage') ?? 10;
         $name = request()->query('name') ?? '';
+        $orderBy = request()->query('orderBy') ?? 'id';
+        $order = request()->query('order') ?? 'asc';
 
-        $companies = Company::withTrashed()->filter($name)->paginate($perpage);
+        $companies = Company::withTrashed()
+            ->filter($name)
+            ->select('companies.*')
+            ->join('geos', 'geos.id', '=', 'companies.city_id')
+            ->orderBy($orderBy, $order)
+            ->paginate($perpage);
 
         return CompanyResource::collection($companies);
     }
