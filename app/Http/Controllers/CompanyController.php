@@ -50,6 +50,9 @@ class CompanyController extends Controller
         $company = new Company();
 
         $company->name = $request->name;
+        $company->email = $request->email;
+        $company->address = $request->address;
+        $company->phone = $request->phone;
         $company->category_id = $request->category_id;
         $company->city_id = $request->city_id;
         $company->quarter_id = $request->quarter_id;
@@ -88,6 +91,9 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, Company $company)
     {
         $company->name = $request->name;
+        $company->email = $request->email;
+        $company->address = $request->address;
+        $company->phone = $request->phone;
         $company->category_id = $request->category_id;
         $company->city_id = $request->city_id;
         $company->quarter_id = $request->quarter_id;

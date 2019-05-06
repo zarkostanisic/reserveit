@@ -63,10 +63,11 @@ class User extends Authenticatable
         return '/images/users/' . $this->photo;
     }
 
-    public function scopeFilter($query, $role_id, $company_id)
+    public function scopeFilter($query, $role_id, $company_id, $email)
     {
         if($role_id > 0) $query->where('role_id', $role_id);
         if($company_id > 0) $query->where('company_id', $company_id);
+        if($email != '') $query->where('users.email', 'like', $email . '%');
     }
 
     public function isAdmin(){

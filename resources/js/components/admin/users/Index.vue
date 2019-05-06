@@ -39,6 +39,17 @@
 							</select>
 						</label>
 
+						<label class="col-sm-12 col-md-2">
+							{{ trans.get('universal.email') }} 
+
+							<input type="text" 
+								class="form-control form-control-sm" v-bind:value="email" 
+								@input="email = $event.target.value"
+								@keyup="searchByEmail()"
+								:disabled="loading"
+								>
+						</label>
+
 						<label class="col-sm-12 col-md-2">{{ trans.get('universal.role') }}
 							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="role_id" @change="getAllWithFilter" :disabled="loading">
 								<option value="0">
@@ -63,6 +74,7 @@
 							</select>
 
 						</label>
+
 					</div>
 				</div>
 				<table class="table table-responsive m-table table-bordered">
@@ -168,6 +180,8 @@
 	import {orderBy} from '../../../Helpers'
 	import {orderActive} from '../../../Helpers'
 
+	let timeout = null;
+
 	export default {
 		props: ['roles', 'companies', 'geos'],
 		components: {
@@ -182,7 +196,8 @@
 				role_id: 0,
 				company_id: 0,
 				loading: false,
-				user_company_id: this.$gate.getCompanyId()
+				user_company_id: this.$gate.getCompanyId(),
+				email: ''
 			}
 		},
 		mounted() {
@@ -215,6 +230,7 @@
 				ajax_url += '&order=' + this.order;
 				ajax_url += '&role_id=' + this.role_id;
 				ajax_url += '&company_id=' + this.company_id;
+				if(this.email != '') ajax_url += '&email=' + this.email;
 
 				axios.get(ajax_url)
 				.then(response => {
@@ -248,6 +264,13 @@
 						window.noty(this.trans.get('universal.success'), 'success');
 					});
 				}
+			},
+			searchByEmail(){
+				clearTimeout(timeout);
+
+				timeout = setTimeout(() => {
+					this.getAllWithFilter();
+				}, 500);
 			},
 			getDateWithFormat,
 			orderBy,

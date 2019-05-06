@@ -1913,6 +1913,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1922,6 +1949,9 @@ var Company = function Company(company) {
   this.id = company.id || '';
   this.name = company.name || '';
   this.logo = '';
+  this.email = company.email || '';
+  this.address = company.address || '';
+  this.phone = company.phone || '';
   this.category_id = company.category_id || '';
   this.city_id = company.city_id || '';
   this.quarter_id = company.quarter_id || 0;
@@ -2162,6 +2192,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2267,6 +2302,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
 //
 //
 //
@@ -2714,10 +2751,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
+var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['roles', 'companies', 'geos'],
   components: {
@@ -2732,7 +2782,8 @@ __webpack_require__.r(__webpack_exports__);
       role_id: 0,
       company_id: 0,
       loading: false,
-      user_company_id: this.$gate.getCompanyId()
+      user_company_id: this.$gate.getCompanyId(),
+      email: ''
     };
   },
   mounted: function mounted() {
@@ -2768,6 +2819,7 @@ __webpack_require__.r(__webpack_exports__);
       ajax_url += '&order=' + this.order;
       ajax_url += '&role_id=' + this.role_id;
       ajax_url += '&company_id=' + this.company_id;
+      if (this.email != '') ajax_url += '&email=' + this.email;
       axios.get(ajax_url).then(function (response) {
         $(document).scrollTop(0);
         _this2.loading = false;
@@ -2796,6 +2848,14 @@ __webpack_require__.r(__webpack_exports__);
           window.noty(_this3.trans.get('universal.success'), 'success');
         });
       }
+    },
+    searchByEmail: function searchByEmail() {
+      var _this4 = this;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        _this4.getAllWithFilter();
+      }, 500);
     },
     getDateWithFormat: _Helpers__WEBPACK_IMPORTED_MODULE_1__["getDateWithFormat"],
     orderBy: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderBy"],
@@ -26479,6 +26539,167 @@ var render = function() {
                               "label",
                               {
                                 staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "address" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("universal.address"))
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.company.address,
+                                    expression: "company.address"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: { type: "text", id: "address" },
+                                domProps: { value: _vm.company.address },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.company,
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.address
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.address[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "phone" }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("universal.phone")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.company.phone,
+                                    expression: "company.phone"
+                                  },
+                                  {
+                                    name: "mask",
+                                    rawName: "v-mask",
+                                    value: "### #######",
+                                    expression: "'### #######'"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: { type: "text", id: "phone" },
+                                domProps: { value: _vm.company.phone },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.company,
+                                      "phone",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.phone
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.phone[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "email" }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("universal.email")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.company.email,
+                                    expression: "company.email"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "",
+                                  id: "email"
+                                },
+                                domProps: { value: _vm.company.email },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.company,
+                                      "email",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.email
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.email[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "logo" }
                               },
                               [_vm._v(_vm._s(_vm.trans.get("universal.logo")))]
@@ -26528,7 +26749,7 @@ var render = function() {
                           "m-btn m-loader m-loader--light m-loader--right":
                             _vm.saving
                         },
-                        attrs: { type: "button" },
+                        attrs: { type: "button", disabled: _vm.saving },
                         on: { click: _vm.editCompany }
                       },
                       [
@@ -26547,7 +26768,7 @@ var render = function() {
                           "m-btn m-loader m-loader--light m-loader--right":
                             _vm.saving
                         },
-                        attrs: { type: "button" },
+                        attrs: { type: "button", disabled: _vm.saving },
                         on: { click: _vm.createCompany }
                       },
                       [
@@ -26721,7 +26942,7 @@ var render = function() {
                   ),
                   _c("input", {
                     staticClass: "form-control form-control-sm",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", disabled: _vm.loading },
                     domProps: { value: _vm.name },
                     on: {
                       input: function($event) {
@@ -26801,6 +27022,14 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.address")))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.phone")))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.status")))
                     ]),
                     _vm._v(" "),
@@ -26845,6 +27074,10 @@ var render = function() {
                           )
                         )
                       ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(company.address))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(company.phone))]),
                       _vm._v(" "),
                       _c("td", [
                         company.deleted
@@ -27785,7 +28018,7 @@ var render = function() {
                           "m-btn m-loader m-loader--light m-loader--right":
                             _vm.saving
                         },
-                        attrs: { type: "button" },
+                        attrs: { type: "button", disabled: _vm.saving },
                         on: { click: _vm.editUser }
                       },
                       [
@@ -27804,7 +28037,7 @@ var render = function() {
                           "m-btn m-loader m-loader--light m-loader--right":
                             _vm.saving
                         },
-                        attrs: { type: "button" },
+                        attrs: { type: "button", disabled: _vm.saving },
                         on: { click: _vm.createUser }
                       },
                       [
@@ -27968,6 +28201,27 @@ var render = function() {
                       _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
                     ]
                   )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "col-sm-12 col-md-2" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.email")) +
+                      " \n\n\t\t\t\t\t\t"
+                  ),
+                  _c("input", {
+                    staticClass: "form-control form-control-sm",
+                    attrs: { type: "text", disabled: _vm.loading },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        _vm.email = $event.target.value
+                      },
+                      keyup: function($event) {
+                        return _vm.searchByEmail()
+                      }
+                    }
+                  })
                 ]),
                 _vm._v(" "),
                 _c("label", { staticClass: "col-sm-12 col-md-2" }, [

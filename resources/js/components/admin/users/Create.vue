@@ -150,6 +150,7 @@
 							class="btn btn-primary" 
 							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}"
 							@click="editUser"
+							:disabled="saving"
 							>
 							{{ trans.get('universal.edit') }}
 						</button>
@@ -158,6 +159,7 @@
 							class="btn btn-primary"
 							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}" 
 							@click="createUser"
+							:disabled="saving"
 							>
 							{{ trans.get('universal.create') }}
 						</button>

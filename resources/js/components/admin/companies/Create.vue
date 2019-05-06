@@ -82,6 +82,31 @@
 
 									</div>
 								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="address" class="col-lg-2 col-form-label">{{ trans.get('universal.address') }}</label>
+									<div class="col-lg-8">
+										<input v-model="company.address" type="text" class="form-control m-input" id="address">
+										<span v-if="errors.address"class="m-form__help">{{ errors.address[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="phone" class="col-lg-2 col-form-label">{{ trans.get('universal.phone') }}</label>
+									<div class="col-lg-8">
+										<input v-model="company.phone" v-mask="'### #######'" type="text" class="form-control m-input" id="phone">
+										<span v-if="errors.phone"class="m-form__help">{{ errors.phone[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label for="email" class="col-lg-2 col-form-label">{{ trans.get('universal.email') }}</label>
+									<div class="col-lg-8">
+										<input v-model="company.email" type="text" class="form-control m-input" placeholder="" id="email">
+										<span v-if="errors.email"class="m-form__help">{{ errors.email[0] }}</span>
+									</div>
+								</div>
+
 								<div class="form-group m-form__group row">
 									<label class="col-lg-2 col-form-label" for="logo">{{ trans.get('universal.logo') }}</label>
 									<div class="col-lg-8">
@@ -99,6 +124,7 @@
 							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}"
 							class="btn btn-primary"
 						 	@click="editCompany"
+						 	:disabled="saving"
 						 	>
 							{{ trans.get('universal.edit') }}
 						</button>
@@ -106,6 +132,7 @@
 						<button v-else type="button" class="btn btn-primary"
 							v-bind:class="{'m-btn m-loader m-loader--light m-loader--right': saving}" 
 							@click="createCompany"
+							:disabled="saving"
 							>
 							{{ trans.get('universal.create') }}
 						</button>
@@ -127,6 +154,9 @@
 			this.id = company.id || '';
 			this.name = company.name || '';
 			this.logo = '';
+			this.email = company.email || '';
+			this.address = company.address || '';
+			this.phone = company.phone || '';
 			this.category_id = company.category_id || '';
 			this.city_id = company.city_id || '';
 			this.quarter_id = company.quarter_id || 0;

@@ -46,6 +46,7 @@
 								class="form-control form-control-sm" v-bind:value="name" 
 								@input="name = $event.target.value"
 								@keyup="searchByName()"
+								:disabled="loading"
 								>
 						</label>
 					</div>
@@ -67,6 +68,8 @@
 								:class="orderActive('geos.name')" 
 								@click="orderBy('geos.name')">{{ trans.get('universal.city') }}</th>
 							<th>{{ trans.get('universal.quarter') }}</th>
+							<th>{{ trans.get('universal.address') }}</th>
+							<th>{{ trans.get('universal.phone') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>
 						</tr>
@@ -81,6 +84,8 @@
 							<td>{{ trans.get('companies.' + company.category) }}</td>
 							<td>{{ company.city }}</td>
 							<td>{{ company.quarter != null ? company.quarter : '-' }}</td>
+							<td>{{ company.address }}</td>
+							<td>{{ company.phone }}</td>
 							<td>
 								<span v-if="company.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}

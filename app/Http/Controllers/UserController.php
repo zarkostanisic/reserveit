@@ -28,13 +28,14 @@ class UserController extends Controller
     public function index()
     {
         $perpage = request()->query('perpage') ?? 10;
+        $email = request()->query('email') ?? '';
         $role_id = request()->query('role_id') ?? 0;
         $company_id = request()->query('company_id') ?? 0;
         $orderBy = request()->query('orderBy') ?? 'id';
         $order = request()->query('order') ?? 'asc';
 
         $users = User::withTrashed()
-            ->filter($role_id, $company_id)
+            ->filter($role_id, $company_id, $email)
             ->select('users.*')
             ->join('geos', 'geos.id', '=', 'users.city_id')
             ->leftjoin('companies', 'companies.id', '=', 'users.company_id')
