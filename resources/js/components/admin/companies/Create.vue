@@ -25,6 +25,26 @@
 
 								<div class="form-group m-form__group row">
 									<label class="col-lg-2 col-form-label">
+										{{ trans.get('universal.category') }}
+									</label>
+									<div class="col-lg-8">
+										<select class="form-control custom-select" id="city_id" 
+										v-model="company.category_id" 
+										>
+											<option value="">{{ trans.get('universal.choose') }}</option>
+											<option v-for="category in categories" 
+											:value="category.id"
+											>
+												{{ trans.get('companies.' + category.name ) }}
+											</option>
+										</select>
+
+										<span v-if="errors.category_id"class="m-form__help">{{ errors.category_id[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">
 										{{ trans.get('universal.city') }}
 									</label>
 									<div class="col-lg-8">
@@ -41,26 +61,6 @@
 										</select>
 
 										<span v-if="errors.city_id"class="m-form__help">{{ errors.city_id[0] }}</span>
-									</div>
-								</div>
-
-								<div class="form-group m-form__group row">
-									<label class="col-lg-2 col-form-label">
-										{{ trans.get('universal.category') }}
-									</label>
-									<div class="col-lg-8">
-										<select class="form-control custom-select" id="city_id" 
-										v-model="company.category_id" 
-										>
-											<option value="">{{ trans.get('universal.choose') }}</option>
-											<option v-for="category in categories" 
-											:value="category.id"
-											>
-												{{ trans.get('companies.' + category.name ) }}
-											</option>
-										</select>
-
-										<span v-if="errors.category_id"class="m-form__help">{{ errors.category_id[0] }}</span>
 									</div>
 								</div>
 

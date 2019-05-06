@@ -26183,97 +26183,6 @@ var render = function() {
                               [
                                 _vm._v(
                                   "\n\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(_vm.trans.get("universal.city")) +
-                                    "\n\t\t\t\t\t\t\t\t"
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-8" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.company.city_id,
-                                      expression: "company.city_id"
-                                    }
-                                  ],
-                                  staticClass: "form-control custom-select",
-                                  attrs: { id: "city_id" },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.company,
-                                          "city_id",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      },
-                                      function($event) {
-                                        return _vm.changeCity()
-                                      }
-                                    ]
-                                  }
-                                },
-                                [
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      _vm._s(_vm.trans.get("universal.choose"))
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.geos, function(geo) {
-                                    return _c(
-                                      "option",
-                                      { domProps: { value: geo.id } },
-                                      [
-                                        _vm._v(
-                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                            _vm._s(geo.name) +
-                                            "\n\t\t\t\t\t\t\t\t\t\t"
-                                        )
-                                      ]
-                                    )
-                                  })
-                                ],
-                                2
-                              ),
-                              _vm._v(" "),
-                              _vm.errors.city_id
-                                ? _c("span", { staticClass: "m-form__help" }, [
-                                    _vm._v(_vm._s(_vm.errors.city_id[0]))
-                                  ])
-                                : _vm._e()
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "form-group m-form__group row" },
-                          [
-                            _c(
-                              "label",
-                              { staticClass: "col-lg-2 col-form-label" },
-                              [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t" +
                                     _vm._s(
                                       _vm.trans.get("universal.category")
                                     ) +
@@ -26350,6 +26259,97 @@ var render = function() {
                               _vm.errors.category_id
                                 ? _c("span", { staticClass: "m-form__help" }, [
                                     _vm._v(_vm._s(_vm.errors.category_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.city")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.company.city_id,
+                                      expression: "company.city_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "city_id" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.company,
+                                          "city_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      function($event) {
+                                        return _vm.changeCity()
+                                      }
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.geos, function(geo) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: geo.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(geo.name) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.city_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.city_id[0]))
                                   ])
                                 : _vm._e()
                             ])
