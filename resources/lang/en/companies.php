@@ -13,5 +13,8 @@ return [
     
     'singular' => 'Company',
     'plural' => 'Companies',
-    'list' => 'List of companies'
+    'list' => 'List of companies',
+    'tavern' => 'Tavern',
+    'nightclub' => 'Nightclub',
+    'restaurant' => 'Restaurant'
 ];

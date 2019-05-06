@@ -43,7 +43,7 @@ return [
     'password_confirmation' => 'Confirm password',
     'city' => 'City',
     'quarter' => 'Quarter',
-    //not translated
     'created_at' => 'Created at',
-    'logo' => 'Logo'
+    'logo' => 'Logo',
+    'category' => 'Category'
 ];

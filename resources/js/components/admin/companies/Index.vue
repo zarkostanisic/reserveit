@@ -60,6 +60,9 @@
 							<th 
 								:class="orderActive('name')" 
 								@click="orderBy('name')">{{ trans.get('universal.name') }}</th>
+							<th 
+								:class="orderActive('categories.name')" 
+								@click="orderBy('categories.name')">{{ trans.get('universal.category') }}</th>
 							<th
 								:class="orderActive('geos.name')" 
 								@click="orderBy('geos.name')">{{ trans.get('universal.city') }}</th>
@@ -75,8 +78,9 @@
 								<img :src="company.logo" width="80" height="80">
 							</td>
 							<td>{{ company.name }}</td>
+							<td>{{ trans.get('companies.' + company.category) }}</td>
 							<td>{{ company.city }}</td>
-							<td>{{ company.quarter != '' ? company.quarter : '-' }}</td>
+							<td>{{ company.quarter != null ? company.quarter : '-' }}</td>
 							<td>
 								<span v-if="company.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}
@@ -123,7 +127,7 @@
 			  </div>
 			</BlockUI>
 
-			<admin-companies-create :geos="geos"></admin-companies-create>
+			<admin-companies-create :geos="geos" :categories="categories"></admin-companies-create>
 		</div>
 	</div>
 </template>
@@ -136,7 +140,7 @@
 	let timeout = null;
 
 	export default {
-		props: ['geos'],
+		props: ['geos', 'categories'],
 		components: {
 		    AdminCompaniesCreate
 		},
@@ -154,7 +158,7 @@
 			this.getAllWithFilter();
 
 			this.$on('company_created', (company) => {
-				// this.companies.data.unshift(company);
+				this.companies.data.unshift(company);
 				window.noty(this.trans.get('universal.success'), 'success');
 			});
 

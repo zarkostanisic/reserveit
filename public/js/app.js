@@ -1893,6 +1893,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1902,12 +1922,13 @@ var Company = function Company(company) {
   this.id = company.id || '';
   this.name = company.name || '';
   this.logo = '';
+  this.category_id = company.category_id || '';
   this.city_id = company.city_id || '';
   this.quarter_id = company.quarter_id || 0;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['geos'],
+  props: ['geos', 'categories'],
   data: function data() {
     return {
       municipalities: {},
@@ -2137,12 +2158,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['geos'],
+  props: ['geos', 'categories'],
   components: {
     AdminCompaniesCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2161,7 +2186,8 @@ var timeout = null;
 
     this.getAllWithFilter();
     this.$on('company_created', function (company) {
-      // this.companies.data.unshift(company);
+      _this.companies.data.unshift(company);
+
       window.noty(_this.trans.get('universal.success'), 'success');
     });
     this.$on('company_updated', function (company) {
@@ -26240,6 +26266,98 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(
+                                      _vm.trans.get("universal.category")
+                                    ) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.company.category_id,
+                                      expression: "company.category_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "city_id" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.company,
+                                        "category_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.categories, function(category) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: category.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(
+                                              _vm.trans.get(
+                                                "companies." + category.name
+                                              )
+                                            ) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.category_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.category_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
                           {
                             directives: [
                               {
@@ -26630,6 +26748,19 @@ var render = function() {
                     _c(
                       "th",
                       {
+                        class: _vm.orderActive("categories.name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("categories.name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.category")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
                         class: _vm.orderActive("geos.name"),
                         on: {
                           click: function($event) {
@@ -26674,11 +26805,19 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.name))]),
                       _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(_vm.trans.get("companies." + company.category))
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(company.city))]),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(
-                          _vm._s(company.quarter != "" ? company.quarter : "-")
+                          _vm._s(
+                            company.quarter != null ? company.quarter : "-"
+                          )
                         )
                       ]),
                       _vm._v(" "),
@@ -26818,7 +26957,9 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("admin-companies-create", { attrs: { geos: _vm.geos } })
+        _c("admin-companies-create", {
+          attrs: { geos: _vm.geos, categories: _vm.categories }
+        })
       ],
       1
     )

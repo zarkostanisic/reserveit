@@ -150,7 +150,8 @@ return [
         'company_id' => 'company',
         'birthdate' => 'birthdate',
         'password' => 'password',
-        'city_id' => 'city'
+        'city_id' => 'city',
+        'category_id' => 'category'
     ],
 
 ];

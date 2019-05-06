@@ -26,6 +26,7 @@ class CompanyRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'logo' => 'image64:jpeg,jpg,png',
+            'category_id' => 'required|integer',
             'city_id' => 'required|integer',
             'quarter_id' => 'integer'
         ];

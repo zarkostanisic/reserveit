@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Geo;
+use App\Category;
 
 class Company extends Model
 {
@@ -23,7 +24,11 @@ class Company extends Model
     }
 
     public function scopeFilter($query, $name){
-    	if($name != '') $query->where('name', 'like', $name . '%');
+    	if($name != '') $query->where('companies.name', 'like', $name . '%');
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
     }
 
      public function city(){

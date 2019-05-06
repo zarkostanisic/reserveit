@@ -17,6 +17,10 @@ class CreateCompaniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('logo')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->integer('category_id')->nullable()->index();
             $table->integer('city_id')->nullable()->index();
             $table->integer('quarter_id')->nullable()->index();
             $table->softDeletes();

@@ -22,7 +22,7 @@ class UsersController extends Controller
     {
         $roles = [];
         $company = 0;
-        $companies = Company::all();
+        $companies = Company::orderBy('name', 'asc')->get();
 
         $role = auth()->user()->role->name;
 

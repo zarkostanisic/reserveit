@@ -147,6 +147,8 @@ return [
         'role_id' => 'pozicija',
         'company_id' => 'kompanija',
         'birthdate' => 'datum rođenja',
-        'password' => 'lozinka'
+        'password' => 'lozinka',
+        'city_id' => 'grad',
+        'category_id' => 'kategorija'
     ],
 ];

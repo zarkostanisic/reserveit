@@ -44,6 +44,26 @@
 									</div>
 								</div>
 
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">
+										{{ trans.get('universal.category') }}
+									</label>
+									<div class="col-lg-8">
+										<select class="form-control custom-select" id="city_id" 
+										v-model="company.category_id" 
+										>
+											<option value="">{{ trans.get('universal.choose') }}</option>
+											<option v-for="category in categories" 
+											:value="category.id"
+											>
+												{{ trans.get('companies.' + category.name ) }}
+											</option>
+										</select>
+
+										<span v-if="errors.category_id"class="m-form__help">{{ errors.category_id[0] }}</span>
+									</div>
+								</div>
+
 								<div class="form-group m-form__group row" v-show="municipalities.length > 0">
 									<label class="col-lg-2 col-form-label">
 										{{ trans.get('universal.quarter') }}
@@ -107,13 +127,14 @@
 			this.id = company.id || '';
 			this.name = company.name || '';
 			this.logo = '';
+			this.category_id = company.category_id || '';
 			this.city_id = company.city_id || '';
 			this.quarter_id = company.quarter_id || 0;
 		}
 	}
 
 	export default{
-		props: ['geos'],
+		props: ['geos', 'categories'],
 		data(){
 			return {
 				municipalities: {},

@@ -42,5 +42,8 @@ return [
     'phone' => 'Telefon',
     'password_confirmation' => 'Potvrdi lozinku',
     'city' => 'Grad',
-    'quarter' => 'Deo grada'
+    'quarter' => 'Deo grada',
+    'created_at' => 'Kreiran',
+    'logo' => 'Logo',
+    'category' => 'Kategorija'
 ];
