@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Role;
 use App\Company;
+use App\Geo;
 
 class User extends Authenticatable
 {
@@ -43,7 +44,7 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'role', 'company'
+        'role', 'company', 'city'
     ];
 
     public function role(){
@@ -52,6 +53,10 @@ class User extends Authenticatable
 
     public function company(){
         return $this->belongsTo(Company::class);
+    }
+
+    public function city(){
+        return $this->belongsTo(Geo::class, 'city_id', 'id');
     }
 
      public function getPhotoPathAttribute(){

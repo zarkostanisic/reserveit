@@ -1931,7 +1931,7 @@ var Company = function Company(company) {
   props: ['geos', 'categories'],
   data: function data() {
     return {
-      municipalities: {},
+      quarters: {},
       company: {},
       errors: {},
       editing: false,
@@ -1947,7 +1947,7 @@ var Company = function Company(company) {
       _this.editing = false;
       _this.company = new Company({});
       _this.errors = {};
-      _this.municipalities = {};
+      _this.quarters = {};
     });
     this.$parent.$on('edit_company', function (_ref) {
       var company = _ref.company;
@@ -2003,11 +2003,11 @@ var Company = function Company(company) {
         this.company.quarter_id = 0;
       }
 
-      this.municipalities = {};
+      this.quarters = {};
       var city_id = this.company.city_id;
 
       for (var g in this.geos) {
-        if (this.geos[g].id == city_id) this.municipalities = this.geos[g].municipalities;
+        if (this.geos[g].id == city_id) this.quarters = this.geos[g].quarters;
       }
     },
     onFileChange: _Helpers__WEBPACK_IMPORTED_MODULE_0__["onFileChange"],
@@ -2419,6 +2419,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2434,12 +2454,13 @@ var User = function User(user) {
   this.phone = user.phone || '';
   this.password = '';
   this.password_confirmation = '';
+  this.city_id = user.city_id || '';
   this.role_id = user.role_id || '';
   this.company_id = user.company_id || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies'],
+  props: ['roles', 'companies', 'geos'],
   data: function data() {
     return {
       user: {},
@@ -2689,12 +2710,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies'],
+  props: ['roles', 'companies', 'geos'],
   components: {
     AdminUsersCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -26363,8 +26388,8 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.municipalities.length > 0,
-                                expression: "municipalities.length > 0"
+                                value: _vm.quarters.length > 0,
+                                expression: "quarters.length > 0"
                               }
                             ],
                             staticClass: "form-group m-form__group row"
@@ -26426,7 +26451,7 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(_vm.municipalities, function(quarter) {
+                                  _vm._l(_vm.quarters, function(quarter) {
                                     return _c(
                                       "option",
                                       { domProps: { value: quarter.id } },
@@ -27422,6 +27447,92 @@ var render = function() {
                           [
                             _c(
                               "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.city")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.user.city_id,
+                                      expression: "user.city_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "city_id" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.user,
+                                        "city_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("universal.choose"))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.geos, function(geo) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: geo.id } },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                            _vm._s(geo.name) +
+                                            "\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.city_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.city_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
                               {
                                 staticClass: "col-lg-2 col-form-label",
                                 attrs: { for: "address" }
@@ -28053,6 +28164,19 @@ var render = function() {
                       [_vm._v(_vm._s(_vm.trans.get("universal.email")))]
                     ),
                     _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("geos.name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("geos.name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.city")))]
+                    ),
+                    _vm._v(" "),
                     _c("th", [
                       _vm._v(_vm._s(_vm.trans.get("universal.address")))
                     ]),
@@ -28115,6 +28239,8 @@ var render = function() {
                         : _vm._e(),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.city))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.address))]),
                       _vm._v(" "),
@@ -28270,7 +28396,7 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("admin-users-create", {
-          attrs: { roles: _vm.roles, companies: _vm.companies }
+          attrs: { geos: _vm.geos, roles: _vm.roles, companies: _vm.companies }
         })
       ],
       1

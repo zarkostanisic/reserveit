@@ -81,6 +81,9 @@
 							<th 
 								:class="orderActive('email')"
 								@click="orderBy('email')">{{ trans.get('universal.email') }}</th>
+							<th
+								:class="orderActive('geos.name')" 
+								@click="orderBy('geos.name')">{{ trans.get('universal.city') }}</th>
 							<th>{{ trans.get('universal.address') }}</th>
 							<th>{{ trans.get('universal.phone') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
@@ -102,6 +105,7 @@
 								{{ user.role_id == 1 ? '-' : user.company }}
 							</td>
 							<td>{{ user.email }}</td>
+							<td>{{ user.city }}</td>
 							<td>{{ user.address }}</td>
 							<td>{{ user.phone }}</td>
 							<td>
@@ -153,7 +157,7 @@
 			  </div>
 			</BlockUI>
 
-			<admin-users-create :roles="roles" :companies="companies"></admin-users-create>
+			<admin-users-create :geos="geos" :roles="roles" :companies="companies"></admin-users-create>
 		</div>
 	</div>
 </template>
@@ -165,7 +169,7 @@
 	import {orderActive} from '../../../Helpers'
 
 	export default {
-		props: ['roles', 'companies'],
+		props: ['roles', 'companies', 'geos'],
 		components: {
 		    AdminUsersCreate
 		},

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Geo extends Model
 {
 	protected $with = [
-		'municipalities'
+		'quarters'
 	];
 
-    public function municipalities(){
+    public function quarters(){
     	return $this->hasMany(self::class, 'geo_id');
     }
 }

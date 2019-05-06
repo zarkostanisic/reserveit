@@ -98,11 +98,11 @@ class CompanyController extends Controller
 
         if($fileName = $this->uploadFile('logo', $path)){
             $company->logo = $fileName;
+
+            $this->removeFile($remove_path);
         }
 
         $company->save();
-
-        $this->removeFile($remove_path);
 
         return response([
             'data' => new CompanyResource($company->fresh())

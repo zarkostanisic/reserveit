@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
 	        'password' => bcrypt('administrator'),
             'api_token' => Str::random(60),
 	        'remember_token' => Str::random(10),
+            'city_id' => 1,
 	        'role_id' => 1,
             'company_id' => 0
     	]);
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
 	        'password' => bcrypt('manager'),
             'api_token' => Str::random(60),
 	        'remember_token' => Str::random(10),
+            'city_id' => 2,
 	        'role_id' => 2,
             'company_id' => 1
     	]);
@@ -42,6 +44,7 @@ class UsersTableSeeder extends Seeder
 	        'password' => bcrypt('hostess'),
             'api_token' => Str::random(60),
 	        'remember_token' => Str::random(10),
+            'city_id' => 3,
 	        'role_id' => 3,
             'company_id' => 2
     	]);

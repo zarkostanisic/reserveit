@@ -36,6 +36,7 @@ class UserController extends Controller
         $users = User::withTrashed()
             ->filter($role_id, $company_id)
             ->select('users.*')
+            ->join('geos', 'geos.id', '=', 'users.city_id')
             ->leftjoin('companies', 'companies.id', '=', 'users.company_id')
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->orderBy($orderBy, $order)
@@ -61,6 +62,7 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
+        $user->city_id = $request->city_id;
         $user->role_id = $request->role_id;
         $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
 
@@ -109,6 +111,7 @@ class UserController extends Controller
                 $user->password = bcrypt($request->password);
             }
 
+            $user->city_id = $request->city_id;
             $user->role_id = $request->role_id;
             $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
 
@@ -117,11 +120,11 @@ class UserController extends Controller
 
             if($fileName = $this->uploadFile('photo', $path)){
                 $user->photo = $fileName;
+
+                $this->removeFile($remove_path);
             }
 
             $user->save();
-
-            $this->removeFile($remove_path);
             
             return response([
                 'data' => new UserResource($user->fresh())

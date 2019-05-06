@@ -78,6 +78,26 @@
 								</div>
 
 								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">
+										{{ trans.get('universal.city') }}
+									</label>
+									<div class="col-lg-8">
+										<select class="form-control custom-select" id="city_id" 
+										v-model="user.city_id" 
+										>
+											<option value="">{{ trans.get('universal.choose') }}</option>
+											<option v-for="geo in geos" 
+											:value="geo.id"
+											>
+												{{ geo.name }}
+											</option>
+										</select>
+
+										<span v-if="errors.city_id"class="m-form__help">{{ errors.city_id[0] }}</span>
+									</div>
+								</div>
+
+								<div class="form-group m-form__group row">
 									<label for="address" class="col-lg-2 col-form-label">{{ trans.get('universal.address') }}</label>
 									<div class="col-lg-8">
 										<input v-model="user.address" type="text" class="form-control m-input" id="address">
@@ -165,13 +185,14 @@
 			this.phone = user.phone || '';
 			this.password = '';
 			this.password_confirmation = '';
+			this.city_id = user.city_id || '';
 			this.role_id = user.role_id || '';
 			this.company_id = user.company_id || '';
 		}
 	}
 
 	export default{
-		props: ['roles', 'companies'],
+		props: ['roles', 'companies', 'geos'],
 		data(){
 			return {
 				user: {},

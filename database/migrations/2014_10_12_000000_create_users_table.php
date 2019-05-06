@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
                         ->nullable()
                         ->default(null);
             $table->rememberToken();
+            $table->integer('city_id')->index()->default(0);
             $table->integer('role_id')->index()->default(0);
             $table->integer('company_id')->index()->default(0);
             $table->softDeletes();

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Role;
 use App\Company;
 use App\User;
+use  App\Geo;
 
 class UsersController extends Controller
 {
@@ -21,8 +22,8 @@ class UsersController extends Controller
     public function index()
     {
         $roles = [];
-        $company = 0;
         $companies = Company::orderBy('name', 'asc')->get();
+        $geos = Geo::where('geo_id', 0)->orderBy('name', 'asc')->get();
 
         $role = auth()->user()->role->name;
 
@@ -31,10 +32,9 @@ class UsersController extends Controller
            
            if($role == 'manager'){
                 unset($roles[0]);
-                $company = auth()->user()->company->id ?? 0;
            } 
         }
 
-        return view('admin.users.index', compact('roles', 'companies', 'role', 'company'));
+        return view('admin.users.index', compact('roles', 'companies', 'geos'));
     }
 }

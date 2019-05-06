@@ -144,11 +144,14 @@ return [
     */
 
     'attributes' => [
+        'name' => ' ',
         'role_id' => 'pozicija',
         'company_id' => 'kompanija',
         'birthdate' => 'datum rođenja',
         'password' => 'lozinka',
         'city_id' => 'grad',
-        'category_id' => 'kategorija'
+        'category_id' => 'kategorija',
+        'address' => 'adresa',
+        'phone' => 'telefon'
     ],
 ];

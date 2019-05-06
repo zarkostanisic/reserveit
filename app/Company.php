@@ -31,7 +31,7 @@ class Company extends Model
         return $this->belongsTo(Category::class);
     }
 
-     public function city(){
+    public function city(){
         return $this->belongsTo(Geo::class, 'city_id', 'id');
     }
 

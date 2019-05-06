@@ -64,7 +64,7 @@
 									</div>
 								</div>
 
-								<div class="form-group m-form__group row" v-show="municipalities.length > 0">
+								<div class="form-group m-form__group row" v-show="quarters.length > 0">
 									<label class="col-lg-2 col-form-label">
 										{{ trans.get('universal.quarter') }}
 									</label>
@@ -73,7 +73,7 @@
 										v-model="company.quarter_id" 
 										>
 											<option value="0">{{ trans.get('universal.choose') }}</option>
-											<option v-for="quarter in municipalities" 
+											<option v-for="quarter in quarters" 
 											:value="quarter.id"
 											>
 												{{ quarter.name }}
@@ -137,7 +137,7 @@
 		props: ['geos', 'categories'],
 		data(){
 			return {
-				municipalities: {},
+				quarters: {},
 				company: {},
 				errors: {},
 				editing: false,
@@ -151,7 +151,7 @@
 				this.company = new Company({});
 				this.errors = {};
 
-				this.municipalities = {};
+				this.quarters = {};
 			});
 
 			this.$parent.$on('edit_company', ({company}) => {
@@ -198,12 +198,12 @@
 				if(edit === false){
 					this.company.quarter_id = 0;
 				}
-				this.municipalities = {};
+				this.quarters = {};
 
 				var city_id = this.company.city_id;
 
 				for(var g in this.geos){
-					if(this.geos[g].id == city_id) this.municipalities = this.geos[g].municipalities;
+					if(this.geos[g].id == city_id) this.quarters = this.geos[g].quarters;
 				}
 			},
 			onFileChange,

@@ -146,12 +146,15 @@ return [
     */
 
     'attributes' => [
+        'name' => ' ',
         'role_id' => 'role',
         'company_id' => 'company',
         'birthdate' => 'birthdate',
         'password' => 'password',
         'city_id' => 'city',
-        'category_id' => 'category'
+        'category_id' => 'category',
+        'address' => 'address',
+        'phone' => 'phone'
     ],
 
 ];
