@@ -8,10 +8,12 @@ use App\Geo;
 use App\Category;
 
 $factory->define(Company::class, function (Faker $faker) {
+
     return [
         'name' => $faker->company,
         'email' => $faker->unique()->safeEmail,
         'address' => $faker->address,
+        'phone' => $faker->randomNumber(7),
         'city_id' => function(){
             return Geo::all()->random();
         },
