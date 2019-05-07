@@ -27050,7 +27050,7 @@ var render = function() {
                       _c("td", [
                         _c("img", {
                           attrs: {
-                            src: company.logo,
+                            src: company.logo.small,
                             width: "80",
                             height: "80"
                           }
@@ -28476,7 +28476,11 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _c("img", {
-                          attrs: { src: user.photo, width: "80", height: "80" }
+                          attrs: {
+                            src: user.photo.small,
+                            width: "80",
+                            height: "80"
+                          }
                         })
                       ]),
                       _vm._v(" "),

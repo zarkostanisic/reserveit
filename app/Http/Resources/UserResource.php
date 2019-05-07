@@ -14,10 +14,15 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $dir = config('site.upload.images.users.show');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'photo' => $this->photo ? $this->photoPath : '',
+            'photo' => [
+                'orig' => $this->photo ? asset($dir . $this->photo) : '',
+                'small' => $this->photo ? asset($dir . thumbnail($this->photo, 'small')) : ''
+            ],
             'email' => $this->email,
             'birthdate' => $this->birthdate,
             'address' => $this->address,

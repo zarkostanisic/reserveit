@@ -67,9 +67,9 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
 
-        $path = 'images/users/';
+        $path = config('site.upload.images.users.storage');
 
-        if($fileName = $this->uploadFile('photo', $path)){
+        if($fileName = $this->uploadImage('photo', $path)){
             $user->photo = $fileName;
         }
 
@@ -116,13 +116,13 @@ class UserController extends Controller
             $user->role_id = $request->role_id;
             $user->company_id = $user->role_id == 1 ? 0 : $request->company_id;
 
-            $path = 'images/users/';
-            $remove_path = public_path($path) . $user->photo;
+            $path = config('site.upload.images.users.storage');
+            $photoName = $user->photo;
 
-            if($fileName = $this->uploadFile('photo', $path)){
+            if($fileName = $this->uploadImage('photo', $path)){
                 $user->photo = $fileName;
 
-                $this->removeFile($remove_path);
+                $this->removeImages($path, $photoName);
             }
 
             $user->save();

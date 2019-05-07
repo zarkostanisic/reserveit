@@ -114,6 +114,7 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'Format polja :attribute ne važi.',
     'uuid'                 => 'The :attribute must be a valid UUID.',
+    'image64' => 'Polje :attribute mora biti datoteka tipa: :values.',
 
     /*
     |--------------------------------------------------------------------------

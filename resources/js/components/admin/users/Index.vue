@@ -110,7 +110,7 @@
 						<tr v-for="user, key in users.data">
 							<th scope="row">{{ user.id }}</th>
 							<td>
-								<img :src="user.photo" width="80" height="80">
+								<img :src="user.photo.small" width="80" height="80">
 							</td>
 							<td>{{ user.name }}</td>
 							<td v-if="user_company_id == 0">

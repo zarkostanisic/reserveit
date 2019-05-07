@@ -57,9 +57,9 @@ class CompanyController extends Controller
         $company->city_id = $request->city_id;
         $company->quarter_id = $request->quarter_id;
 
-        $path = 'images/companies/';
+        $path = config('site.upload.images.companies.storage');
 
-        if($fileName = $this->uploadFile('logo', $path)){
+        if($fileName = $this->uploadImage('logo', $path)){
             $company->logo = $fileName;
         }
         
@@ -99,13 +99,13 @@ class CompanyController extends Controller
         $company->quarter_id = $request->quarter_id;
 
         
-        $path = 'images/companies/';
-        $remove_path = public_path($path) . $company->logo;
+        $path = config('site.upload.images.companies.storage');
+        $imageName = $company->logo;
 
-        if($fileName = $this->uploadFile('logo', $path)){
+        if($fileName = $this->uploadImage('logo', $path)){
             $company->logo = $fileName;
 
-            $this->removeFile($remove_path);
+            $this->removeImages($path, $imageName);
         }
 
         $company->save();

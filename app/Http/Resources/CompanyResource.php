@@ -14,11 +14,16 @@ class CompanyResource extends JsonResource
      */
     public function toArray($request)
     {
+        $dir = config('site.upload.images.companies.show');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'logo' => $this->logo ? $this->logoPath : '',
+            'logo' => [
+                'orig' => $this->logo ? asset($dir . $this->logo) : '',
+                'small' => $this->logo ? asset($dir . thumbnail($this->logo, 'small')) : ''
+            ],
             'address' => $this->address,
             'phone' => $this->phone,
             'category' => $this->category['name'],

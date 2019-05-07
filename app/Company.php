@@ -19,10 +19,6 @@ class Company extends Model
     	'city', 'quarter'
     ];
 
-    public function getLogoPathAttribute(){
-        return '/images/companies/' . $this->logo;
-    }
-
     public function scopeFilter($query, $name){
     	if($name != '') $query->where('companies.name', 'like', $name . '%');
     }

@@ -59,10 +59,6 @@ class User extends Authenticatable
         return $this->belongsTo(Geo::class, 'city_id', 'id');
     }
 
-     public function getPhotoPathAttribute(){
-        return '/images/users/' . $this->photo;
-    }
-
     public function scopeFilter($query, $role_id, $company_id, $email)
     {
         if($role_id > 0) $query->where('role_id', $role_id);

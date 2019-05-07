@@ -78,7 +78,7 @@
 						<tr v-for="company, key in companies.data">
 							<th scope="row">{{ company.id }}</th>
 							<td>
-								<img :src="company.logo" width="80" height="80">
+								<img :src="company.logo.small" width="80" height="80">
 							</td>
 							<td>{{ company.name }}</td>
 							<td>{{ trans.get('companies.' + company.category) }}</td>
