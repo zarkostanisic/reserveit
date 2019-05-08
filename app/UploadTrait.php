@@ -12,7 +12,10 @@ trait UploadTrait{
             $fileName = Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
 
 
-            $origImage = $this->fitImage($imageData, 500, 500);
+            $origImage = Image::make($imageData)
+                ->orientate()
+                ->encode();
+                
             $this->saveFile($path . $fileName, $origImage);
 
             $this->generateThumbnails($fileName, $path, $imageData);
