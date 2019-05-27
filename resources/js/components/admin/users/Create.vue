@@ -86,10 +86,10 @@
 										v-model="user.city_id" 
 										>
 											<option value="">{{ trans.get('universal.choose') }}</option>
-											<option v-for="geo in geos" 
-											:value="geo.id"
+											<option v-for="city in cities" 
+											:value="city.id"
 											>
-												{{ geo.name }}
+												{{ city.name }}
 											</option>
 										</select>
 
@@ -194,7 +194,7 @@
 	}
 
 	export default{
-		props: ['roles', 'companies', 'geos'],
+		props: ['roles', 'companies', 'cities'],
 		data(){
 			return {
 				user: {},

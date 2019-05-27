@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
             GeosTableSeeder::class,
             CategoriesTableSeeder::class,
             RolesTableSeeder::class,
-
             CompaniesTableSeeder::class,
         	UsersTableSeeder::class
         ]);

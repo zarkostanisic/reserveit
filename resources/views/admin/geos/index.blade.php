@@ -6,7 +6,7 @@
 <div class="m-subheader ">
     <div class="d-flex align-items-center">
 		<div class="mr-auto">
-			<h3 class="m-subheader__title m-subheader__title--separator">{{ __('users.plural') }}</h3>
+			<h3 class="m-subheader__title m-subheader__title--separator">{{ __('geos.plural') }}</h3>
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
 					<a href="{{ route('dashboard') }}" class="m-nav__link m-nav__link--icon">
@@ -15,8 +15,8 @@
 				</li>
 				<li class="m-nav__separator">-</li>
 				<li class="m-nav__item">
-					<a href="{{ route('users.index') }}" class="m-nav__link">
-						<span class="m-nav__link-text">{{ __('users.plural') }}</span>
+					<a href="{{ route('geos.index') }}" class="m-nav__link">
+						<span class="m-nav__link-text">{{ __('geos.plural') }}</span>
 					</a>
 				</li>
 
@@ -29,7 +29,7 @@
 <div class="m-content">
 
     <div class="m-section">
-    	<admin-users-index :cities="{{ $cities }}" :roles="{{ $roles }}" :companies="{{ $companies }}"></admin-users-index>
+    	<admin-geos-index :types="{{ $types }}" :cities="{{ $cities }}"></admin-geos-index>
 	</div>
 
 </div>					

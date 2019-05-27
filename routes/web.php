@@ -27,4 +27,5 @@ Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 	Route::resource('/users', 'Admin\\UsersController')->only('index');
 	Route::resource('/companies', 'Admin\\CompaniesController')->only('index');
+	Route::resource('/geos', 'Admin\\GeosController')->only('index');
 });

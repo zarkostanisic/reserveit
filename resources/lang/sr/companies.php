@@ -13,7 +13,7 @@ return [
     
     'singular' => 'Kompanija',
     'plural' => 'Kompanije',
-    'list' => 'Lista korisnika',
+    'list' => 'Lista kompanija',
     'tavern' => 'Kafana',
     'nightclub' => 'Noćni klub',
     'restaurant' => 'Restoran'

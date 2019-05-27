@@ -15,10 +15,12 @@ class CreateGeosTable extends Migration
     {
         Schema::create('geos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('geo_id')->default(0)->index();
+            $table->enum('type', ['country', 'city', 'quarter'])->default('city')->index();
+            $table->integer('city_id')->default(0)->index();
             $table->string('name')->nullable();
             $table->string('lon')->nullable();
             $table->string('lat')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

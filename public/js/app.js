@@ -1958,7 +1958,7 @@ var Company = function Company(company) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['geos', 'categories'],
+  props: ['cities', 'categories'],
   data: function data() {
     return {
       quarters: {},
@@ -2036,8 +2036,8 @@ var Company = function Company(company) {
       this.quarters = {};
       var city_id = this.company.city_id;
 
-      for (var g in this.geos) {
-        if (this.geos[g].id == city_id) this.quarters = this.geos[g].quarters;
+      for (var g in this.cities) {
+        if (this.cities[g].id == city_id) this.quarters = this.cities[g].quarters;
       }
     },
     onFileChange: _Helpers__WEBPACK_IMPORTED_MODULE_0__["onFileChange"],
@@ -2202,7 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['geos', 'categories'],
+  props: ['cities', 'categories'],
   components: {
     AdminCompaniesCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2271,6 +2271,445 @@ var timeout = null;
 
           _this3.companies.data.splice(key, 1, response.data.data);
 
+          window.noty(_this3.trans.get('universal.success'), 'success');
+        });
+      }
+    },
+    searchByName: function searchByName() {
+      var _this4 = this;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        _this4.getAllWithFilter();
+      }, 500);
+    },
+    orderBy: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderBy"],
+    orderActive: _Helpers__WEBPACK_IMPORTED_MODULE_1__["orderActive"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var Geo = function Geo(geo) {
+  _classCallCheck(this, Geo);
+
+  this.id = geo.id || '';
+  this.name = geo.name || '';
+  this.type = geo.type || 'city';
+  this.city_id = geo.city_id || '';
+};
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['cities', 'types'],
+  data: function data() {
+    return {
+      geo: {},
+      errors: {},
+      editing: false,
+      saving: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$parent.$on('create_geo', function () {
+      _this.editing = false;
+      _this.geo = new Geo({});
+      _this.errors = {};
+    });
+    this.$parent.$on('edit_geo', function (_ref) {
+      var geo = _ref.geo;
+      _this.editing = true;
+      _this.geo = new Geo(geo);
+      _this.errors = {};
+
+      _this.$helpers.changeSelect('#type', _this.geo.type);
+    });
+  },
+  methods: {
+    createGeo: function createGeo() {
+      var _this2 = this;
+
+      this.saving = true;
+      axios.post('/api/geos', this.geo).then(function (response) {
+        _this2.saving = false;
+
+        _this2.$parent.$emit('geo_created', response.data.data);
+
+        _this2.$helpers.modalHide('#m_modal_create_geo');
+      })["catch"](function (error) {
+        _this2.saving = false;
+        _this2.errors = error.response.data.errors;
+      });
+    },
+    editGeo: function editGeo() {
+      var _this3 = this;
+
+      this.saving = true;
+      axios.put('/api/geos/' + this.geo.id, this.geo).then(function (response) {
+        _this3.saving = false;
+
+        _this3.$parent.$emit('geo_updated', response.data.data);
+
+        _this3.$helpers.modalHide('#m_modal_create_geo');
+      })["catch"](function (error) {
+        _this3.saving = false;
+        _this3.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create */ "./resources/js/components/admin/geos/Create.vue");
+/* harmony import */ var _Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Helpers */ "./resources/js/Helpers.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var timeout = null;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['types', 'cities'],
+  components: {
+    AdminGeosCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      geos: {},
+      perpage: 25,
+      orderField: 'id',
+      order: 'asc',
+      loading: false,
+      name: '',
+      city_id: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.getAllWithFilter();
+    this.$on('geo_created', function (geo) {
+      _this.geos.data.unshift(geo);
+
+      if (geo.type == 'city') _this.cities.unshift(geo);
+      window.noty(_this.trans.get('universal.success'), 'success');
+    });
+    this.$on('geo_updated', function (geo) {
+      var geoIndex = _this.geos.data.findIndex(function (g) {
+        return geo.id == g.id;
+      });
+
+      var cityIndex = _this.cities.findIndex(function (c) {
+        return geo.id == c.id;
+      });
+
+      _this.geos.data.splice(geoIndex, 1, geo);
+
+      if (geo.type == 'city' && cityIndex == -1) _this.cities.unshift(geo);else if (geo.type == 'quarter') _this.cities.splice(cityIndex, 1);
+      window.noty(_this.trans.get('universal.success'), 'success');
+    });
+  },
+  methods: {
+    getAllWithFilter: function getAllWithFilter() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.loading = true;
+      var ajax_url = '/api/geos?page=' + page;
+      ajax_url += '&perpage=' + this.perpage;
+      ajax_url += '&orderBy=' + this.orderField;
+      ajax_url += '&order=' + this.order;
+      if (this.name != '') ajax_url += '&name=' + this.name;
+      if (this.city_id != '0') ajax_url += '&city_id=' + this.city_id;
+      axios.get(ajax_url).then(function (response) {
+        $(document).scrollTop(0);
+        _this2.loading = false;
+        _this2.geos = response.data;
+      });
+    },
+    createGeo: function createGeo() {
+      this.$emit('create_geo');
+    },
+    editGeo: function editGeo(geo) {
+      this.$emit('edit_geo', {
+        geo: geo
+      });
+    },
+    deleteGeo: function deleteGeo(id, key) {
+      var _this3 = this;
+
+      if (confirm(this.trans.get('universal.confirm'))) {
+        this.loading = true;
+        var ajax_url = '/api/geos/' + id;
+        axios["delete"](ajax_url).then(function (response) {
+          _this3.loading = false;
+
+          _this3.geos.data.splice(key, 1, response.data.data);
+
+          var cityIndex = _this3.cities.findIndex(function (c) {
+            return response.data.data.id == c.id;
+          });
+
+          if (response.data.data.deleted) _this3.cities.splice(cityIndex, 1);else _this3.cities.unshift(response.data.data);
           window.noty(_this3.trans.get('universal.success'), 'success');
         });
       }
@@ -2497,7 +2936,7 @@ var User = function User(user) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies', 'geos'],
+  props: ['roles', 'companies', 'cities'],
   data: function data() {
     return {
       user: {},
@@ -2769,7 +3208,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var timeout = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['roles', 'companies', 'geos'],
+  props: ['roles', 'companies', 'cities'],
   components: {
     AdminUsersCreate: _Create__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -26415,14 +26854,14 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(_vm.geos, function(geo) {
+                                  _vm._l(_vm.cities, function(city) {
                                     return _c(
                                       "option",
-                                      { domProps: { value: geo.id } },
+                                      { domProps: { value: city.id } },
                                       [
                                         _vm._v(
                                           "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                            _vm._s(geo.name) +
+                                            _vm._s(city.name) +
                                             "\n\t\t\t\t\t\t\t\t\t\t"
                                         )
                                       ]
@@ -27216,7 +27655,815 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("admin-companies-create", {
-          attrs: { geos: _vm.geos, categories: _vm.categories }
+          attrs: { cities: _vm.cities, categories: _vm.categories }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "m_modal_create_geo",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(
+                        _vm.editing
+                          ? _vm.trans.get("universal.edit")
+                          : _vm.trans.get("universal.create")
+                      ) +
+                      "\n\t\t\t\t\t"
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "m-form m-form--fit m-form--label-align-right",
+                    attrs: { enctype: "multipart/form-data" }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "m-form__section m-form__section--first" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.type")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.geo.type,
+                                      expression: "geo.type"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "type" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.geo,
+                                        "type",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.types, function(type) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: type } },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            _vm.trans.get("universal." + type)
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.type
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.type[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.geo.type == "quarter",
+                                expression: "geo.type == 'quarter'"
+                              }
+                            ],
+                            staticClass: "form-group m-form__group row"
+                          },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-2 col-form-label" },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.city")) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.geo.city_id,
+                                      expression: "geo.city_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control custom-select",
+                                  attrs: { id: "city_id" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.geo,
+                                        "city_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.cities, function(city) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: city.id } },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(city.name) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.city_id
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.city_id[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group m-form__group row" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-lg-2 col-form-label",
+                                attrs: { for: "name" }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("universal.name")))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.geo.name,
+                                    expression: "geo.name"
+                                  }
+                                ],
+                                staticClass: "form-control m-input",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "",
+                                  id: "name"
+                                },
+                                domProps: { value: _vm.geo.name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.geo,
+                                      "name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.name
+                                ? _c("span", { staticClass: "m-form__help" }, [
+                                    _vm._v(_vm._s(_vm.errors.name[0]))
+                                  ])
+                                : _vm._e()
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _vm.editing
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        class: {
+                          "m-btn m-loader m-loader--light m-loader--right":
+                            _vm.saving
+                        },
+                        attrs: { type: "button", disabled: _vm.saving },
+                        on: { click: _vm.editGeo }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(_vm.trans.get("universal.edit")) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        class: {
+                          "m-btn m-loader m-loader--light m-loader--right":
+                            _vm.saving
+                        },
+                        attrs: { type: "button", disabled: _vm.saving },
+                        on: { click: _vm.createGeo }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(_vm.trans.get("universal.create")) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ]
+                    )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "m-portlet m-portlet--mobile" },
+      [
+        _c("div", { staticClass: "m-portlet__head" }, [
+          _c("div", { staticClass: "m-portlet__head-caption" }, [
+            _c("div", { staticClass: "m-portlet__head-title" }, [
+              _c("h3", { staticClass: "m-portlet__head-text" }, [
+                _vm._v(
+                  "\n\t\t\t\t\t\t" +
+                    _vm._s(_vm.trans.get("geos.list")) +
+                    "\n\t\t\t\t\t"
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "m-portlet__head-tools" }, [
+            _c("ul", { staticClass: "m-portlet__nav" }, [
+              _c("li", { staticClass: "m-portlet__nav-item" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#m_modal_create_geo"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.createGeo($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", [
+                      _c("i", { staticClass: "la la-plus" }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.trans.get("geos.singular")))
+                      ])
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "m-portlet__nav-item" })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "m-portlet__body" },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-12 col-md-12" }, [
+                _c("label", { staticClass: "col-sm-12 col-md-1" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.show")) +
+                      " \n\n\t\t\t\t\t\t"
+                  ),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.perpage,
+                          expression: "perpage"
+                        }
+                      ],
+                      staticClass:
+                        "form-control form-control-sm custom-select custom-select-sm",
+                      attrs: { disabled: _vm.loading },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.perpage = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          _vm.getAllWithFilter
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "col-sm-12 col-md-2" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.trans.get("universal.name")) +
+                      " \n\n\t\t\t\t\t\t"
+                  ),
+                  _c("input", {
+                    staticClass: "form-control form-control-sm",
+                    attrs: { type: "text", disabled: _vm.loading },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function($event) {
+                        _vm.name = $event.target.value
+                      },
+                      keyup: function($event) {
+                        return _vm.searchByName()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "col-sm-12 col-md-2" }, [
+                  _vm._v(
+                    _vm._s(_vm.trans.get("universal.city")) + "\n\t\t\t\t\t\t"
+                  ),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.city_id,
+                          expression: "city_id"
+                        }
+                      ],
+                      staticClass:
+                        "form-control form-control-sm custom-select custom-select-sm",
+                      attrs: { disabled: _vm.loading },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.city_id = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          _vm.getAllWithFilter
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0" } }, [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\t" +
+                            _vm._s(_vm.trans.get("universal.choose")) +
+                            "\n\t\t\t\t\t\t\t"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.cities, function(city) {
+                        return _c("option", { domProps: { value: city.id } }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(city.name) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "table",
+              { staticClass: "table table-responsive m-table table-bordered" },
+              [
+                _c("thead", [
+                  _c("tr", [
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("id"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("id")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.id")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("name"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("name")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.name")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        class: _vm.orderActive("type"),
+                        on: {
+                          click: function($event) {
+                            return _vm.orderBy("type")
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("universal.type")))]
+                    ),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.status")))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [
+                      _vm._v(_vm._s(_vm.trans.get("universal.actions")))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.geos.data, function(geo, key) {
+                    return _c("tr", [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(geo.id))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        geo.city_id > 0
+                          ? _c("div", [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t" +
+                                  _vm._s(geo.name) +
+                                  "\n\t\t\t\t\t\t\t\t"
+                              ),
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "m-badge m-badge--brand m-badge--wide"
+                                },
+                                [_vm._v(_vm._s(geo.city.name))]
+                              )
+                            ])
+                          : _c("span", [_vm._v(_vm._s(geo.name))])
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(_vm.trans.get("universal." + geo.type)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        geo.deleted
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "m-badge m-badge--danger m-badge--wide"
+                              },
+                              [
+                                _vm._v(
+                                  "\t\n\t\t\t\t\t\t\t\t" +
+                                    _vm._s(_vm.trans.get("universal.deleted")) +
+                                    "\n\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            )
+                          : _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "m-badge m-badge--success m-badge--wide"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t" +
+                                      _vm._s(
+                                        _vm.trans.get("universal.active")
+                                      ) +
+                                      "\n\t\t\t\t\t\t\t\t"
+                                  )
+                                ]
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "m-stack m-stack--ver m-stack--general",
+                            staticStyle: { width: "160px" }
+                          },
+                          [
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-info",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "modal",
+                                    "data-target": "#m_modal_create_geo"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editGeo(geo)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t\t" +
+                                      _vm._s(_vm.trans.get("universal.edit")) +
+                                      "\n\t\t\t\t\t\t\t\t\t"
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "m-stack__item" }, [
+                              _vm.$gate.isAdmin()
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-outline-danger": !geo.deleted,
+                                        "btn-outline-success": geo.deleted
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteGeo(geo.id, key)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(
+                                            geo.deleted
+                                              ? _vm.trans.get(
+                                                  "universal.restore"
+                                                )
+                                              : _vm.trans.get(
+                                                  "universal.delete"
+                                                )
+                                          ) +
+                                          "\n\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("pagination", {
+              attrs: { limit: 3, data: _vm.geos, align: "right" },
+              on: { "pagination-change-page": _vm.getAllWithFilter }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _vm.loading
+          ? _c("BlockUI", [
+              _c("div", {
+                staticClass: "m-loader m-loader--brand",
+                staticStyle: { width: "30px", display: "inline-block" }
+              })
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("admin-geos-create", {
+          attrs: { cities: _vm.cities, types: _vm.types }
         })
       ],
       1
@@ -27734,14 +28981,14 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(_vm.geos, function(geo) {
+                                  _vm._l(_vm.cities, function(city) {
                                     return _c(
                                       "option",
-                                      { domProps: { value: geo.id } },
+                                      { domProps: { value: city.id } },
                                       [
                                         _vm._v(
                                           "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                            _vm._s(geo.name) +
+                                            _vm._s(city.name) +
                                             "\n\t\t\t\t\t\t\t\t\t\t"
                                         )
                                       ]
@@ -28654,7 +29901,11 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("admin-users-create", {
-          attrs: { geos: _vm.geos, roles: _vm.roles, companies: _vm.companies }
+          attrs: {
+            cities: _vm.cities,
+            roles: _vm.roles,
+            companies: _vm.companies
+          }
         })
       ],
       1
@@ -41009,11 +42260,13 @@ Vue.use(vue_blockui__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 Vue.component('admin-users-index', __webpack_require__(/*! ./components/admin/users/Index.vue */ "./resources/js/components/admin/users/Index.vue")["default"]); // companies
 
-Vue.component('admin-companies-index', __webpack_require__(/*! ./components/admin/companies/Index.vue */ "./resources/js/components/admin/companies/Index.vue")["default"]); // paginsation
+Vue.component('admin-companies-index', __webpack_require__(/*! ./components/admin/companies/Index.vue */ "./resources/js/components/admin/companies/Index.vue")["default"]); // pagination
 
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // notification
 
-Vue.component('vue-noty', __webpack_require__(/*! ./components/Noty.vue */ "./resources/js/components/Noty.vue")["default"]);
+Vue.component('vue-noty', __webpack_require__(/*! ./components/Noty.vue */ "./resources/js/components/Noty.vue")["default"]); // geos
+
+Vue.component('admin-geos-index', __webpack_require__(/*! ./components/admin/geos/Index.vue */ "./resources/js/components/admin/geos/Index.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -41312,6 +42565,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_261ae083___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_261ae083___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Create.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/admin/geos/Create.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=3dc7968e& */ "./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e&");
+/* harmony import */ var _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/geos/Create.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Create.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=template&id=3dc7968e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Create.vue?vue&type=template&id=3dc7968e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_3dc7968e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Index.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/admin/geos/Index.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=51280ba0& */ "./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0&");
+/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/geos/Index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Index.vue?vue&type=template&id=51280ba0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/geos/Index.vue?vue&type=template&id=51280ba0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_51280ba0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

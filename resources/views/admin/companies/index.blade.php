@@ -29,7 +29,7 @@
 <div class="m-content">
 
     <div class="m-section">
-    	<admin-companies-index :geos="{{ $geos }}" :categories="{{ $categories }}"></admin-companies-index>
+    	<admin-companies-index :cities="{{ $cities }}" :categories="{{ $categories }}"></admin-companies-index>
 	</div>
 
 </div>					

@@ -169,7 +169,7 @@
 			  </div>
 			</BlockUI>
 
-			<admin-users-create :geos="geos" :roles="roles" :companies="companies"></admin-users-create>
+			<admin-users-create :cities="cities" :roles="roles" :companies="companies"></admin-users-create>
 		</div>
 	</div>
 </template>
@@ -183,7 +183,7 @@
 	let timeout = null;
 
 	export default {
-		props: ['roles', 'companies', 'geos'],
+		props: ['roles', 'companies', 'cities'],
 		components: {
 		    AdminUsersCreate
 		},

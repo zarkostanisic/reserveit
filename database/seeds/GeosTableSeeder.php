@@ -25,7 +25,7 @@ class GeosTableSeeder extends Seeder
             ['name' => 'Alibunar'],
             ['name' => 'Aleksinac'],
             ['name' => 'Apatin'],
-            ['name' => 'Aranđđelovac'],
+            ['name' => 'Aranđelovac'],
             ['name' => 'Arilje'],
             ['name' => 'Azanja'],
             ['name' => 'Babušnica'],
@@ -203,7 +203,7 @@ class GeosTableSeeder extends Seeder
             ['name' => 'Zvečan'],
             ['name' => 'Žabalj'],
             ['name' => 'Žagubica'],
-            ['name' => 'Žitorđe'],
+            ['name' => 'Žitorađa'],
         ]);
     }
 }

@@ -53,10 +53,10 @@
 										@change="changeCity()"
 										>
 											<option value="">{{ trans.get('universal.choose') }}</option>
-											<option v-for="geo in geos" 
-											:value="geo.id"
+											<option v-for="city in cities" 
+											:value="city.id"
 											>
-												{{ geo.name }}
+												{{ city.name }}
 											</option>
 										</select>
 
@@ -164,7 +164,7 @@
 	}
 
 	export default{
-		props: ['geos', 'categories'],
+		props: ['cities', 'categories'],
 		data(){
 			return {
 				quarters: {},
@@ -232,8 +232,8 @@
 
 				var city_id = this.company.city_id;
 
-				for(var g in this.geos){
-					if(this.geos[g].id == city_id) this.quarters = this.geos[g].quarters;
+				for(var g in this.cities){
+					if(this.cities[g].id == city_id) this.quarters = this.cities[g].quarters;
 				}
 			},
 			onFileChange,

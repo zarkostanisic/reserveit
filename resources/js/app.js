@@ -49,15 +49,14 @@ Vue.use(BlockUI);
 
 // users
 Vue.component('admin-users-index', require('./components/admin/users/Index.vue').default);
-
 // companies
 Vue.component('admin-companies-index', require('./components/admin/companies/Index.vue').default);
-
-// paginsation
+// pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
-
 // notification
 Vue.component('vue-noty', require('./components/Noty.vue').default);
+// geos
+Vue.component('admin-geos-index', require('./components/admin/geos/Index.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -34,6 +34,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('company', function ($value) {
             return \App\Company::withTrashed()->where('id', $value)->first();
         });
+
+        Route::bind('geo', function ($value) {
+            return \App\Geo::withTrashed()->where('id', $value)->first();
+        });
     }
 
     /**

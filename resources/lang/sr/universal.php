@@ -25,7 +25,7 @@ return [
     'full_name' => 'Ime i prezime',
     'username' => 'Korisničko ime',
     'status' => 'Status',
-    'type' => 'Type',
+    'type' => 'Tip',
     'actions' => 'Opcije',
     'delete' => 'Ukloni',
     'restore' => 'Vrati',

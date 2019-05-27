@@ -6,7 +6,9 @@
 			<i class="m-menu__section-icon flaticon-more-v2"></i>
 		</li>
 		<li class="m-menu__item  {{ request()->routeIs('dashboard') ? 'm-menu__item--active' : '' }}" aria-haspopup="true"><a href="{{ route('dashboard') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">{{ __('dashboard.title') }}</span></a></li>
-
+		@if (Auth()->user()->isAdmin())
+			<li class="m-menu__item  {{ request()->routeIs('geos.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ route('geos.index') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('geos.plural') }}</span></a></li>
+		@endif
 		@if (Auth()->user()->isAdmin())
 			<li class="m-menu__item  {{ request()->routeIs('companies.index') ? 'm-menu__item--active' : '' }}" aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ route('companies.index') }}" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-home-1"></i><span class="m-menu__link-text">{{ __('companies.plural') }}</span></a></li>
 		@endif

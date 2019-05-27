@@ -5,17 +5,17 @@
 				<div class="m-portlet__head-caption">
 					<div class="m-portlet__head-title">
 						<h3 class="m-portlet__head-text">
-							{{ trans.get('companies.list') }}
+							{{ trans.get('geos.list') }}
 						</h3>
 					</div>
 				</div>
 				<div class="m-portlet__head-tools">
 					<ul class="m-portlet__nav">
 						<li class="m-portlet__nav-item">
-							<button @click.prevent="createCompany" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#m_modal_create_company">
+							<button @click.prevent="createGeo" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#m_modal_create_geo">
 								<span>
 									<i class="la la-plus"></i>
-									<span>{{ trans.get('companies.singular') }}</span>
+									<span>{{ trans.get('geos.singular') }}</span>
 								</span>
 							</button>
 						</li>
@@ -49,6 +49,17 @@
 								:disabled="loading"
 								>
 						</label>
+
+						<label class="col-sm-12 col-md-2">{{ trans.get('universal.city') }}
+							<select class="form-control form-control-sm custom-select custom-select-sm" v-model="city_id" @change="getAllWithFilter" :disabled="loading">
+								<option value="0">
+									{{ trans.get('universal.choose') }}
+								</option>
+								<option v-for="city in cities" :value="city.id">
+									{{ city.name }}
+								</option>
+							</select>
+						</label>
 					</div>
 				</div>
 				<table class="table table-responsive m-table table-bordered">
@@ -57,37 +68,29 @@
 							<th 
 								:class="orderActive('id')" 
 								@click="orderBy('id')">{{ trans.get('universal.id') }}</th>
-							<th>{{ trans.get('universal.logo') }}</th>
 							<th 
 								:class="orderActive('name')" 
 								@click="orderBy('name')">{{ trans.get('universal.name') }}</th>
 							<th 
-								:class="orderActive('categories.name')" 
-								@click="orderBy('categories.name')">{{ trans.get('universal.category') }}</th>
-							<th
-								:class="orderActive('geos.name')" 
-								@click="orderBy('geos.name')">{{ trans.get('universal.city') }}</th>
-							<th>{{ trans.get('universal.quarter') }}</th>
-							<th>{{ trans.get('universal.address') }}</th>
-							<th>{{ trans.get('universal.phone') }}</th>
+								:class="orderActive('type')" 
+								@click="orderBy('type')">{{ trans.get('universal.type') }}</th>
 							<th>{{ trans.get('universal.status') }}</th>
 							<th>{{ trans.get('universal.actions') }}</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="company, key in companies.data">
-							<th scope="row">{{ company.id }}</th>
+						<tr v-for="geo, key in geos.data">
+							<th scope="row">{{ geo.id }}</th>
 							<td>
-								<img :src="company.logo.small" width="80" height="80">
+								<div v-if="geo.city_id > 0">
+									{{ geo.name }}
+									<span class="m-badge m-badge--brand m-badge--wide">{{ geo.city.name }}</span>
+								</div>
+								<span v-else>{{ geo.name }}</span>
 							</td>
-							<td>{{ company.name }}</td>
-							<td>{{ trans.get('companies.' + company.category) }}</td>
-							<td>{{ company.city }}</td>
-							<td>{{ company.quarter != null ? company.quarter : '-' }}</td>
-							<td>{{ company.address }}</td>
-							<td>{{ company.phone }}</td>
+							<th scope="row">{{ trans.get('universal.' + geo.type) }}</th>
 							<td>
-								<span v-if="company.deleted" class="m-badge m-badge--danger m-badge--wide">	
+								<span v-if="geo.deleted" class="m-badge m-badge--danger m-badge--wide">	
 									{{ trans.get('universal.deleted') }}
 								</span>
 								<div v-else>
@@ -103,8 +106,8 @@
 											type="button" 
 											class="btn btn-outline-info" 
 											data-toggle="modal" 
-											data-target="#m_modal_create_company"
-											@click="editCompany(company)">
+											data-target="#m_modal_create_geo"
+											@click="editGeo(geo)">
 											{{ trans.get('universal.edit') }}
 										</button>
 									</div>
@@ -113,9 +116,9 @@
 
 										<button type="button" class="btn" 
 											v-if="$gate.isAdmin()"
-											v-bind:class="{ 'btn-outline-danger': !company.deleted, 'btn-outline-success': company.deleted}" 
-										 	@click="deleteCompany(company.id, key)">
-											{{ company.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
+											v-bind:class="{ 'btn-outline-danger': !geo.deleted, 'btn-outline-success': geo.deleted}" 
+										 	@click="deleteGeo(geo.id, key)">
+											{{ geo.deleted ? trans.get('universal.restore') : trans.get('universal.delete') }}
 										</button>
 									</div>
 								</div>
@@ -124,7 +127,7 @@
 					</tbody>
 				</table>
 
-				<pagination :limit="3" :data="companies" @pagination-change-page="getAllWithFilter" align="right"></pagination>
+				<pagination :limit="3" :data="geos" @pagination-change-page="getAllWithFilter" align="right"></pagination>
 			</div>
 
 			<BlockUI v-if="loading">
@@ -132,47 +135,59 @@
 			  </div>
 			</BlockUI>
 
-			<admin-companies-create :cities="cities" :categories="categories"></admin-companies-create>
+			<admin-geos-create :cities="cities" :types="types"></admin-geos-create>
 		</div>
 	</div>
 </template>
 
 <script>
-	import AdminCompaniesCreate from './Create'	
+	import AdminGeosCreate from './Create'	
 	import {orderBy} from '../../../Helpers'
 	import {orderActive} from '../../../Helpers'
 
 	let timeout = null;
 
 	export default {
-		props: ['cities', 'categories'],
+		props: ['types', 'cities'],
 		components: {
-		    AdminCompaniesCreate
+		    AdminGeosCreate
 		},
 		data() {
 			return {
-				companies: {},
+				geos: {},
 				perpage: 25,
 				orderField: 'id',
 				order: 'asc',
 				loading: false,
-				name: ''
+				name: '',
+				city_id: 0
 			}
 		},
 		mounted() {
+
 			this.getAllWithFilter();
 
-			this.$on('company_created', (company) => {
-				this.companies.data.unshift(company);
+			this.$on('geo_created', (geo) => {
+				this.geos.data.unshift(geo);
+				
+				if(geo.type == 'city') this.cities.unshift(geo);
+
 				window.noty(this.trans.get('universal.success'), 'success');
 			});
 
-			this.$on('company_updated', (company) => {
-				let companyIndex = this.companies.data.findIndex(c => {
-					return company.id == c.id;
+			this.$on('geo_updated', (geo) => {
+				let geoIndex = this.geos.data.findIndex(g => {
+					return geo.id == g.id;
 				});
 
-				this.companies.data.splice(companyIndex, 1, company);
+				let cityIndex = this.cities.findIndex(c => {
+					return geo.id == c.id;
+				});
+
+				this.geos.data.splice(geoIndex, 1, geo);
+				
+				if(geo.type == 'city' && cityIndex == -1) this.cities.unshift(geo);
+				else if(geo.type == 'quarter') this.cities.splice(cityIndex, 1);
 
 				window.noty(this.trans.get('universal.success'), 'success');
 			});
@@ -181,40 +196,48 @@
 			getAllWithFilter(page = 1) {
 				this.loading = true;
 
-				var ajax_url = '/api/companies?page=' + page 
+				var ajax_url = '/api/geos?page=' + page 
 				ajax_url += '&perpage=' + this.perpage;
 				ajax_url += '&orderBy=' + this.orderField;
 				ajax_url += '&order=' + this.order;
 				if(this.name != '') ajax_url += '&name=' + this.name;
+				if(this.city_id != '0') ajax_url += '&city_id=' + this.city_id;
 
 				axios.get(ajax_url)
 				.then(response => {
 					$(document).scrollTop(0);
 					this.loading = false;
 
-					this.companies = response.data;
+					this.geos = response.data;
 				});
 			},
 
-			createCompany(){
-				this.$emit('create_company');
+			createGeo(){
+				this.$emit('create_geo');
 			},
 
-			editCompany(company){
-				this.$emit('edit_company', {company});
+			editGeo(geo){
+				this.$emit('edit_geo', {geo});
 			},
 
-			deleteCompany(id, key) {
+			deleteGeo(id, key) {
 				if(confirm(this.trans.get('universal.confirm'))){
 					this.loading = true;
 
-					var ajax_url = '/api/companies/' + id;
+					var ajax_url = '/api/geos/' + id;
 
 					axios.delete(ajax_url)
 					.then(response => {
 						this.loading = false;
 
-						this.companies.data.splice(key, 1, response.data.data);
+						this.geos.data.splice(key, 1, response.data.data);
+
+						let cityIndex = this.cities.findIndex(c => {
+							return response.data.data.id == c.id;
+						});
+
+						if(response.data.data.deleted) this.cities.splice(cityIndex, 1);
+						else this.cities.unshift(response.data.data);
 
 						window.noty(this.trans.get('universal.success'), 'success');
 					});

@@ -23,7 +23,7 @@ class UsersController extends Controller
     {
         $roles = [];
         $companies = Company::orderBy('name', 'asc')->get();
-        $geos = Geo::where('geo_id', 0)->orderBy('name', 'asc')->get();
+        $cities = Geo::cities()->orderBy('name', 'asc')->get();
 
         $role = auth()->user()->role->name;
 
@@ -35,6 +35,6 @@ class UsersController extends Controller
            } 
         }
 
-        return view('admin.users.index', compact('roles', 'companies', 'geos'));
+        return view('admin.users.index', compact('roles', 'companies', 'cities'));
     }
 }
